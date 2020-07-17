@@ -24,7 +24,12 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "OCIN_FLOW",
-						"type": "DataFlowReference"
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"OCINSINK": {
+								"tablename": "O_CIN"
+							}
+						}
 					},
 					"compute": {
 						"coreCount": 8,
@@ -71,7 +76,10 @@
 				"outputs": [
 					{
 						"referenceName": "AzureSqlTable1",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"tablename": "O_CIN"
+						}
 					}
 				]
 			}

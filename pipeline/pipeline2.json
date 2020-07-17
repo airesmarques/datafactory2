@@ -159,7 +159,10 @@
 				"outputs": [
 					{
 						"referenceName": "AzureSqlTable1",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"tablename": "O_CIN"
+						}
 					}
 				]
 			}
