@@ -15,7 +15,7 @@
 		"schema": [],
 		"typeProperties": {
 			"schema": "DBO",
-			"table": "O_CIN"
+			"table": "tablename"
 		}
 	}
 }
