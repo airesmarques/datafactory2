@@ -64,27 +64,6 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/SqlServerTable1')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "SqlServer1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "SqlServerTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "L_REL"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/SqlServer1')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/CSV')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -119,6 +98,75 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/O_CIN')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Xml",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "O_CIN.xml",
+						"folderPath": "airbus/AIRBUS-RUAG-20200622-A320-XML-EZ20181205003-1-1",
+						"container": "blob01"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SqlServerTable1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SqlServer1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "L_REL"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/SqlServer1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Xml1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Xml",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "O_CIN.xml",
+						"folderPath": "airbus/AIRBUS-RUAG-20200622-A320-XML-EZ20181205003-1-1",
+						"container": "blob01"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -127,7 +175,14 @@
 					{
 						"name": "Copy data1",
 						"type": "Copy",
-						"dependsOn": [],
+						"dependsOn": [
+							{
+								"activity": "Copy data2",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
 						"policy": {
 							"timeout": "7.00:00:00",
 							"retry": 0,
@@ -2331,13 +2386,178 @@
 								"parameters": {}
 							}
 						]
+					},
+					{
+						"name": "Copy data2",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "XmlSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true
+								},
+								"formatSettings": {
+									"type": "XmlReadSettings",
+									"validationMode": "none"
+								}
+							},
+							"sink": {
+								"type": "SqlServerSink",
+								"tableOption": "autoCreate"
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"path": "$['O']['CIN']['row'][0]['CIN']"
+										},
+										"sink": {
+											"name": "CIN",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['O']['CIN']['row'][0]['MODNUMBER']"
+										},
+										"sink": {
+											"name": "MODNUMBER"
+										}
+									},
+									{
+										"source": {
+											"path": "$['O']['CIN']['row'][0]['MODTITLE']"
+										},
+										"sink": {
+											"name": "MODTITLE"
+										}
+									},
+									{
+										"source": {
+											"path": "$['O']['CIN']['row'][0]['MPNUMBER']"
+										},
+										"sink": {
+											"name": "MPNUMBER"
+										}
+									},
+									{
+										"source": {
+											"path": "$['O']['CIN']['row'][0]['MPTITLE']"
+										},
+										"sink": {
+											"name": "MPTITLE"
+										}
+									},
+									{
+										"source": {
+											"path": "$['O']['CIN']['row'][0]['TEAM_DISPLAY']"
+										},
+										"sink": {
+											"name": "TEAM_DISPLAY"
+										}
+									},
+									{
+										"source": {
+											"path": "$['O']['CIN']['row'][0]['CATEGORY']"
+										},
+										"sink": {
+											"name": "CATEGORY"
+										}
+									},
+									{
+										"source": {
+											"path": "$['O']['CIN']['row'][0]['CONFIGSETNAME']"
+										},
+										"sink": {
+											"name": "CONFIGSETNAME"
+										}
+									},
+									{
+										"source": {
+											"path": "$['O']['CIN']['row'][0]['VALIDITYUPDATEDATE']"
+										},
+										"sink": {
+											"name": "VALIDITYUPDATEDATE"
+										}
+									},
+									{
+										"source": {
+											"path": "$['O']['CIN']['row'][0]['VALIDITYTYPE']"
+										},
+										"sink": {
+											"name": "VALIDITYTYPE"
+										}
+									},
+									{
+										"source": {
+											"path": "$['O']['CIN']['row'][0]['INDUSSTDCODE']"
+										},
+										"sink": {
+											"name": "INDUSSTDCODE"
+										}
+									},
+									{
+										"source": {
+											"path": "$['O']['CIN']['row'][0]['STDCODE']"
+										},
+										"sink": {
+											"name": "STDCODE"
+										}
+									},
+									{
+										"source": {
+											"path": "$['O']['CIN']['row'][0]['VERSIONCODE']"
+										},
+										"sink": {
+											"name": "VERSIONCODE"
+										}
+									},
+									{
+										"source": {
+											"path": "$['O']['CIN']['row'][0]['RANGE']"
+										},
+										"sink": {
+											"name": "RANGE"
+										}
+									}
+								],
+								"collectionReference": ""
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "O_CIN",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "SqlServerTable1",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
 					}
 				],
 				"annotations": []
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/CSV')]",
-				"[concat(variables('factoryId'), '/datasets/SqlServerTable1')]"
+				"[concat(variables('factoryId'), '/datasets/SqlServerTable1')]",
+				"[concat(variables('factoryId'), '/datasets/O_CIN')]"
 			]
 		}
 	]

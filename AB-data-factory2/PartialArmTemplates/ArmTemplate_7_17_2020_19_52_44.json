@@ -6,18 +6,6 @@
 			"type": "string",
 			"metadata": "Data Factory name",
 			"defaultValue": "AB-data-factory2"
-		},
-		"AzureBlobStorage1_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage1'"
-		},
-		"AzureSqlMI1_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'AzureSqlMI1'"
-		},
-		"SqlServer1_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'SqlServer1'"
 		}
 	},
 	"variables": {
@@ -2233,15 +2221,13 @@
 						"inputs": [
 							{
 								"referenceName": "CSV",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						],
 						"outputs": [
 							{
 								"referenceName": "SqlServerTable1",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						]
 					},
@@ -2397,15 +2383,13 @@
 						"inputs": [
 							{
 								"referenceName": "O_CIN",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						],
 						"outputs": [
 							{
 								"referenceName": "SqlServerTable1",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						]
 					}
@@ -2413,43 +2397,7 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/CSV')]",
-				"[concat(variables('factoryId'), '/datasets/SqlServerTable1')]",
 				"[concat(variables('factoryId'), '/datasets/O_CIN')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/CSV')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "Data selection.csv",
-						"folderPath": "airbus",
-						"container": "blob01"
-					},
-					"columnDelimiter": ";",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "ADAPCINUMBER;ADAPCILEGACYNUMBER;ADAPLONUMBER;ADAPLOLEGACYNUMBER;CDATE;UDATE;ADAPCINUMBER2;CINSTACK;ADAPCINUMBER3;REQUIREMENTID;ADAPDSNUMBER;ADAPDSISSUEINDEX;ADAPCINUMBER4;ADAPCILEGACYNUMBER5;CDATE6;UDATE7;QUANTITY;A_ADAPDSNUMBER;A_ADAPDSISSUEINDEX;B_ADAPDSNUMBER;CDATE8;UDATE9;QUANTITY10;ITEMNUMBER;ITEMNUMBERZONE;ALTERNCODE;UNIT;ADAPDSNUMBER11;ADAPDSISSUEINDEX12;DASSYNUMBER;DASSYISSUEINDEX;CDATE13;UDATE14;QUANTITY15;ITEMNUMBER16;ITEMNUMBERZONE17;ALTERNCODE18;UNIT19;ADAPDSNUMBER20;ADAPDSISSUEINDEX21;DDPTNUMBER;DDPTISSUEINDEX;CDATE22;UDATE23;QUANTITY24;ITEMNUMBER25;ALTERNCODE26;UNIT27;ADAPDSNUMBER28;ADAPDSISSUEINDEX29;DRAWINGSETNUMBER;DRWSTISSUEINDEX;CDATE30;UDATE31;ADAPDSNUMBER32;ADAPDSISSUEINDEX33;PNCADNUMBER;CDATE34;UDATE35;QUANTITY36;ITEMNUMBER37;ITEMNUMBERZONE38;ALTERNCODE39;UNIT40;ADAPDSNUMBER41;ADAPDSISSUEINDEX42;STDPTNUMBER;CDATE43;UDATE44;QUANTITY45;ITEMNUMBER46;ITEMNUMBERZONE47;ALTERNCODE48;UNIT49;FCSM;MATERIAL;CLASSIFICATION;ADAPLONUMBER50;ADAPLOLEGACYNUMBER51;ADAPDSNUMBER52;ADAPDSISSUEINDEX53;CDATE54;UDATE55;ADAPLONUMBER56;REQUIREMENTID57;CACCCODE;ADAPCINUMBER58;ADAPCILEGACYNUMBER59;CDATE60;UDATE61;CACCCODE62;DASSYNUMBER63;DASSYISSUEINDEX64;CDATE65;UDATE66;DASSYNUMBER67;DASSYISSUEINDEX68;ADAPCINUMBER69;CDATE70;UDATE71;QUANTITY72;ITEMNUMBER73;ITEMNUMBERZONE74;UNIT75;A_DASSYNUMBER;A_DASSYISSUEINDEX;B_DASSYNUMBER;B_DASSYISSUEINDEX;CDATE76;UDATE77;QUANTITY78;ITEMNUMBER79;ITEMNUMBERZONE80;ALTERNCODE81;UNIT82;A_DASSYNUMBER83;B_DASSYNUMBER84;CDATE85;UDATE86;ICYCODE;ICYCONDITION;ICYLINKTYPE;TEAM_O_DASSY_A;TEAM_O_DASSY_B;DASSYNUMBER87;DASSYISSUEINDEX88;DDPTNUMBER89;DDPTISSUEINDEX90;CDATE91;UDATE92;QUANTITY93;ITEMNUMBER94;ITEMNUMBERZONE95;ALTERNCODE96;MINUS;UNIT97;A_DASSYNUMBER98;B_DDPTNUMBER;CDATE99;UDATE100;ICYCODE101;ICYCONDITION102;ICYLINKTYPE103;DASSYNUMBER104;DASSYISSUEINDEX105;DRAWINGSETNUMBER106;DRWSTISSUEINDEX107;CDATE108;UDATE109;DASSYNUMBER110;DASSYISSUEINDEX111;STDPTNUMBER112;CDATE113;UDATE114;QUANTITY115;ITEMNUMBER116;ITEMNUMBERZONE117;ALTERNCODE118;UNIT119;FSCM;MATERIAL120;CLASSIFICATION121;A_DDPTNUMBER;B_DASSYNUMBER122;CDATE123;UDATE124;ICYCODE125;ICYCONDITION126;ICYLINKTYPE127;A_DDPTNUMBER128;B_DDPTNUMBER129;CDATE130;UDATE131;ICYCODE132;ICYCONDITION133;ICYLINKTYPE134;DDPTNUMBER135;DDPTISSUEINDEX136;DRAWINGSETNUMBER137;DRWSTISSUEINDEX138;CDATE139;UDATE140;DDPTNUMBER141;DDPTISSUEINDEX142;STDPTNUMBER143;CDATE144;UDATE145;QUANTITY146;ITEMNUMBER147;ITEMNUMBERZONE148;LENGTH;WIDTH;THICKNESSORDIAMETER;THICKNESS;DIAMETER;UNIT149;FCSM150;MINUS151;ALTERNCODE152;DRWSTNUMBER;DRWSTISSUE;DQNNUMBER;IMPACTTYPE;CIN;ATACODE;CACODE;INTEGRATIONISSUE;MSN;IMPACTEDDS;IMPACTSTATUS;DRAWINGSETNUMBER153;DRWSTISSUEINDEX154;DRAWINGNUMBER;DRWISSUEINDEX;REQUIREMENTID155;CINSTACK156",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
 			]
 		},
 		{
@@ -2472,30 +2420,7 @@
 					}
 				}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SqlServerTable1')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "SqlServer1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "SqlServerTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "L_REL"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/SqlServer1')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Xml1')]",
@@ -2515,47 +2440,6 @@
 						"folderPath": "airbus/AIRBUS-RUAG-20200622-A320-XML-EZ20181205003-1-1",
 						"container": "blob01"
 					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureBlobStorage1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobStorage",
-				"typeProperties": {
-					"connectionString": "[parameters('AzureBlobStorage1_connectionString')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureSqlMI1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureSqlMI",
-				"typeProperties": {
-					"connectionString": "[parameters('AzureSqlMI1_connectionString')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SqlServer1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "SqlServer",
-				"typeProperties": {
-					"connectionString": "[parameters('SqlServer1_connectionString')]"
 				}
 			},
 			"dependsOn": []
