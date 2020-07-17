@@ -15,7 +15,10 @@
 		"schema": [],
 		"typeProperties": {
 			"schema": "DBO",
-			"table": "tablename"
+			"table": {
+				"value": "@dataset().tablename",
+				"type": "Expression"
+			}
 		}
 	}
 }
