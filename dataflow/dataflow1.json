@@ -9,12 +9,20 @@
 						"referenceName": "AzureBlobStorage1",
 						"type": "LinkedServiceReference"
 					},
-					"name": "source1"
+					"name": "OCIN"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "AzureSqlTable1",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
 			"transformations": [],
-			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'xml',\n\tcontainer: 'blob01',\n\tfolderPath: 'airbus/AIRBUS-RUAG-20200622-A320-XML-EZ20181205003-1-1',\n\tfileName: 'O_CIN.xml',\n\tvalidationMode: 'none',\n\tnamespaces: true) ~> source1"
+			"script": "source(output(\n\t\tO as (CIN as (row as (CATEGORY as string, CIN as string, CONFIGSETNAME as string, INDUSSTDCODE as string, MODNUMBER as integer, MODTITLE as string, MPNUMBER as string, MPTITLE as string, RANGE as string, STDCODE as string, TEAM_DISPLAY as string, VALIDITYTYPE as string, VALIDITYUPDATEDATE as integer, VERSIONCODE as string)[]))\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'xml',\n\tcontainer: 'blob01',\n\tfolderPath: 'airbus/AIRBUS-RUAG-20200622-A320-XML-EZ20181205003-1-1',\n\tfileName: 'O_CIN.xml',\n\tvalidationMode: 'none',\n\tnamespaces: true) ~> OCIN\nOCIN sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
 		}
 	}
 }
