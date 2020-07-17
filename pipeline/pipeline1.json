@@ -3,11 +3,11 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy data1",
+				"name": "L_REL",
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "Copy data2",
+						"activity": "O_CIN",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -2216,7 +2216,7 @@
 				]
 			},
 			{
-				"name": "Copy data2",
+				"name": "O_CIN",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
