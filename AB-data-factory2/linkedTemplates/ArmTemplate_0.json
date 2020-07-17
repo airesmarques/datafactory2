@@ -89,12 +89,17 @@
 					"referenceName": "AzureSqlDatabase1",
 					"type": "LinkedServiceReference"
 				},
+				"parameters": {
+					"tablename": {
+						"type": "string"
+					}
+				},
 				"annotations": [],
 				"type": "AzureSqlTable",
 				"schema": [],
 				"typeProperties": {
 					"schema": "DBO",
-					"table": "O_CIN"
+					"table": "tablename"
 				}
 			},
 			"dependsOn": [
@@ -150,6 +155,30 @@
 					"location": {
 						"type": "AzureBlobStorageLocation",
 						"fileName": "O_CIN.xml",
+						"folderPath": "airbus/AIRBUS-RUAG-20200622-A320-XML-EZ20181205003-1-1",
+						"container": "blob01"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/O_MSN')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Xml",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "O_MSN.xml",
 						"folderPath": "airbus/AIRBUS-RUAG-20200622-A320-XML-EZ20181205003-1-1",
 						"container": "blob01"
 					}
@@ -2763,7 +2792,9 @@
 							{
 								"referenceName": "AzureSqlTable1",
 								"type": "DatasetReference",
-								"parameters": {}
+								"parameters": {
+									"tablename": "O_CIN"
+								}
 							}
 						]
 					}
@@ -2805,7 +2836,7 @@
 							"name": "Flatten1"
 						}
 					],
-					"script": "source(output(\n\t\tO as (CIN as (row as (CATEGORY as string, CIN as string, CONFIGSETNAME as string, INDUSSTDCODE as string, MODNUMBER as integer, MODTITLE as string, MPNUMBER as string, MPTITLE as string, RANGE as string, STDCODE as string, TEAM_DISPLAY as string, VALIDITYTYPE as string, VALIDITYUPDATEDATE as integer, VERSIONCODE as string)[]))\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: true,\n\tformat: 'xml',\n\tcontainer: 'blob01',\n\tfolderPath: 'airbus/AIRBUS-RUAG-20200622-A320-XML-EZ20181205003-1-1',\n\tfileName: 'O_CIN.xml',\n\tvalidationMode: 'none',\n\tnamespaces: true) ~> OCIN\nOCIN foldDown(unroll(O.CIN.row, O.CIN.row),\n\tmapColumn(\n\t\tCATEGORY = O.CIN.row.CATEGORY,\n\t\tCIN = O.CIN.row.CIN,\n\t\tCONFIGSETNAME = O.CIN.row.CONFIGSETNAME,\n\t\tINDUSSTDCODE = O.CIN.row.INDUSSTDCODE,\n\t\tMODNUMBER = O.CIN.row.MODNUMBER,\n\t\tMODTITLE = O.CIN.row.MODTITLE,\n\t\tMPNUMBER = O.CIN.row.MPNUMBER,\n\t\tMPTITLE = O.CIN.row.MPTITLE,\n\t\tRANGE = O.CIN.row.RANGE,\n\t\tSTDCODE = O.CIN.row.STDCODE,\n\t\tTEAM_DISPLAY = O.CIN.row.TEAM_DISPLAY,\n\t\tVALIDITYTYPE = O.CIN.row.VALIDITYTYPE,\n\t\tVALIDITYUPDATEDATE = O.CIN.row.VALIDITYUPDATEDATE,\n\t\tVERSIONCODE = O.CIN.row.VERSIONCODE\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> Flatten1\nFlatten1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> OCINSINK"
+					"script": "source(output(\n\t\tO as (CIN as (row as (CATEGORY as string, CIN as string, CONFIGSETNAME as string, INDUSSTDCODE as string, MODNUMBER as integer, MODTITLE as string, MPNUMBER as string, MPTITLE as string, RANGE as string, STDCODE as string, TEAM_DISPLAY as string, VALIDITYTYPE as string, VALIDITYUPDATEDATE as integer, VERSIONCODE as string)[]))\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: true,\n\tformat: 'xml',\n\tcontainer: 'blob01',\n\tfolderPath: 'airbus/AIRBUS-RUAG-20200622-A320-XML-EZ20181205003-1-1',\n\tfileName: 'O_CIN.xml',\n\tvalidationMode: 'none',\n\tnamespaces: true) ~> OCIN\nOCIN foldDown(unroll(O.CIN.row, O.CIN.row),\n\tmapColumn(\n\t\tCATEGORY = O.CIN.row.CATEGORY,\n\t\tCIN = O.CIN.row.CIN,\n\t\tCONFIGSETNAME = O.CIN.row.CONFIGSETNAME,\n\t\tINDUSSTDCODE = O.CIN.row.INDUSSTDCODE,\n\t\tMODNUMBER = O.CIN.row.MODNUMBER,\n\t\tMODTITLE = O.CIN.row.MODTITLE,\n\t\tMPNUMBER = O.CIN.row.MPNUMBER,\n\t\tMPTITLE = O.CIN.row.MPTITLE,\n\t\tRANGE = O.CIN.row.RANGE,\n\t\tSTDCODE = O.CIN.row.STDCODE,\n\t\tTEAM_DISPLAY = O.CIN.row.TEAM_DISPLAY,\n\t\tVALIDITYTYPE = O.CIN.row.VALIDITYTYPE,\n\t\tVALIDITYUPDATEDATE = O.CIN.row.VALIDITYUPDATEDATE,\n\t\tVERSIONCODE = O.CIN.row.VERSIONCODE\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> Flatten1\nFlatten1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table',\n\tskipDuplicateMapOutputs: true) ~> OCINSINK"
 				}
 			},
 			"dependsOn": [
@@ -2822,14 +2853,7 @@
 					{
 						"name": "OCIN_FLOW",
 						"type": "ExecuteDataFlow",
-						"dependsOn": [
-							{
-								"activity": "Copy data1",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
+						"dependsOn": [],
 						"policy": {
 							"timeout": "7.00:00:00",
 							"retry": 0,
@@ -2845,7 +2869,9 @@
 								"parameters": {},
 								"datasetParameters": {
 									"OCIN": {},
-									"OCINSINK": {}
+									"OCINSINK": {
+										"tablename": "O_CIN"
+									}
 								}
 							},
 							"staging": {},
@@ -2854,59 +2880,12 @@
 								"computeType": "General"
 							}
 						}
-					},
-					{
-						"name": "Copy data1",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "XmlSource",
-								"storeSettings": {
-									"type": "AzureBlobStorageReadSettings",
-									"recursive": true
-								},
-								"formatSettings": {
-									"type": "XmlReadSettings",
-									"validationMode": "none"
-								}
-							},
-							"sink": {
-								"type": "AzureSqlSink",
-								"tableOption": "autoCreate"
-							},
-							"enableStaging": false
-						},
-						"inputs": [
-							{
-								"referenceName": "XML_OCIN",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "AzureSqlTable1",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
 					}
 				],
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/OCIN_FLOW')]",
-				"[concat(variables('factoryId'), '/datasets/XML_OCIN')]",
-				"[concat(variables('factoryId'), '/datasets/AzureSqlTable1')]"
+				"[concat(variables('factoryId'), '/dataflows/OCIN_FLOW')]"
 			]
 		}
 	]
