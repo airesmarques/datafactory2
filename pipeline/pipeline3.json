@@ -5,14 +5,7 @@
 			{
 				"name": "OCIN_FLOW",
 				"type": "ExecuteDataFlow",
-				"dependsOn": [
-					{
-						"activity": "Copy data1",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -36,52 +29,6 @@
 						"computeType": "General"
 					}
 				}
-			},
-			{
-				"name": "Copy data1",
-				"type": "Copy",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "XmlSource",
-						"storeSettings": {
-							"type": "AzureBlobStorageReadSettings",
-							"recursive": true
-						},
-						"formatSettings": {
-							"type": "XmlReadSettings",
-							"validationMode": "none"
-						}
-					},
-					"sink": {
-						"type": "AzureSqlSink",
-						"tableOption": "autoCreate"
-					},
-					"enableStaging": false
-				},
-				"inputs": [
-					{
-						"referenceName": "XML_OCIN",
-						"type": "DatasetReference"
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "AzureSqlTable1",
-						"type": "DatasetReference",
-						"parameters": {
-							"tablename": "O_CIN"
-						}
-					}
-				]
 			}
 		],
 		"annotations": []
