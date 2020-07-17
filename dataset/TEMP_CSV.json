@@ -9,7 +9,10 @@
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
-				"type": "AzureBlobStorageLocation"
+				"type": "AzureBlobStorageLocation",
+				"fileName": "temp.csv",
+				"folderPath": "airbus",
+				"container": "blob01"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
