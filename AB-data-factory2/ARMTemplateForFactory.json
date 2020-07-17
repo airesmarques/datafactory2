@@ -2664,7 +2664,7 @@
 				"schema": [],
 				"typeProperties": {
 					"schema": "DBO",
-					"table": "tablename"
+					"table": "O_CIN"
 				}
 			},
 			"dependsOn": [
