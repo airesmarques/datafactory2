@@ -15,11 +15,2192 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
 					"sink": {
 						"type": "SqlServerSink"
 					},
-					"enableStaging": false
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "ADAPCINUMBER",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ADAPCINUMBER",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ADAPCILEGACYNUMBER",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ADAPCILEGACYNUMBER",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ADAPLONUMBER",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ADAPLONUMBER",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ADAPLOLEGACYNUMBER",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ADAPLOLEGACYNUMBER",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CDATE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CDATE",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "UDATE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "UDATE",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ADAPCINUMBER2",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ADAPCINUMBER2",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CINSTACK",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CINSTACK",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ADAPCINUMBER3",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ADAPCINUMBER3",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "REQUIREMENTID",
+									"type": "String"
+								},
+								"sink": {
+									"name": "REQUIREMENTID",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ADAPDSNUMBER",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ADAPDSNUMBER",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ADAPDSISSUEINDEX",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ADAPDSISSUEINDEX",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ADAPCINUMBER4",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ADAPCINUMBER4",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ADAPCILEGACYNUMBER5",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ADAPCILEGACYNUMBER5",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CDATE6",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CDATE6",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "UDATE7",
+									"type": "String"
+								},
+								"sink": {
+									"name": "UDATE7",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "QUANTITY",
+									"type": "String"
+								},
+								"sink": {
+									"name": "QUANTITY",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "A_ADAPDSNUMBER",
+									"type": "String"
+								},
+								"sink": {
+									"name": "A_ADAPDSNUMBER",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "A_ADAPDSISSUEINDEX",
+									"type": "String"
+								},
+								"sink": {
+									"name": "A_ADAPDSISSUEINDEX",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "B_ADAPDSNUMBER",
+									"type": "String"
+								},
+								"sink": {
+									"name": "B_ADAPDSNUMBER",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CDATE8",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CDATE8",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "UDATE9",
+									"type": "String"
+								},
+								"sink": {
+									"name": "UDATE9",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "QUANTITY10",
+									"type": "String"
+								},
+								"sink": {
+									"name": "QUANTITY10",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ITEMNUMBER",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ITEMNUMBER",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ITEMNUMBERZONE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ITEMNUMBERZONE",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ALTERNCODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ALTERNCODE",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "UNIT",
+									"type": "String"
+								},
+								"sink": {
+									"name": "UNIT",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ADAPDSNUMBER11",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ADAPDSNUMBER11",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ADAPDSISSUEINDEX12",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ADAPDSISSUEINDEX12",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DASSYNUMBER",
+									"type": "String"
+								},
+								"sink": {
+									"name": "DASSYNUMBER",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DASSYISSUEINDEX",
+									"type": "String"
+								},
+								"sink": {
+									"name": "DASSYISSUEINDEX",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CDATE13",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CDATE13",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "UDATE14",
+									"type": "String"
+								},
+								"sink": {
+									"name": "UDATE14",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "QUANTITY15",
+									"type": "String"
+								},
+								"sink": {
+									"name": "QUANTITY15",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ITEMNUMBER16",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ITEMNUMBER16",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ITEMNUMBERZONE17",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ITEMNUMBERZONE17",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ALTERNCODE18",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ALTERNCODE18",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "UNIT19",
+									"type": "String"
+								},
+								"sink": {
+									"name": "UNIT19",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ADAPDSNUMBER20",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ADAPDSNUMBER20",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ADAPDSISSUEINDEX21",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ADAPDSISSUEINDEX21",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DDPTNUMBER",
+									"type": "String"
+								},
+								"sink": {
+									"name": "DDPTNUMBER",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DDPTISSUEINDEX",
+									"type": "String"
+								},
+								"sink": {
+									"name": "DDPTISSUEINDEX",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CDATE22",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CDATE22",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "UDATE23",
+									"type": "String"
+								},
+								"sink": {
+									"name": "UDATE23",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "QUANTITY24",
+									"type": "String"
+								},
+								"sink": {
+									"name": "QUANTITY24",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ITEMNUMBER25",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ITEMNUMBER25",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ALTERNCODE26",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ALTERNCODE26",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "UNIT27",
+									"type": "String"
+								},
+								"sink": {
+									"name": "UNIT27",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ADAPDSNUMBER28",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ADAPDSNUMBER28",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ADAPDSISSUEINDEX29",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ADAPDSISSUEINDEX29",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DRAWINGSETNUMBER",
+									"type": "String"
+								},
+								"sink": {
+									"name": "DRAWINGSETNUMBER",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DRWSTISSUEINDEX",
+									"type": "String"
+								},
+								"sink": {
+									"name": "DRWSTISSUEINDEX",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CDATE30",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CDATE30",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "UDATE31",
+									"type": "String"
+								},
+								"sink": {
+									"name": "UDATE31",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ADAPDSNUMBER32",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ADAPDSNUMBER32",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ADAPDSISSUEINDEX33",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ADAPDSISSUEINDEX33",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PNCADNUMBER",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PNCADNUMBER",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CDATE34",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CDATE34",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "UDATE35",
+									"type": "String"
+								},
+								"sink": {
+									"name": "UDATE35",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "QUANTITY36",
+									"type": "String"
+								},
+								"sink": {
+									"name": "QUANTITY36",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ITEMNUMBER37",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ITEMNUMBER37",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ITEMNUMBERZONE38",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ITEMNUMBERZONE38",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ALTERNCODE39",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ALTERNCODE39",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "UNIT40",
+									"type": "String"
+								},
+								"sink": {
+									"name": "UNIT40",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ADAPDSNUMBER41",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ADAPDSNUMBER41",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ADAPDSISSUEINDEX42",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ADAPDSISSUEINDEX42",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "STDPTNUMBER",
+									"type": "String"
+								},
+								"sink": {
+									"name": "STDPTNUMBER",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CDATE43",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CDATE43",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "UDATE44",
+									"type": "String"
+								},
+								"sink": {
+									"name": "UDATE44",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "QUANTITY45",
+									"type": "String"
+								},
+								"sink": {
+									"name": "QUANTITY45",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ITEMNUMBER46",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ITEMNUMBER46",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ITEMNUMBERZONE47",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ITEMNUMBERZONE47",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ALTERNCODE48",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ALTERNCODE48",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "UNIT49",
+									"type": "String"
+								},
+								"sink": {
+									"name": "UNIT49",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "FCSM",
+									"type": "String"
+								},
+								"sink": {
+									"name": "FCSM",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "MATERIAL",
+									"type": "String"
+								},
+								"sink": {
+									"name": "MATERIAL",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CLASSIFICATION",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CLASSIFICATION",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ADAPLONUMBER50",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ADAPLONUMBER50",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ADAPLOLEGACYNUMBER51",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ADAPLOLEGACYNUMBER51",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ADAPDSNUMBER52",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ADAPDSNUMBER52",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ADAPDSISSUEINDEX53",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ADAPDSISSUEINDEX53",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CDATE54",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CDATE54",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "UDATE55",
+									"type": "String"
+								},
+								"sink": {
+									"name": "UDATE55",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ADAPLONUMBER56",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ADAPLONUMBER56",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "REQUIREMENTID57",
+									"type": "String"
+								},
+								"sink": {
+									"name": "REQUIREMENTID57",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CACCCODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CACCCODE",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ADAPCINUMBER58",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ADAPCINUMBER58",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ADAPCILEGACYNUMBER59",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ADAPCILEGACYNUMBER59",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CDATE60",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CDATE60",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "UDATE61",
+									"type": "String"
+								},
+								"sink": {
+									"name": "UDATE61",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CACCCODE62",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CACCCODE62",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DASSYNUMBER63",
+									"type": "String"
+								},
+								"sink": {
+									"name": "DASSYNUMBER63",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DASSYISSUEINDEX64",
+									"type": "String"
+								},
+								"sink": {
+									"name": "DASSYISSUEINDEX64",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CDATE65",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CDATE65",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "UDATE66",
+									"type": "String"
+								},
+								"sink": {
+									"name": "UDATE66",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DASSYNUMBER67",
+									"type": "String"
+								},
+								"sink": {
+									"name": "DASSYNUMBER67",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DASSYISSUEINDEX68",
+									"type": "String"
+								},
+								"sink": {
+									"name": "DASSYISSUEINDEX68",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ADAPCINUMBER69",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ADAPCINUMBER69",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CDATE70",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CDATE70",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "UDATE71",
+									"type": "String"
+								},
+								"sink": {
+									"name": "UDATE71",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "QUANTITY72",
+									"type": "String"
+								},
+								"sink": {
+									"name": "QUANTITY72",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ITEMNUMBER73",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ITEMNUMBER73",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ITEMNUMBERZONE74",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ITEMNUMBERZONE74",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "UNIT75",
+									"type": "String"
+								},
+								"sink": {
+									"name": "UNIT75",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "A_DASSYNUMBER",
+									"type": "String"
+								},
+								"sink": {
+									"name": "A_DASSYNUMBER",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "A_DASSYISSUEINDEX",
+									"type": "String"
+								},
+								"sink": {
+									"name": "A_DASSYISSUEINDEX",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "B_DASSYNUMBER",
+									"type": "String"
+								},
+								"sink": {
+									"name": "B_DASSYNUMBER",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "B_DASSYISSUEINDEX",
+									"type": "String"
+								},
+								"sink": {
+									"name": "B_DASSYISSUEINDEX",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CDATE76",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CDATE76",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "UDATE77",
+									"type": "String"
+								},
+								"sink": {
+									"name": "UDATE77",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "QUANTITY78",
+									"type": "String"
+								},
+								"sink": {
+									"name": "QUANTITY78",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ITEMNUMBER79",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ITEMNUMBER79",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ITEMNUMBERZONE80",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ITEMNUMBERZONE80",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ALTERNCODE81",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ALTERNCODE81",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "UNIT82",
+									"type": "String"
+								},
+								"sink": {
+									"name": "UNIT82",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "A_DASSYNUMBER83",
+									"type": "String"
+								},
+								"sink": {
+									"name": "A_DASSYNUMBER83",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "B_DASSYNUMBER84",
+									"type": "String"
+								},
+								"sink": {
+									"name": "B_DASSYNUMBER84",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CDATE85",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CDATE85",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "UDATE86",
+									"type": "String"
+								},
+								"sink": {
+									"name": "UDATE86",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ICYCODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ICYCODE",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ICYCONDITION",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ICYCONDITION",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ICYLINKTYPE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ICYLINKTYPE",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "TEAM_O_DASSY_A",
+									"type": "String"
+								},
+								"sink": {
+									"name": "TEAM_O_DASSY_A",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "TEAM_O_DASSY_B",
+									"type": "String"
+								},
+								"sink": {
+									"name": "TEAM_O_DASSY_B",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DASSYNUMBER87",
+									"type": "String"
+								},
+								"sink": {
+									"name": "DASSYNUMBER87",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DASSYISSUEINDEX88",
+									"type": "String"
+								},
+								"sink": {
+									"name": "DASSYISSUEINDEX88",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DDPTNUMBER89",
+									"type": "String"
+								},
+								"sink": {
+									"name": "DDPTNUMBER89",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DDPTISSUEINDEX90",
+									"type": "String"
+								},
+								"sink": {
+									"name": "DDPTISSUEINDEX90",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CDATE91",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CDATE91",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "UDATE92",
+									"type": "String"
+								},
+								"sink": {
+									"name": "UDATE92",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "QUANTITY93",
+									"type": "String"
+								},
+								"sink": {
+									"name": "QUANTITY93",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ITEMNUMBER94",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ITEMNUMBER94",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ITEMNUMBERZONE95",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ITEMNUMBERZONE95",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ALTERNCODE96",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ALTERNCODE96",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "MINUS",
+									"type": "String"
+								},
+								"sink": {
+									"name": "MINUS",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "UNIT97",
+									"type": "String"
+								},
+								"sink": {
+									"name": "UNIT97",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "A_DASSYNUMBER98",
+									"type": "String"
+								},
+								"sink": {
+									"name": "A_DASSYNUMBER98",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "B_DDPTNUMBER",
+									"type": "String"
+								},
+								"sink": {
+									"name": "B_DDPTNUMBER",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CDATE99",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CDATE99",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "UDATE100",
+									"type": "String"
+								},
+								"sink": {
+									"name": "UDATE100",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ICYCODE101",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ICYCODE101",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ICYCONDITION102",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ICYCONDITION102",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ICYLINKTYPE103",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ICYLINKTYPE103",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DASSYNUMBER104",
+									"type": "String"
+								},
+								"sink": {
+									"name": "DASSYNUMBER104",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DASSYISSUEINDEX105",
+									"type": "String"
+								},
+								"sink": {
+									"name": "DASSYISSUEINDEX105",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DRAWINGSETNUMBER106",
+									"type": "String"
+								},
+								"sink": {
+									"name": "DRAWINGSETNUMBER106",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DRWSTISSUEINDEX107",
+									"type": "String"
+								},
+								"sink": {
+									"name": "DRWSTISSUEINDEX107",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CDATE108",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CDATE108",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "UDATE109",
+									"type": "String"
+								},
+								"sink": {
+									"name": "UDATE109",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DASSYNUMBER110",
+									"type": "String"
+								},
+								"sink": {
+									"name": "DASSYNUMBER110",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DASSYISSUEINDEX111",
+									"type": "String"
+								},
+								"sink": {
+									"name": "DASSYISSUEINDEX111",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "STDPTNUMBER112",
+									"type": "String"
+								},
+								"sink": {
+									"name": "STDPTNUMBER112",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CDATE113",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CDATE113",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "UDATE114",
+									"type": "String"
+								},
+								"sink": {
+									"name": "UDATE114",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "QUANTITY115",
+									"type": "String"
+								},
+								"sink": {
+									"name": "QUANTITY115",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ITEMNUMBER116",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ITEMNUMBER116",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ITEMNUMBERZONE117",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ITEMNUMBERZONE117",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ALTERNCODE118",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ALTERNCODE118",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "UNIT119",
+									"type": "String"
+								},
+								"sink": {
+									"name": "UNIT119",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "FSCM",
+									"type": "String"
+								},
+								"sink": {
+									"name": "FSCM",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "MATERIAL120",
+									"type": "String"
+								},
+								"sink": {
+									"name": "MATERIAL120",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CLASSIFICATION121",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CLASSIFICATION121",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "A_DDPTNUMBER",
+									"type": "String"
+								},
+								"sink": {
+									"name": "A_DDPTNUMBER",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "B_DASSYNUMBER122",
+									"type": "String"
+								},
+								"sink": {
+									"name": "B_DASSYNUMBER122",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CDATE123",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CDATE123",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "UDATE124",
+									"type": "String"
+								},
+								"sink": {
+									"name": "UDATE124",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ICYCODE125",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ICYCODE125",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ICYCONDITION126",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ICYCONDITION126",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ICYLINKTYPE127",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ICYLINKTYPE127",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "A_DDPTNUMBER128",
+									"type": "String"
+								},
+								"sink": {
+									"name": "A_DDPTNUMBER128",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "B_DDPTNUMBER129",
+									"type": "String"
+								},
+								"sink": {
+									"name": "B_DDPTNUMBER129",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CDATE130",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CDATE130",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "UDATE131",
+									"type": "String"
+								},
+								"sink": {
+									"name": "UDATE131",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ICYCODE132",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ICYCODE132",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ICYCONDITION133",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ICYCONDITION133",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ICYLINKTYPE134",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ICYLINKTYPE134",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DDPTNUMBER135",
+									"type": "String"
+								},
+								"sink": {
+									"name": "DDPTNUMBER135",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DDPTISSUEINDEX136",
+									"type": "String"
+								},
+								"sink": {
+									"name": "DDPTISSUEINDEX136",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DRAWINGSETNUMBER137",
+									"type": "String"
+								},
+								"sink": {
+									"name": "DRAWINGSETNUMBER137",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DRWSTISSUEINDEX138",
+									"type": "String"
+								},
+								"sink": {
+									"name": "DRWSTISSUEINDEX138",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CDATE139",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CDATE139",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "UDATE140",
+									"type": "String"
+								},
+								"sink": {
+									"name": "UDATE140",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DDPTNUMBER141",
+									"type": "String"
+								},
+								"sink": {
+									"name": "DDPTNUMBER141",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DDPTISSUEINDEX142",
+									"type": "String"
+								},
+								"sink": {
+									"name": "DDPTISSUEINDEX142",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "STDPTNUMBER143",
+									"type": "String"
+								},
+								"sink": {
+									"name": "STDPTNUMBER143",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CDATE144",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CDATE144",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "UDATE145",
+									"type": "String"
+								},
+								"sink": {
+									"name": "UDATE145",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "QUANTITY146",
+									"type": "String"
+								},
+								"sink": {
+									"name": "QUANTITY146",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ITEMNUMBER147",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ITEMNUMBER147",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ITEMNUMBERZONE148",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ITEMNUMBERZONE148",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "LENGTH",
+									"type": "String"
+								},
+								"sink": {
+									"name": "LENGTH",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "WIDTH",
+									"type": "String"
+								},
+								"sink": {
+									"name": "WIDTH",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "THICKNESSORDIAMETER",
+									"type": "String"
+								},
+								"sink": {
+									"name": "THICKNESSORDIAMETER",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "THICKNESS",
+									"type": "String"
+								},
+								"sink": {
+									"name": "THICKNESS",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DIAMETER",
+									"type": "String"
+								},
+								"sink": {
+									"name": "DIAMETER",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "UNIT149",
+									"type": "String"
+								},
+								"sink": {
+									"name": "UNIT149",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "FCSM150",
+									"type": "String"
+								},
+								"sink": {
+									"name": "FCSM150",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "MINUS151",
+									"type": "String"
+								},
+								"sink": {
+									"name": "MINUS151",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ALTERNCODE152",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ALTERNCODE152",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DRWSTNUMBER",
+									"type": "String"
+								},
+								"sink": {
+									"name": "DRWSTNUMBER",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DRWSTISSUE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "DRWSTISSUE",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DQNNUMBER",
+									"type": "String"
+								},
+								"sink": {
+									"name": "DQNNUMBER",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "IMPACTTYPE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "IMPACTTYPE",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CIN",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CIN",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ATACODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ATACODE",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CACODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CACODE",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "INTEGRATIONISSUE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "INTEGRATIONISSUE",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "MSN",
+									"type": "String"
+								},
+								"sink": {
+									"name": "MSN",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "IMPACTEDDS",
+									"type": "String"
+								},
+								"sink": {
+									"name": "IMPACTEDDS",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "IMPACTSTATUS",
+									"type": "String"
+								},
+								"sink": {
+									"name": "IMPACTSTATUS",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DRAWINGSETNUMBER153",
+									"type": "String"
+								},
+								"sink": {
+									"name": "DRAWINGSETNUMBER153",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DRWSTISSUEINDEX154",
+									"type": "String"
+								},
+								"sink": {
+									"name": "DRWSTISSUEINDEX154",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DRAWINGNUMBER",
+									"type": "String"
+								},
+								"sink": {
+									"name": "DRAWINGNUMBER",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DRWISSUEINDEX",
+									"type": "String"
+								},
+								"sink": {
+									"name": "DRWISSUEINDEX",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "REQUIREMENTID155",
+									"type": "String"
+								},
+								"sink": {
+									"name": "REQUIREMENTID155",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CINSTACK156",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CINSTACK156",
+									"type": "String"
+								}
+							}
+						]
+					}
 				},
+				"inputs": [
+					{
+						"referenceName": "CSV",
+						"type": "DatasetReference"
+					}
+				],
 				"outputs": [
 					{
 						"referenceName": "SqlServerTable1",
