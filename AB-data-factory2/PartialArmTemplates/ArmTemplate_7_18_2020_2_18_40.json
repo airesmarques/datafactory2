@@ -1,0 +1,122 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "AB-data-factory2"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/pipeline3_copy1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "ODASSY_FLOW",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "ODASSY",
+								"type": "DataFlowReference",
+								"datasetParameters": {
+									"ODASSYSINK": {
+										"tablename": "O_DASSY"
+									}
+								}
+							},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							}
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/ODASSY')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"tablename": {
+						"type": "string",
+						"defaultValue": "O_DASSY"
+					}
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "DBO",
+					"table": {
+						"value": "@dataset().tablename",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ODASSY')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"linkedService": {
+								"referenceName": "AzureBlobStorage1",
+								"type": "LinkedServiceReference"
+							},
+							"name": "ODASSY"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "AzureSqlTable1",
+								"type": "DatasetReference"
+							},
+							"name": "ODASSYSINK"
+						}
+					],
+					"transformations": [
+						{
+							"name": "Flatten1"
+						}
+					],
+					"script": "source(output(\n\t\tO as (DASSY as (row as (BESTMATURITYWEIGHT as double, BLANKCODE as string, BOUGHTOUTINDICATOR as boolean, CANCELLATION as boolean, CDATE as date, COMMENTS as string, CONSUMEROFTHEELEMENTCODE as string, CREATETIMESTAMP as date, DASSYISSUEINDEX as string, DASSYNUMBER as string, DEFEXPLOITATIONRESPONSIBLE as string, DESIGNSTATUS as string, DIRECTLINKTOEQ as boolean, DOMESTICTITLE as string, EFFECTIVEDATE as string, ENGLISHTITLE as string, FUNCTIONALCLASS as string, GENERALCODE as string, GEOGRAPHICALID as short, ICYNUMBER as string, ICYREFERENCE as string, IDENTIFIABLEPART as string, IDENTNUMBER as integer, INSTOCKIDENTICALPART as string, INTERCHANGEABILITYCODE as string, ITEMNUMBER as string, ITEMZONE as string, LOCATION as string, LOCK as boolean, LOCKINGRESPONSIBLE as string, LOGISTICCODE as string, MANUFACTURINGCODE as string, MANUFACTURINGRESPONSIBLE as string, MANUFINDEX as string, MARKING as string, MAXHEIGHT as string, MERFLAG as string, MODIFYTIMESTAMP as date, MORPHODIMENSIONALCODE as string, MORPHODIMENSIONALGROUP as string, NATCO as string, NATCOINDUS as string, NEEDDATE as string, NEGOCIATEDNEEDDATE as string, ORDINALNUMBER as string, PRODUCTIONTYPE as string, PROTECTIVETREATMENTCODE as string, SPAREITEM as boolean, SPECIALITYRESPONSIBLE as string, STATE as string, SURFACETYPE as string, TEAM_DISPLAY as string, TECHNOLOGICALCODE as string, UDATE as date, USEDASBLANK as boolean, USEDONDRAWING as string, VERSIONITERATION as string)[]))\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'xml',\n\tcontainer: 'blob01',\n\tfolderPath: 'airbus/AIRBUS-RUAG-20200622-A320-XML-EZ20181205003-1-1',\n\tfileName: 'O_DASSY.xml',\n\tvalidationMode: 'none',\n\tnamespaces: true) ~> ODASSY\nODASSY foldDown(unroll(O.DASSY.row, O.DASSY.row),\n\tmapColumn(\n\t\tBESTMATURITYWEIGHT = O.DASSY.row.BESTMATURITYWEIGHT,\n\t\tBLANKCODE = O.DASSY.row.BLANKCODE,\n\t\tBOUGHTOUTINDICATOR = O.DASSY.row.BOUGHTOUTINDICATOR,\n\t\tCANCELLATION = O.DASSY.row.CANCELLATION,\n\t\tCDATE = O.DASSY.row.CDATE,\n\t\tCOMMENTS = O.DASSY.row.COMMENTS,\n\t\tCONSUMEROFTHEELEMENTCODE = O.DASSY.row.CONSUMEROFTHEELEMENTCODE,\n\t\tCREATETIMESTAMP = O.DASSY.row.CREATETIMESTAMP,\n\t\tDASSYISSUEINDEX = O.DASSY.row.DASSYISSUEINDEX,\n\t\tDASSYNUMBER = O.DASSY.row.DASSYNUMBER,\n\t\tDEFEXPLOITATIONRESPONSIBLE = O.DASSY.row.DEFEXPLOITATIONRESPONSIBLE,\n\t\tDESIGNSTATUS = O.DASSY.row.DESIGNSTATUS,\n\t\tDIRECTLINKTOEQ = O.DASSY.row.DIRECTLINKTOEQ,\n\t\tDOMESTICTITLE = O.DASSY.row.DOMESTICTITLE,\n\t\tEFFECTIVEDATE = O.DASSY.row.EFFECTIVEDATE,\n\t\tENGLISHTITLE = O.DASSY.row.ENGLISHTITLE,\n\t\tFUNCTIONALCLASS = O.DASSY.row.FUNCTIONALCLASS,\n\t\tGENERALCODE = O.DASSY.row.GENERALCODE,\n\t\tGEOGRAPHICALID = O.DASSY.row.GEOGRAPHICALID,\n\t\tICYNUMBER = O.DASSY.row.ICYNUMBER,\n\t\tICYREFERENCE = O.DASSY.row.ICYREFERENCE,\n\t\tIDENTIFIABLEPART = O.DASSY.row.IDENTIFIABLEPART,\n\t\tIDENTNUMBER = O.DASSY.row.IDENTNUMBER,\n\t\tINSTOCKIDENTICALPART = O.DASSY.row.INSTOCKIDENTICALPART,\n\t\tINTERCHANGEABILITYCODE = O.DASSY.row.INTERCHANGEABILITYCODE,\n\t\tITEMNUMBER = O.DASSY.row.ITEMNUMBER,\n\t\tITEMZONE = O.DASSY.row.ITEMZONE,\n\t\tLOCATION = O.DASSY.row.LOCATION,\n\t\tLOCK = O.DASSY.row.LOCK,\n\t\tLOCKINGRESPONSIBLE = O.DASSY.row.LOCKINGRESPONSIBLE,\n\t\tLOGISTICCODE = O.DASSY.row.LOGISTICCODE,\n\t\tMANUFACTURINGCODE = O.DASSY.row.MANUFACTURINGCODE,\n\t\tMANUFACTURINGRESPONSIBLE = O.DASSY.row.MANUFACTURINGRESPONSIBLE,\n\t\tMANUFINDEX = O.DASSY.row.MANUFINDEX,\n\t\tMARKING = O.DASSY.row.MARKING,\n\t\tMAXHEIGHT = O.DASSY.row.MAXHEIGHT,\n\t\tMERFLAG = O.DASSY.row.MERFLAG,\n\t\tMODIFYTIMESTAMP = O.DASSY.row.MODIFYTIMESTAMP,\n\t\tMORPHODIMENSIONALCODE = O.DASSY.row.MORPHODIMENSIONALCODE,\n\t\tMORPHODIMENSIONALGROUP = O.DASSY.row.MORPHODIMENSIONALGROUP,\n\t\tNATCO = O.DASSY.row.NATCO,\n\t\tNATCOINDUS = O.DASSY.row.NATCOINDUS,\n\t\tNEEDDATE = O.DASSY.row.NEEDDATE,\n\t\tNEGOCIATEDNEEDDATE = O.DASSY.row.NEGOCIATEDNEEDDATE,\n\t\tORDINALNUMBER = O.DASSY.row.ORDINALNUMBER,\n\t\tPRODUCTIONTYPE = O.DASSY.row.PRODUCTIONTYPE,\n\t\tPROTECTIVETREATMENTCODE = O.DASSY.row.PROTECTIVETREATMENTCODE,\n\t\tSPAREITEM = O.DASSY.row.SPAREITEM,\n\t\tSPECIALITYRESPONSIBLE = O.DASSY.row.SPECIALITYRESPONSIBLE,\n\t\tSTATE = O.DASSY.row.STATE,\n\t\tSURFACETYPE = O.DASSY.row.SURFACETYPE,\n\t\tTEAM_DISPLAY = O.DASSY.row.TEAM_DISPLAY,\n\t\tTECHNOLOGICALCODE = O.DASSY.row.TECHNOLOGICALCODE,\n\t\tUDATE = O.DASSY.row.UDATE,\n\t\tUSEDASBLANK = O.DASSY.row.USEDASBLANK,\n\t\tUSEDONDRAWING = O.DASSY.row.USEDONDRAWING,\n\t\tVERSIONITERATION = O.DASSY.row.VERSIONITERATION\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> Flatten1\nFlatten1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table') ~> ODASSYSINK"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/AzureSqlTable1')]"
+			]
+		}
+	]
+}
