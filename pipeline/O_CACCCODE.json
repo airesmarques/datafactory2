@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "ODASSY_FLOW",
+				"name": "O_CACCCODE_FLOW",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -20,7 +20,7 @@
 						"type": "DataFlowReference",
 						"datasetParameters": {
 							"ODASSYSINK": {
-								"tablename": "O_DASSY"
+								"tablename": "O_CACCCODE"
 							}
 						}
 					},
