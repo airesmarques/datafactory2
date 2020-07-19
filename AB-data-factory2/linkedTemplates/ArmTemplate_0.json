@@ -2811,7 +2811,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/OCIN_FLOW')]",
+			"name": "[concat(parameters('factoryName'), '/OCIN_TEMP_FLOW')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -2887,7 +2887,89 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/pipeline3')]",
+			"name": "[concat(parameters('factoryName'), '/O_CACCCODE')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"linkedService": {
+								"referenceName": "AzureBlobStorage1",
+								"type": "LinkedServiceReference"
+							},
+							"name": "OCACCCODE"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "AzureSqlTable1",
+								"type": "DatasetReference"
+							},
+							"name": "OCACCCODESINK"
+						}
+					],
+					"transformations": [
+						{
+							"name": "Flatten1"
+						}
+					],
+					"script": "source(output(\n\t\tO as (CACODE as (row as (AIR as boolean, CACCCODE as string, CDATE as date, CITYPE as string, DELIVERYRESPONSIBLE as string, DESIGNATION as string, DESIGNRESPONSIBLE as string, EQPTINTEGRATED as boolean, GLOBALSC as string, GROUNDTEST as boolean, JAAFORM1 as string, MANUFACTURINGRESPONSIBLE as string, MODIFYTIMESTAMP as date, NATCO as string, PRODUCTIONRESPONSIBLE as string, SECTIONCODE as string, SUPERVISOR as string, TEAM_DISPLAY as string, UDATE as date)[]))\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'xml',\n\tcontainer: 'blob01',\n\tfolderPath: 'airbus/AIRBUS-RUAG-20200622-A320-XML-EZ20181205003-1-1',\n\tfileName: 'O_CACCCODE.xml',\n\tvalidationMode: 'none',\n\tnamespaces: true) ~> OCACCCODE\nOCACCCODE foldDown(unroll(O.CACODE.row, O.CACODE.row),\n\tmapColumn(\n\t\tAIR = O.CACODE.row.AIR,\n\t\tCACCCODE = O.CACODE.row.CACCCODE,\n\t\tCDATE = O.CACODE.row.CDATE,\n\t\tCITYPE = O.CACODE.row.CITYPE,\n\t\tDELIVERYRESPONSIBLE = O.CACODE.row.DELIVERYRESPONSIBLE,\n\t\tDESIGNATION = O.CACODE.row.DESIGNATION,\n\t\tDESIGNRESPONSIBLE = O.CACODE.row.DESIGNRESPONSIBLE,\n\t\tEQPTINTEGRATED = O.CACODE.row.EQPTINTEGRATED,\n\t\tGLOBALSC = O.CACODE.row.GLOBALSC,\n\t\tGROUNDTEST = O.CACODE.row.GROUNDTEST,\n\t\tJAAFORM1 = O.CACODE.row.JAAFORM1,\n\t\tMANUFACTURINGRESPONSIBLE = O.CACODE.row.MANUFACTURINGRESPONSIBLE,\n\t\tMODIFYTIMESTAMP = O.CACODE.row.MODIFYTIMESTAMP,\n\t\tNATCO = O.CACODE.row.NATCO,\n\t\tPRODUCTIONRESPONSIBLE = O.CACODE.row.PRODUCTIONRESPONSIBLE,\n\t\tSECTIONCODE = O.CACODE.row.SECTIONCODE,\n\t\tSUPERVISOR = O.CACODE.row.SUPERVISOR,\n\t\tTEAM_DISPLAY = O.CACODE.row.TEAM_DISPLAY,\n\t\tUDATE = O.CACODE.row.UDATE\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> Flatten1\nFlatten1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table') ~> OCACCCODESINK"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]",
+				"[concat(variables('factoryId'), '/datasets/AzureSqlTable1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/O_CACCCODE')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "O_CACCCODE_FLOW",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "ODASSY",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"ODASSY": {},
+									"ODASSYSINK": {
+										"tablename": "O_CACCCODE"
+									}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							}
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/ODASSY')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/O_CIN')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -2906,7 +2988,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"dataflow": {
-								"referenceName": "OCIN_FLOW",
+								"referenceName": "OCIN_TEMP_FLOW",
 								"type": "DataFlowReference",
 								"parameters": {},
 								"datasetParameters": {
@@ -2927,11 +3009,11 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/OCIN_FLOW')]"
+				"[concat(variables('factoryId'), '/dataflows/OCIN_TEMP_FLOW')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/pipeline3_copy1')]",
+			"name": "[concat(parameters('factoryName'), '/O_DASSY')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
