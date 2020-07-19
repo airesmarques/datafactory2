@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "OCIN_FLOW",
+						"referenceName": "OCIN_TEMP_FLOW",
 						"type": "DataFlowReference",
 						"datasetParameters": {
 							"OCINSINK": {
