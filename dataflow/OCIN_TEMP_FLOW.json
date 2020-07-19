@@ -1,5 +1,5 @@
 {
-	"name": "OCIN_FLOW",
+	"name": "OCIN_TEMP_FLOW",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
