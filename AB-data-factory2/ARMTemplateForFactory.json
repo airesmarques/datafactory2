@@ -2627,7 +2627,7 @@
 								"datasetParameters": {
 									"OCIN": {},
 									"OCINSINK": {
-										"tablename": "O_CIN"
+										"tablename": "O_CIN_TEMP"
 									}
 								}
 							},
