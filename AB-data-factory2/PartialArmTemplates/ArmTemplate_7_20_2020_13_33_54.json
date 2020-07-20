@@ -6,160 +6,12 @@
 			"type": "string",
 			"metadata": "Data Factory name",
 			"defaultValue": "AB-data-factory2"
-		},
-		"AzureBlobStorage1_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage1'"
-		},
-		"AzureSqlDatabase1_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase1'"
-		},
-		"AzureSqlMI1_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'AzureSqlMI1'"
-		},
-		"SqlServer1_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'SqlServer1'"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
-		{
-			"name": "[concat(parameters('factoryName'), '/O_CACCCODE')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "O_CACCCODE_FLOW",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "ODASSY",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"ODASSY": {},
-									"ODASSYSINK": {
-										"tablename": "O_CACCCODE"
-									}
-								}
-							},
-							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							}
-						}
-					}
-				],
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/ODASSY')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/O_CIN')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "OCIN_FLOW",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "OCIN_TEMP_FLOW",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"OCIN": {},
-									"OCINSINK": {
-										"tablename": "O_CIN_TEMP"
-									}
-								}
-							},
-							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							}
-						}
-					}
-				],
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/OCIN_TEMP_FLOW')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/O_DASSY')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "ODASSY_FLOW",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "ODASSY",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"ODASSY": {},
-									"ODASSYSINK": {
-										"tablename": "O_DASSY"
-									}
-								}
-							},
-							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							}
-						}
-					}
-				],
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/ODASSY')]"
-			]
-		},
 		{
 			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
@@ -2362,25 +2214,20 @@
 						"inputs": [
 							{
 								"referenceName": "CSV",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						],
 						"outputs": [
 							{
 								"referenceName": "SqlServerTable1",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						]
 					}
 				],
 				"annotations": []
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/CSV')]",
-				"[concat(variables('factoryId'), '/datasets/SqlServerTable1')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/AzureSqlTable1')]",
@@ -2405,187 +2252,6 @@
 						"value": "@dataset().tablename",
 						"type": "Expression"
 					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/CSV')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "Data selection.csv",
-						"folderPath": "airbus",
-						"container": "blob01"
-					},
-					"columnDelimiter": ";",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "ADAPCINUMBER;ADAPCILEGACYNUMBER;ADAPLONUMBER;ADAPLOLEGACYNUMBER;CDATE;UDATE;ADAPCINUMBER2;CINSTACK;ADAPCINUMBER3;REQUIREMENTID;ADAPDSNUMBER;ADAPDSISSUEINDEX;ADAPCINUMBER4;ADAPCILEGACYNUMBER5;CDATE6;UDATE7;QUANTITY;A_ADAPDSNUMBER;A_ADAPDSISSUEINDEX;B_ADAPDSNUMBER;CDATE8;UDATE9;QUANTITY10;ITEMNUMBER;ITEMNUMBERZONE;ALTERNCODE;UNIT;ADAPDSNUMBER11;ADAPDSISSUEINDEX12;DASSYNUMBER;DASSYISSUEINDEX;CDATE13;UDATE14;QUANTITY15;ITEMNUMBER16;ITEMNUMBERZONE17;ALTERNCODE18;UNIT19;ADAPDSNUMBER20;ADAPDSISSUEINDEX21;DDPTNUMBER;DDPTISSUEINDEX;CDATE22;UDATE23;QUANTITY24;ITEMNUMBER25;ALTERNCODE26;UNIT27;ADAPDSNUMBER28;ADAPDSISSUEINDEX29;DRAWINGSETNUMBER;DRWSTISSUEINDEX;CDATE30;UDATE31;ADAPDSNUMBER32;ADAPDSISSUEINDEX33;PNCADNUMBER;CDATE34;UDATE35;QUANTITY36;ITEMNUMBER37;ITEMNUMBERZONE38;ALTERNCODE39;UNIT40;ADAPDSNUMBER41;ADAPDSISSUEINDEX42;STDPTNUMBER;CDATE43;UDATE44;QUANTITY45;ITEMNUMBER46;ITEMNUMBERZONE47;ALTERNCODE48;UNIT49;FCSM;MATERIAL;CLASSIFICATION;ADAPLONUMBER50;ADAPLOLEGACYNUMBER51;ADAPDSNUMBER52;ADAPDSISSUEINDEX53;CDATE54;UDATE55;ADAPLONUMBER56;REQUIREMENTID57;CACCCODE;ADAPCINUMBER58;ADAPCILEGACYNUMBER59;CDATE60;UDATE61;CACCCODE62;DASSYNUMBER63;DASSYISSUEINDEX64;CDATE65;UDATE66;DASSYNUMBER67;DASSYISSUEINDEX68;ADAPCINUMBER69;CDATE70;UDATE71;QUANTITY72;ITEMNUMBER73;ITEMNUMBERZONE74;UNIT75;A_DASSYNUMBER;A_DASSYISSUEINDEX;B_DASSYNUMBER;B_DASSYISSUEINDEX;CDATE76;UDATE77;QUANTITY78;ITEMNUMBER79;ITEMNUMBERZONE80;ALTERNCODE81;UNIT82;A_DASSYNUMBER83;B_DASSYNUMBER84;CDATE85;UDATE86;ICYCODE;ICYCONDITION;ICYLINKTYPE;TEAM_O_DASSY_A;TEAM_O_DASSY_B;DASSYNUMBER87;DASSYISSUEINDEX88;DDPTNUMBER89;DDPTISSUEINDEX90;CDATE91;UDATE92;QUANTITY93;ITEMNUMBER94;ITEMNUMBERZONE95;ALTERNCODE96;MINUS;UNIT97;A_DASSYNUMBER98;B_DDPTNUMBER;CDATE99;UDATE100;ICYCODE101;ICYCONDITION102;ICYLINKTYPE103;DASSYNUMBER104;DASSYISSUEINDEX105;DRAWINGSETNUMBER106;DRWSTISSUEINDEX107;CDATE108;UDATE109;DASSYNUMBER110;DASSYISSUEINDEX111;STDPTNUMBER112;CDATE113;UDATE114;QUANTITY115;ITEMNUMBER116;ITEMNUMBERZONE117;ALTERNCODE118;UNIT119;FSCM;MATERIAL120;CLASSIFICATION121;A_DDPTNUMBER;B_DASSYNUMBER122;CDATE123;UDATE124;ICYCODE125;ICYCONDITION126;ICYLINKTYPE127;A_DDPTNUMBER128;B_DDPTNUMBER129;CDATE130;UDATE131;ICYCODE132;ICYCONDITION133;ICYLINKTYPE134;DDPTNUMBER135;DDPTISSUEINDEX136;DRAWINGSETNUMBER137;DRWSTISSUEINDEX138;CDATE139;UDATE140;DDPTNUMBER141;DDPTISSUEINDEX142;STDPTNUMBER143;CDATE144;UDATE145;QUANTITY146;ITEMNUMBER147;ITEMNUMBERZONE148;LENGTH;WIDTH;THICKNESSORDIAMETER;THICKNESS;DIAMETER;UNIT149;FCSM150;MINUS151;ALTERNCODE152;DRWSTNUMBER;DRWSTISSUE;DQNNUMBER;IMPACTTYPE;CIN;ATACODE;CACODE;INTEGRATIONISSUE;MSN;IMPACTEDDS;IMPACTSTATUS;DRAWINGSETNUMBER153;DRWSTISSUEINDEX154;DRAWINGNUMBER;DRWISSUEINDEX;REQUIREMENTID155;CINSTACK156",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/O_CIN')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Xml",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "O_CIN.xml",
-						"folderPath": "airbus/AIRBUS-RUAG-20200622-A320-XML-EZ20181205003-1-1",
-						"container": "blob01"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/O_MSN')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Xml",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "O_MSN.xml",
-						"folderPath": "airbus/AIRBUS-RUAG-20200622-A320-XML-EZ20181205003-1-1",
-						"container": "blob01"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SqlServerTable1')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "SqlServer1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "SqlServerTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "L_REL"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/SqlServer1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/XML_OCIN')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Xml",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "O_CIN.xml",
-						"folderPath": "airbus/AIRBUS-RUAG-20200622-A320-XML-EZ20181205003-1-1",
-						"container": "blob01"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureBlobStorage1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobStorage",
-				"typeProperties": {
-					"connectionString": "[parameters('AzureBlobStorage1_connectionString')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabase1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureSqlDatabase",
-				"typeProperties": {
-					"connectionString": "[parameters('AzureSqlDatabase1_connectionString')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureSqlMI1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureSqlMI",
-				"typeProperties": {
-					"connectionString": "[parameters('AzureSqlMI1_connectionString')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SqlServer1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "SqlServer",
-				"typeProperties": {
-					"connectionString": "[parameters('SqlServer1_connectionString')]"
 				}
 			},
 			"dependsOn": []
@@ -2624,7 +2290,6 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]",
 				"[concat(variables('factoryId'), '/datasets/AzureSqlTable1')]"
 			]
 		},
@@ -2672,121 +2337,6 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]",
-				"[concat(variables('factoryId'), '/datasets/AzureSqlTable1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/OCIN_TEMP_FLOW')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"linkedService": {
-								"referenceName": "AzureBlobStorage1",
-								"type": "LinkedServiceReference"
-							},
-							"name": "OCIN"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "AzureSqlTable1",
-								"type": "DatasetReference"
-							},
-							"name": "OCINSINK"
-						}
-					],
-					"transformations": [
-						{
-							"name": "Flatten1"
-						}
-					],
-					"script": "source(output(\n\t\tO as (CIN as (row as (CATEGORY as string, CIN as string, CONFIGSETNAME as string, INDUSSTDCODE as string, MODNUMBER as integer, MODTITLE as string, MPNUMBER as string, MPTITLE as string, RANGE as string, STDCODE as string, TEAM_DISPLAY as string, VALIDITYTYPE as string, VALIDITYUPDATEDATE as date, VERSIONCODE as string)[]))\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'xml',\n\tcontainer: 'blob01',\n\tfolderPath: 'airbus/AIRBUS-RUAG-20200622-A320-XML-EZ20181205003-1-1',\n\tfileName: 'O_CIN.xml',\n\tvalidationMode: 'none',\n\tnamespaces: true) ~> OCIN\nOCIN foldDown(unroll(O.CIN.row, O.CIN.row),\n\tmapColumn(\n\t\tCATEGORY = O.CIN.row.CATEGORY,\n\t\tCIN = O.CIN.row.CIN,\n\t\tCONFIGSETNAME = O.CIN.row.CONFIGSETNAME,\n\t\tINDUSSTDCODE = O.CIN.row.INDUSSTDCODE,\n\t\tMODNUMBER = O.CIN.row.MODNUMBER,\n\t\tMODTITLE = O.CIN.row.MODTITLE,\n\t\tMPNUMBER = O.CIN.row.MPNUMBER,\n\t\tMPTITLE = O.CIN.row.MPTITLE,\n\t\tRANGE = O.CIN.row.RANGE,\n\t\tSTDCODE = O.CIN.row.STDCODE,\n\t\tTEAM_DISPLAY = O.CIN.row.TEAM_DISPLAY,\n\t\tVALIDITYTYPE = O.CIN.row.VALIDITYTYPE,\n\t\tVALIDITYUPDATEDATE = O.CIN.row.VALIDITYUPDATEDATE,\n\t\tVERSIONCODE = O.CIN.row.VERSIONCODE\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> Flatten1\nFlatten1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table',\n\tmapColumn(\n\t\tCATEGORY,\n\t\tCIN,\n\t\tCONFIGSETNAME,\n\t\tINDUSSTDCODE,\n\t\tMODNUMBER,\n\t\tMODTITLE,\n\t\tMPNUMBER,\n\t\tMPTITLE,\n\t\tRANGE,\n\t\tSTDCODE,\n\t\tTEAM_DISPLAY,\n\t\tVALIDITYTYPE,\n\t\tVALIDITYUPDATEDATE,\n\t\tVERSIONCODE\n\t)) ~> OCINSINK"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]",
-				"[concat(variables('factoryId'), '/datasets/AzureSqlTable1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ODASSY')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"linkedService": {
-								"referenceName": "AzureBlobStorage1",
-								"type": "LinkedServiceReference"
-							},
-							"name": "ODASSY"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "AzureSqlTable1",
-								"type": "DatasetReference"
-							},
-							"name": "ODASSYSINK"
-						}
-					],
-					"transformations": [
-						{
-							"name": "Flatten1"
-						}
-					],
-					"script": "source(output(\n\t\tO as (DASSY as (row as (BESTMATURITYWEIGHT as double, BLANKCODE as string, BOUGHTOUTINDICATOR as boolean, CANCELLATION as boolean, CDATE as date, COMMENTS as string, CONSUMEROFTHEELEMENTCODE as string, CREATETIMESTAMP as date, DASSYISSUEINDEX as string, DASSYNUMBER as string, DEFEXPLOITATIONRESPONSIBLE as string, DESIGNSTATUS as string, DIRECTLINKTOEQ as boolean, DOMESTICTITLE as string, EFFECTIVEDATE as string, ENGLISHTITLE as string, FUNCTIONALCLASS as string, GENERALCODE as string, GEOGRAPHICALID as short, ICYNUMBER as string, ICYREFERENCE as string, IDENTIFIABLEPART as string, IDENTNUMBER as integer, INSTOCKIDENTICALPART as string, INTERCHANGEABILITYCODE as string, ITEMNUMBER as string, ITEMZONE as string, LOCATION as string, LOCK as boolean, LOCKINGRESPONSIBLE as string, LOGISTICCODE as string, MANUFACTURINGCODE as string, MANUFACTURINGRESPONSIBLE as string, MANUFINDEX as string, MARKING as string, MAXHEIGHT as string, MERFLAG as string, MODIFYTIMESTAMP as date, MORPHODIMENSIONALCODE as string, MORPHODIMENSIONALGROUP as string, NATCO as string, NATCOINDUS as string, NEEDDATE as string, NEGOCIATEDNEEDDATE as string, ORDINALNUMBER as string, PRODUCTIONTYPE as string, PROTECTIVETREATMENTCODE as string, SPAREITEM as boolean, SPECIALITYRESPONSIBLE as string, STATE as string, SURFACETYPE as string, TEAM_DISPLAY as string, TECHNOLOGICALCODE as string, UDATE as date, USEDASBLANK as boolean, USEDONDRAWING as string, VERSIONITERATION as string)[]))\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'xml',\n\tcontainer: 'blob01',\n\tfolderPath: 'airbus/AIRBUS-RUAG-20200622-A320-XML-EZ20181205003-1-1',\n\tfileName: 'O_DASSY.xml',\n\tvalidationMode: 'none',\n\tnamespaces: true) ~> ODASSY\nODASSY foldDown(unroll(O.DASSY.row, O.DASSY.row),\n\tmapColumn(\n\t\tBESTMATURITYWEIGHT = O.DASSY.row.BESTMATURITYWEIGHT,\n\t\tBLANKCODE = O.DASSY.row.BLANKCODE,\n\t\tBOUGHTOUTINDICATOR = O.DASSY.row.BOUGHTOUTINDICATOR,\n\t\tCANCELLATION = O.DASSY.row.CANCELLATION,\n\t\tCDATE = O.DASSY.row.CDATE,\n\t\tCOMMENTS = O.DASSY.row.COMMENTS,\n\t\tCONSUMEROFTHEELEMENTCODE = O.DASSY.row.CONSUMEROFTHEELEMENTCODE,\n\t\tCREATETIMESTAMP = O.DASSY.row.CREATETIMESTAMP,\n\t\tDASSYISSUEINDEX = O.DASSY.row.DASSYISSUEINDEX,\n\t\tDASSYNUMBER = O.DASSY.row.DASSYNUMBER,\n\t\tDEFEXPLOITATIONRESPONSIBLE = O.DASSY.row.DEFEXPLOITATIONRESPONSIBLE,\n\t\tDESIGNSTATUS = O.DASSY.row.DESIGNSTATUS,\n\t\tDIRECTLINKTOEQ = O.DASSY.row.DIRECTLINKTOEQ,\n\t\tDOMESTICTITLE = O.DASSY.row.DOMESTICTITLE,\n\t\tEFFECTIVEDATE = O.DASSY.row.EFFECTIVEDATE,\n\t\tENGLISHTITLE = O.DASSY.row.ENGLISHTITLE,\n\t\tFUNCTIONALCLASS = O.DASSY.row.FUNCTIONALCLASS,\n\t\tGENERALCODE = O.DASSY.row.GENERALCODE,\n\t\tGEOGRAPHICALID = O.DASSY.row.GEOGRAPHICALID,\n\t\tICYNUMBER = O.DASSY.row.ICYNUMBER,\n\t\tICYREFERENCE = O.DASSY.row.ICYREFERENCE,\n\t\tIDENTIFIABLEPART = O.DASSY.row.IDENTIFIABLEPART,\n\t\tIDENTNUMBER = O.DASSY.row.IDENTNUMBER,\n\t\tINSTOCKIDENTICALPART = O.DASSY.row.INSTOCKIDENTICALPART,\n\t\tINTERCHANGEABILITYCODE = O.DASSY.row.INTERCHANGEABILITYCODE,\n\t\tITEMNUMBER = O.DASSY.row.ITEMNUMBER,\n\t\tITEMZONE = O.DASSY.row.ITEMZONE,\n\t\tLOCATION = O.DASSY.row.LOCATION,\n\t\tLOCK = O.DASSY.row.LOCK,\n\t\tLOCKINGRESPONSIBLE = O.DASSY.row.LOCKINGRESPONSIBLE,\n\t\tLOGISTICCODE = O.DASSY.row.LOGISTICCODE,\n\t\tMANUFACTURINGCODE = O.DASSY.row.MANUFACTURINGCODE,\n\t\tMANUFACTURINGRESPONSIBLE = O.DASSY.row.MANUFACTURINGRESPONSIBLE,\n\t\tMANUFINDEX = O.DASSY.row.MANUFINDEX,\n\t\tMARKING = O.DASSY.row.MARKING,\n\t\tMAXHEIGHT = O.DASSY.row.MAXHEIGHT,\n\t\tMERFLAG = O.DASSY.row.MERFLAG,\n\t\tMODIFYTIMESTAMP = O.DASSY.row.MODIFYTIMESTAMP,\n\t\tMORPHODIMENSIONALCODE = O.DASSY.row.MORPHODIMENSIONALCODE,\n\t\tMORPHODIMENSIONALGROUP = O.DASSY.row.MORPHODIMENSIONALGROUP,\n\t\tNATCO = O.DASSY.row.NATCO,\n\t\tNATCOINDUS = O.DASSY.row.NATCOINDUS,\n\t\tNEEDDATE = O.DASSY.row.NEEDDATE,\n\t\tNEGOCIATEDNEEDDATE = O.DASSY.row.NEGOCIATEDNEEDDATE,\n\t\tORDINALNUMBER = O.DASSY.row.ORDINALNUMBER,\n\t\tPRODUCTIONTYPE = O.DASSY.row.PRODUCTIONTYPE,\n\t\tPROTECTIVETREATMENTCODE = O.DASSY.row.PROTECTIVETREATMENTCODE,\n\t\tSPAREITEM = O.DASSY.row.SPAREITEM,\n\t\tSPECIALITYRESPONSIBLE = O.DASSY.row.SPECIALITYRESPONSIBLE,\n\t\tSTATE = O.DASSY.row.STATE,\n\t\tSURFACETYPE = O.DASSY.row.SURFACETYPE,\n\t\tTEAM_DISPLAY = O.DASSY.row.TEAM_DISPLAY,\n\t\tTECHNOLOGICALCODE = O.DASSY.row.TECHNOLOGICALCODE,\n\t\tUDATE = O.DASSY.row.UDATE,\n\t\tUSEDASBLANK = O.DASSY.row.USEDASBLANK,\n\t\tUSEDONDRAWING = O.DASSY.row.USEDONDRAWING,\n\t\tVERSIONITERATION = O.DASSY.row.VERSIONITERATION\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> Flatten1\nFlatten1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table') ~> ODASSYSINK"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]",
-				"[concat(variables('factoryId'), '/datasets/AzureSqlTable1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/O_CACCCODE')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"linkedService": {
-								"referenceName": "AzureBlobStorage1",
-								"type": "LinkedServiceReference"
-							},
-							"name": "OCACCCODE"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "AzureSqlTable1",
-								"type": "DatasetReference"
-							},
-							"name": "OCACCCODESINK"
-						}
-					],
-					"transformations": [
-						{
-							"name": "Flatten1"
-						}
-					],
-					"script": "source(output(\n\t\tO as (CACODE as (row as (AIR as boolean, CACCCODE as string, CDATE as date, CITYPE as string, DELIVERYRESPONSIBLE as string, DESIGNATION as string, DESIGNRESPONSIBLE as string, EQPTINTEGRATED as boolean, GLOBALSC as string, GROUNDTEST as boolean, JAAFORM1 as string, MANUFACTURINGRESPONSIBLE as string, MODIFYTIMESTAMP as date, NATCO as string, PRODUCTIONRESPONSIBLE as string, SECTIONCODE as string, SUPERVISOR as string, TEAM_DISPLAY as string, UDATE as date)[]))\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'xml',\n\tcontainer: 'blob01',\n\tfolderPath: 'airbus/AIRBUS-RUAG-20200622-A320-XML-EZ20181205003-1-1',\n\tfileName: 'O_CACCCODE.xml',\n\tvalidationMode: 'none',\n\tnamespaces: true) ~> OCACCCODE\nOCACCCODE foldDown(unroll(O.CACODE.row, O.CACODE.row),\n\tmapColumn(\n\t\tAIR = O.CACODE.row.AIR,\n\t\tCACCCODE = O.CACODE.row.CACCCODE,\n\t\tCDATE = O.CACODE.row.CDATE,\n\t\tCITYPE = O.CACODE.row.CITYPE,\n\t\tDELIVERYRESPONSIBLE = O.CACODE.row.DELIVERYRESPONSIBLE,\n\t\tDESIGNATION = O.CACODE.row.DESIGNATION,\n\t\tDESIGNRESPONSIBLE = O.CACODE.row.DESIGNRESPONSIBLE,\n\t\tEQPTINTEGRATED = O.CACODE.row.EQPTINTEGRATED,\n\t\tGLOBALSC = O.CACODE.row.GLOBALSC,\n\t\tGROUNDTEST = O.CACODE.row.GROUNDTEST,\n\t\tJAAFORM1 = O.CACODE.row.JAAFORM1,\n\t\tMANUFACTURINGRESPONSIBLE = O.CACODE.row.MANUFACTURINGRESPONSIBLE,\n\t\tMODIFYTIMESTAMP = O.CACODE.row.MODIFYTIMESTAMP,\n\t\tNATCO = O.CACODE.row.NATCO,\n\t\tPRODUCTIONRESPONSIBLE = O.CACODE.row.PRODUCTIONRESPONSIBLE,\n\t\tSECTIONCODE = O.CACODE.row.SECTIONCODE,\n\t\tSUPERVISOR = O.CACODE.row.SUPERVISOR,\n\t\tTEAM_DISPLAY = O.CACODE.row.TEAM_DISPLAY,\n\t\tUDATE = O.CACODE.row.UDATE\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> Flatten1\nFlatten1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table') ~> OCACCCODESINK"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]",
 				"[concat(variables('factoryId'), '/datasets/AzureSqlTable1')]"
 			]
 		},
@@ -2812,15 +2362,12 @@
 							"dataflow": {
 								"referenceName": "A_IXOFFEFF",
 								"type": "DataFlowReference",
-								"parameters": {},
 								"datasetParameters": {
-									"AIXOFFEFF": {},
 									"AIXOFFEFFSINK": {
 										"tablename": "A_IXOFFEFF"
 									}
 								}
 							},
-							"staging": {},
 							"compute": {
 								"coreCount": 8,
 								"computeType": "General"
