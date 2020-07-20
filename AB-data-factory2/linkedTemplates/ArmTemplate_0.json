@@ -237,7 +237,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
+			"name": "[concat(parameters('factoryName'), '/L_REL')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -2816,7 +2816,7 @@
 								"datasetParameters": {
 									"AIXOFFEFF": {},
 									"AIXOFFEFFSINK": {
-										"tablename": "A_IXOFFEFF"
+										"tablename": "A_IXOFFEFF_TEMP"
 									}
 								}
 							},
