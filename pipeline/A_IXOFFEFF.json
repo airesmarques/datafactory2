@@ -20,7 +20,7 @@
 						"type": "DataFlowReference",
 						"datasetParameters": {
 							"AIXOFFEFFSINK": {
-								"tablename": "A_IXOFFEFF"
+								"tablename": "A_IXOFFEFF_TEMP"
 							}
 						}
 					},
