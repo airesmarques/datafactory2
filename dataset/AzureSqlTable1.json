@@ -8,7 +8,7 @@
 		"parameters": {
 			"tablename": {
 				"type": "string",
-				"defaultValue": "L_REL_ADAPCI-ADAPLO"
+				"defaultValue": "L_REL_ADAPCI-CIN"
 			}
 		},
 		"annotations": [],
