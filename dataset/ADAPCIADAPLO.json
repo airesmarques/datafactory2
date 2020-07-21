@@ -1,5 +1,5 @@
 {
-	"name": "ADAPCICIN",
+	"name": "ADAPCIADAPLO",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureSqlDatabase1",
@@ -8,7 +8,7 @@
 		"parameters": {
 			"tablename": {
 				"type": "string",
-				"defaultValue": "R_ADAPCI_CIN"
+				"defaultValue": "R_ADAPCI_ADAPLO"
 			}
 		},
 		"annotations": [],

@@ -15,21 +15,21 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "AzureSqlTable1",
+						"referenceName": "ADAPCIADAPLO",
 						"type": "DatasetReference"
 					},
 					"name": "SADAPCIADAPLO"
 				},
 				{
 					"dataset": {
-						"referenceName": "AzureSqlTable1",
+						"referenceName": "ADAPCICIN",
 						"type": "DatasetReference"
 					},
 					"name": "SADAPCICIN"
 				},
 				{
 					"dataset": {
-						"referenceName": "AzureSqlTable1",
+						"referenceName": "CACODEDASSY",
 						"type": "DatasetReference"
 					},
 					"name": "SCACODEDASSY"
