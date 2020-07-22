@@ -8,7 +8,7 @@
 		"parameters": {
 			"tablename": {
 				"type": "string",
-				"defaultValue": "R_CIN_ADAPCI"
+				"defaultValue": "R_CIN_ADAPCI_TEMP"
 			}
 		},
 		"annotations": [],
