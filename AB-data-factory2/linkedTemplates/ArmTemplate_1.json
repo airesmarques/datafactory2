@@ -166,7 +166,7 @@
 									"SADAPCIADAPLO": {
 										"tablename": "R_ADAPCI_ADAPLO"
 									},
-									"SADAPCICIN": {
+									"SCIN2ADAPCI": {
 										"tablename": "R_ADAPCI_CIN_TEMP"
 									},
 									"SCACODEDASSY": {
