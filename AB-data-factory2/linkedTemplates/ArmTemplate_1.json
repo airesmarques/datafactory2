@@ -116,12 +116,20 @@
 						"userProperties": [],
 						"typeProperties": {
 							"dataflow": {
-								"referenceName": "OCIN_TEMP_FLOW",
+								"referenceName": "L_REL_FLOW",
 								"type": "DataFlowReference",
 								"parameters": {},
 								"datasetParameters": {
-									"OCIN": {},
-									"OCINSINK": {}
+									"LREL": {},
+									"SADAPCIADAPLO": {
+										"tablename": "R_ADAPCI_ADAPLO"
+									},
+									"SADAPCICIN": {
+										"tablename": "R_ADAPCI_CIN"
+									},
+									"SCACODEDASSY": {
+										"tablename": "R_CACODE_DASSY"
+									}
 								}
 							},
 							"staging": {},
