@@ -167,12 +167,14 @@
 										"tablename": "R_ADAPCI_ADAPLO"
 									},
 									"SADAPCICIN": {
-										"tablename": "R_ADAPCI_CIN"
+										"tablename": "R_ADAPCI_CIN_TEMP"
 									},
 									"SCACODEDASSY": {
 										"tablename": "R_CACODE_DASSY"
 									},
-									"SADSPDS2ADAPCI": {}
+									"SADSPDS2ADAPCI": {
+										"tablename": "R_ADAPDS_ADAPCI"
+									}
 								}
 							},
 							"staging": {},
