@@ -19,17 +19,8 @@
 						"referenceName": "L_REL_FLOW",
 						"type": "DataFlowReference",
 						"datasetParameters": {
-							"SADAPCIADAPLO": {
-								"tablename": "R_ADAPCI_ADAPLO"
-							},
-							"SADAPCICIN": {
-								"tablename": "R_ADAPCI_CIN_TEMP"
-							},
 							"SCACODEDASSY": {
 								"tablename": "R_CACODE_DASSY"
-							},
-							"SADSPDS2ADAPCI": {
-								"tablename": "R_ADAPDS_ADAPCI"
 							}
 						}
 					},
