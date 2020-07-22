@@ -27,6 +27,9 @@
 							},
 							"SCACODEDASSY": {
 								"tablename": "R_CACODE_DASSY"
+							},
+							"SADSPDS2ADAPCI": {
+								"tablename": "R_ADAPDS_ADAPCI"
 							}
 						}
 					},
