@@ -36,6 +36,9 @@
 							},
 							"SADAPDS2DRWST": {
 								"tablename": "R_ADAPDS_DRWST"
+							},
+							"SCACODE2CIN": {
+								"tablename": "R_CACODE_CIN"
 							}
 						}
 					},
