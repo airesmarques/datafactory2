@@ -1,5 +1,5 @@
 {
-	"name": "O_MSN",
+	"name": "OMSN",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureBlobStorage1",
