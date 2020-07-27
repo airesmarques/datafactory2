@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "L_REL_FLOW",
+						"referenceName": "L_REL_FLOW_copy1",
 						"type": "DataFlowReference",
 						"datasetParameters": {
 							"SADAPCI2ADAPLO": {
@@ -37,8 +37,8 @@
 							"SADAPDS2DRWST": {
 								"tablename": "R_ADAPDS_DRWST"
 							},
-							"SCACODE2CIN": {
-								"tablename": "R_CACODE_CIN"
+							"SCACODE2ADAPCI": {
+								"tablename": "R_CACODE_ADAPCI"
 							}
 						}
 					},
