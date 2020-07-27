@@ -1,0 +1,28 @@
+{
+	"name": "O_DRWST_FLOW",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"linkedService": {
+						"referenceName": "AzureBlobStorage1",
+						"type": "LinkedServiceReference"
+					},
+					"name": "ODRWST"
+				}
+			],
+			"sinks": [
+				{
+					"name": "ODRWSTSINK"
+				}
+			],
+			"transformations": [
+				{
+					"name": "Flatten1"
+				}
+			],
+			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'xml',\n\tcontainer: 'blob01',\n\tfolderPath: 'airbus/AIRBUS-RUAG-20200622-A320-XML-EZ20181205003-1-1',\n\tfileName: 'O_DRWST.xml',\n\tvalidationMode: 'none',\n\tnamespaces: true) ~> ODRWST\nODRWST foldDown(unroll(A.IXOFFEFF.row, A.IXOFFEFF.row),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> Flatten1\nFlatten1 sink(mapColumn(\n\t\tCDATE,\n\t\tCOCODE,\n\t\tEFFTYPE,\n\t\tINDUSSTDCODE,\n\t\tLOLEGACYNUMBER,\n\t\tLONUMBER,\n\t\tLOTYPE,\n\t\tRANGE,\n\t\tSTDCODE,\n\t\tUDATE,\n\t\tVERSIONCODE\n\t)) ~> ODRWSTSINK"
+		}
+	}
+}
