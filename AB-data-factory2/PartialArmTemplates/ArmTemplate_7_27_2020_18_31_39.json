@@ -1,0 +1,51 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "AB-data-factory2"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/O_DRWST_FLOW')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"linkedService": {
+								"referenceName": "AzureBlobStorage1",
+								"type": "LinkedServiceReference"
+							},
+							"name": "ODRWST"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "O_DRWST",
+								"type": "DatasetReference"
+							},
+							"name": "ODRWSTSINK"
+						}
+					],
+					"transformations": [
+						{
+							"name": "Flatten1"
+						}
+					],
+					"script": "source(output(\n\t\tO as (DRWST as (row as (CANCELLATIONINDEX as boolean, CDATE as date, CIRCUITID as string, CREATETIMESTAMP as date, DESIGNOFFICECODE as string, DOMESTICTITLE as string, DRAWINGSETNUMBER as string, DRWSTISSUEINDEX as string, ENGLISHTITLE as string, GEOGRAPHICALID as short, LEGACY_STATUS as string, LOCATION as string, MODIFYTIMESTAMP as date, NATCO as string, RESPONSABLEID as string, STATUS as string, TEAM_DISPLAY as string, TEAM_RESTRICT as string, UDATE as date, VERSIONITERATION as string)[]))\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\trowUrlColumn: 'file',\n\tpartitionRootPath: 'airbus',\n\tformat: 'xml',\n\tcontainer: 'blob01',\n\tvalidationMode: 'none',\n\tnamespaces: true,\n\twildcardPaths:['airbus/**/O_DRWST.xml']) ~> ODRWST\nODRWST foldDown(unroll(O.DRWST.row, O.DRWST.row),\n\tmapColumn(\n\t\tCANCELLATIONINDEX = O.DRWST.row.CANCELLATIONINDEX,\n\t\tCDATE = O.DRWST.row.CDATE,\n\t\tCIRCUITID = O.DRWST.row.CIRCUITID,\n\t\tCREATETIMESTAMP = O.DRWST.row.CREATETIMESTAMP,\n\t\tDESIGNOFFICECODE = O.DRWST.row.DESIGNOFFICECODE,\n\t\tDOMESTICTITLE = O.DRWST.row.DOMESTICTITLE,\n\t\tDRAWINGSETNUMBER = O.DRWST.row.DRAWINGSETNUMBER,\n\t\tDRWSTISSUEINDEX = O.DRWST.row.DRWSTISSUEINDEX,\n\t\tENGLISHTITLE = O.DRWST.row.ENGLISHTITLE,\n\t\tGEOGRAPHICALID = O.DRWST.row.GEOGRAPHICALID,\n\t\tLEGACY_STATUS = O.DRWST.row.LEGACY_STATUS,\n\t\tLOCATION = O.DRWST.row.LOCATION,\n\t\tMODIFYTIMESTAMP = O.DRWST.row.MODIFYTIMESTAMP,\n\t\tNATCO = O.DRWST.row.NATCO,\n\t\tRESPONSABLEID = O.DRWST.row.RESPONSABLEID,\n\t\tSTATUS = O.DRWST.row.STATUS,\n\t\tTEAM_DISPLAY = O.DRWST.row.TEAM_DISPLAY,\n\t\tTEAM_RESTRICT = O.DRWST.row.TEAM_RESTRICT,\n\t\tUDATE = O.DRWST.row.UDATE,\n\t\tVERSIONITERATION = O.DRWST.row.VERSIONITERATION\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> Flatten1\nFlatten1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table',\n\tmapColumn(\n\t\tCANCELLATIONINDEX,\n\t\tCDATE,\n\t\tCIRCUITID,\n\t\tCREATETIMESTAMP,\n\t\tDESIGNOFFICECODE,\n\t\tDOMESTICTITLE,\n\t\tDRAWINGSETNUMBER,\n\t\tDRWSTISSUEINDEX,\n\t\tENGLISHTITLE,\n\t\tGEOGRAPHICALID,\n\t\tLEGACY_STATUS,\n\t\tLOCATION,\n\t\tMODIFYTIMESTAMP,\n\t\tNATCO,\n\t\tRESPONSABLEID,\n\t\tSTATUS,\n\t\tTEAM_DISPLAY,\n\t\tTEAM_RESTRICT,\n\t\tUDATE,\n\t\tVERSIONITERATION\n\t)) ~> ODRWSTSINK"
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
