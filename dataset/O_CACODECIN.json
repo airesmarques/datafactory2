@@ -8,7 +8,7 @@
 		"parameters": {
 			"tablename": {
 				"type": "string",
-				"defaultValue": "R_CACODE_CIN"
+				"defaultValue": "R_CACODE_ADAPCI"
 			}
 		},
 		"annotations": [],
