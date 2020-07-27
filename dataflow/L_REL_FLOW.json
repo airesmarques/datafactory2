@@ -15,49 +15,49 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "ADAPCIADAPLO",
+						"referenceName": "R_ADAPCI_ADAPLO",
 						"type": "DatasetReference"
 					},
 					"name": "SADAPCI2ADAPLO"
 				},
 				{
 					"dataset": {
-						"referenceName": "ADAPCICIN",
+						"referenceName": "R_ADAPCI_CIN",
 						"type": "DatasetReference"
 					},
 					"name": "SCIN2ADAPCI"
 				},
 				{
 					"dataset": {
-						"referenceName": "CACODEDASSY",
+						"referenceName": "R_CACODE_DASSY",
 						"type": "DatasetReference"
 					},
 					"name": "SCACODEDASSY"
 				},
 				{
 					"dataset": {
-						"referenceName": "ADAPDSADAPCI",
+						"referenceName": "R_ADAPDS_ADAPCI",
 						"type": "DatasetReference"
 					},
 					"name": "SADAPPDS2ADAPCI"
 				},
 				{
 					"dataset": {
-						"referenceName": "ADAPLOADAPDS",
+						"referenceName": "R_ADAPLO_ADAPDS",
 						"type": "DatasetReference"
 					},
 					"name": "SADAPLO2ADAPDS"
 				},
 				{
 					"dataset": {
-						"referenceName": "ADAPDSDRWST",
+						"referenceName": "R_ADAPDS_DRWST",
 						"type": "DatasetReference"
 					},
 					"name": "SADAPDS2DRWST"
 				},
 				{
 					"dataset": {
-						"referenceName": "O_CACODECIN",
+						"referenceName": "O_CACCODE",
 						"type": "DatasetReference"
 					},
 					"name": "SCACODE2CIN"

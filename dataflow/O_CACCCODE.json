@@ -15,7 +15,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "ADAPCICIN",
+						"referenceName": "O_CACCODE",
 						"type": "DatasetReference"
 					},
 					"name": "OCACCCODESINK"

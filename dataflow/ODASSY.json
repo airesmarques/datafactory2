@@ -15,7 +15,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "ADAPCICIN",
+						"referenceName": "R_ADAPCI_CIN",
 						"type": "DatasetReference"
 					},
 					"name": "ODASSYSINK"

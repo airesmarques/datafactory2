@@ -16,10 +16,10 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "ODASSY",
+						"referenceName": "O_CACCCODE",
 						"type": "DataFlowReference",
 						"datasetParameters": {
-							"ODASSYSINK": {
+							"OCACCCODESINK": {
 								"tablename": "O_CACCCODE"
 							}
 						}

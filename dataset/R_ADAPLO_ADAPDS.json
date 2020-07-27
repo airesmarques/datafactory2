@@ -1,5 +1,5 @@
 {
-	"name": "ADAPLOADAPDS",
+	"name": "R_ADAPLO_ADAPDS",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureSqlDatabase1",

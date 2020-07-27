@@ -1,5 +1,5 @@
 {
-	"name": "CACODEDASSY",
+	"name": "R_CACODE_DASSY",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureSqlDatabase1",

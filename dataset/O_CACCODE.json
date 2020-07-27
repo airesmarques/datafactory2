@@ -1,5 +1,5 @@
 {
-	"name": "O_CACODECIN",
+	"name": "O_CACCODE",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureSqlDatabase1",
@@ -8,7 +8,7 @@
 		"parameters": {
 			"tablename": {
 				"type": "string",
-				"defaultValue": "R_CACODE_ADAPCI"
+				"defaultValue": "O_CACCCODE"
 			}
 		},
 		"annotations": [],

@@ -1,0 +1,54 @@
+{
+	"name": "L_REL_ALL_copy1",
+	"properties": {
+		"activities": [
+			{
+				"name": "L_REL_ALL",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "L_REL_FLOW",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"SADAPCI2ADAPLO": {
+								"tablename": "R_ADAPCI_ADAPLO"
+							},
+							"SCIN2ADAPCI": {
+								"tablename": "R_CIN_ADAPCI_TEMP"
+							},
+							"SCACODEDASSY": {
+								"tablename": "R_CACODE_DASSY"
+							},
+							"SADAPPDS2ADAPCI": {
+								"tablename": "R_ADAPDS_ADAPCI"
+							},
+							"SADAPLO2ADAPDS": {
+								"tablename": "R_ADAPLO_ADAPDS"
+							},
+							"SADAPDS2DRWST": {
+								"tablename": "R_ADAPDS_DRWST"
+							},
+							"SCACODE2CIN": {
+								"tablename": "R_CACODE_CIN"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					}
+				}
+			}
+		],
+		"annotations": []
+	}
+}
