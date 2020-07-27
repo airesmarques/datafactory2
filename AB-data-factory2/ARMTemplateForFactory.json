@@ -2476,6 +2476,50 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/O_DRWST')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "O_DRWST_FLOW",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "O_DRWST_FLOW",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"ODRWST": {},
+									"ODRWSTSINK": {
+										"tablename": "O_DRWST"
+									}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							}
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/O_DRWST_FLOW')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/ADAPCIADAPLO')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -2626,6 +2670,78 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/B_O_CIN')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Xml",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "O_CIN.xml",
+						"folderPath": "airbus/AIRBUS-RUAG-20200622-A320-XML-EZ20181205003-1-1",
+						"container": "blob01"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/B_O_DRWST')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Xml",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "O_DRWST.xml",
+						"folderPath": "airbus/AIRBUS-RUAG-20200622-A320-XML-EZ20181205003-1-1",
+						"container": "blob01"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/B_O_MSN')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Xml",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "O_MSN.xml",
+						"folderPath": "airbus/AIRBUS-RUAG-20200622-A320-XML-EZ20181205003-1-1",
+						"container": "blob01"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/CACODEDASSY')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -2690,51 +2806,33 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/O_CIN')]",
+			"name": "[concat(parameters('factoryName'), '/O_DRWST')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage1",
+					"referenceName": "AzureSqlDatabase1",
 					"type": "LinkedServiceReference"
 				},
+				"parameters": {
+					"tablename": {
+						"type": "string",
+						"defaultValue": "O_DRWST"
+					}
+				},
 				"annotations": [],
-				"type": "Xml",
+				"type": "AzureSqlTable",
+				"schema": [],
 				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "O_CIN.xml",
-						"folderPath": "airbus/AIRBUS-RUAG-20200622-A320-XML-EZ20181205003-1-1",
-						"container": "blob01"
+					"schema": "DBO",
+					"table": {
+						"value": "@dataset().tablename",
+						"type": "Expression"
 					}
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/O_MSN')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Xml",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "O_MSN.xml",
-						"folderPath": "airbus/AIRBUS-RUAG-20200622-A320-XML-EZ20181205003-1-1",
-						"container": "blob01"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
 			]
 		},
 		{
@@ -2756,30 +2854,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/SqlServer1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/XML_OCIN')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Xml",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "O_CIN.xml",
-						"folderPath": "airbus/AIRBUS-RUAG-20200622-A320-XML-EZ20181205003-1-1",
-						"container": "blob01"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
 			]
 		},
 		{
@@ -3077,6 +3151,44 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]",
 				"[concat(variables('factoryId'), '/datasets/ADAPCICIN')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/O_DRWST_FLOW')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"linkedService": {
+								"referenceName": "AzureBlobStorage1",
+								"type": "LinkedServiceReference"
+							},
+							"name": "ODRWST"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "O_DRWST",
+								"type": "DatasetReference"
+							},
+							"name": "ODRWSTSINK"
+						}
+					],
+					"transformations": [
+						{
+							"name": "Flatten1"
+						}
+					],
+					"script": "source(output(\n\t\tO as (DRWST as (row as (CANCELLATIONINDEX as boolean, CDATE as date, CIRCUITID as string, CREATETIMESTAMP as date, DESIGNOFFICECODE as string, DOMESTICTITLE as string, DRAWINGSETNUMBER as string, DRWSTISSUEINDEX as string, ENGLISHTITLE as string, GEOGRAPHICALID as short, LEGACY_STATUS as string, LOCATION as string, MODIFYTIMESTAMP as date, NATCO as string, RESPONSABLEID as string, STATUS as string, TEAM_DISPLAY as string, TEAM_RESTRICT as string, UDATE as date, VERSIONITERATION as string)[]))\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'xml',\n\tcontainer: 'blob01',\n\tfolderPath: 'airbus/AIRBUS-RUAG-20200622-A320-XML-EZ20181205003-1-1',\n\tfileName: 'O_DRWST.xml',\n\tvalidationMode: 'none',\n\tnamespaces: true) ~> ODRWST\nODRWST foldDown(unroll(O.DRWST.row, O.DRWST.row),\n\tmapColumn(\n\t\tCANCELLATIONINDEX = O.DRWST.row.CANCELLATIONINDEX,\n\t\tCDATE = O.DRWST.row.CDATE,\n\t\tCIRCUITID = O.DRWST.row.CIRCUITID,\n\t\tCREATETIMESTAMP = O.DRWST.row.CREATETIMESTAMP,\n\t\tDESIGNOFFICECODE = O.DRWST.row.DESIGNOFFICECODE,\n\t\tDOMESTICTITLE = O.DRWST.row.DOMESTICTITLE,\n\t\tDRAWINGSETNUMBER = O.DRWST.row.DRAWINGSETNUMBER,\n\t\tDRWSTISSUEINDEX = O.DRWST.row.DRWSTISSUEINDEX,\n\t\tENGLISHTITLE = O.DRWST.row.ENGLISHTITLE,\n\t\tGEOGRAPHICALID = O.DRWST.row.GEOGRAPHICALID,\n\t\tLEGACY_STATUS = O.DRWST.row.LEGACY_STATUS,\n\t\tLOCATION = O.DRWST.row.LOCATION,\n\t\tMODIFYTIMESTAMP = O.DRWST.row.MODIFYTIMESTAMP,\n\t\tNATCO = O.DRWST.row.NATCO,\n\t\tRESPONSABLEID = O.DRWST.row.RESPONSABLEID,\n\t\tSTATUS = O.DRWST.row.STATUS,\n\t\tTEAM_DISPLAY = O.DRWST.row.TEAM_DISPLAY,\n\t\tTEAM_RESTRICT = O.DRWST.row.TEAM_RESTRICT,\n\t\tUDATE = O.DRWST.row.UDATE,\n\t\tVERSIONITERATION = O.DRWST.row.VERSIONITERATION\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> Flatten1\nFlatten1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tmapColumn(\n\t\tCANCELLATIONINDEX,\n\t\tCDATE,\n\t\tCIRCUITID,\n\t\tCREATETIMESTAMP,\n\t\tDESIGNOFFICECODE,\n\t\tDOMESTICTITLE,\n\t\tDRAWINGSETNUMBER,\n\t\tDRWSTISSUEINDEX,\n\t\tENGLISHTITLE,\n\t\tGEOGRAPHICALID,\n\t\tLEGACY_STATUS,\n\t\tLOCATION,\n\t\tMODIFYTIMESTAMP,\n\t\tNATCO,\n\t\tRESPONSABLEID,\n\t\tSTATUS,\n\t\tTEAM_DISPLAY,\n\t\tTEAM_RESTRICT,\n\t\tUDATE,\n\t\tVERSIONITERATION\n\t)) ~> ODRWSTSINK"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]",
+				"[concat(variables('factoryId'), '/datasets/O_DRWST')]"
 			]
 		}
 	]
