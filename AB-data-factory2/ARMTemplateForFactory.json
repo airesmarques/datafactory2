@@ -48,7 +48,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"dataflow": {
-								"referenceName": "A_IXOFFEFF",
+								"referenceName": "A_IXOFFEFF_TEMP",
 								"type": "DataFlowReference",
 								"parameters": {},
 								"datasetParameters": {
@@ -69,7 +69,7 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/A_IXOFFEFF')]"
+				"[concat(variables('factoryId'), '/dataflows/A_IXOFFEFF_TEMP')]"
 			]
 		},
 		{
@@ -2835,7 +2835,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/A_IXOFFEFF')]",
+			"name": "[concat(parameters('factoryName'), '/A_IXOFFEFF_TEMP')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
