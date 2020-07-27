@@ -1,5 +1,5 @@
 {
-	"name": "OCIN",
+	"name": "B_OCIN",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureBlobStorage1",
