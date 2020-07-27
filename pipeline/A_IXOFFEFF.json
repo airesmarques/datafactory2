@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "A_IXOFFEFF",
+						"referenceName": "A_IXOFFEFF_TEMP",
 						"type": "DataFlowReference",
 						"datasetParameters": {
 							"AIXOFFEFFSINK": {
