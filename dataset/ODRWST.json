@@ -1,5 +1,5 @@
 {
-	"name": "O_DRWST",
+	"name": "ODRWST",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureBlobStorage1",
