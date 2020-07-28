@@ -1,0 +1,151 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "AB-data-factory2"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/L_REL_FLOW_copy1')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"linkedService": {
+								"referenceName": "AzureBlobStorage1",
+								"type": "LinkedServiceReference"
+							},
+							"name": "LREL"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "R_ADAPCI_ADAPLO",
+								"type": "DatasetReference"
+							},
+							"name": "SADAPCI2ADAPLO"
+						},
+						{
+							"dataset": {
+								"referenceName": "R_ADAPCI_CIN",
+								"type": "DatasetReference"
+							},
+							"name": "SCIN2ADAPCI"
+						},
+						{
+							"dataset": {
+								"referenceName": "R_CACODE_DASSY",
+								"type": "DatasetReference"
+							},
+							"name": "SCACODEDASSY"
+						},
+						{
+							"dataset": {
+								"referenceName": "R_ADAPDS_ADAPCI",
+								"type": "DatasetReference"
+							},
+							"name": "SADAPPDS2ADAPCI"
+						},
+						{
+							"dataset": {
+								"referenceName": "R_ADAPLO_ADAPDS",
+								"type": "DatasetReference"
+							},
+							"name": "SADAPLO2ADAPDS"
+						},
+						{
+							"dataset": {
+								"referenceName": "R_ADAPDS_DRWST",
+								"type": "DatasetReference"
+							},
+							"name": "SADAPDS2DRWST"
+						},
+						{
+							"dataset": {
+								"referenceName": "R_CACODE_ADAPCI",
+								"type": "DatasetReference"
+							},
+							"name": "SCACODE2ADAPCI"
+						},
+						{
+							"dataset": {
+								"referenceName": "R_ADAPDS_DASSY",
+								"type": "DatasetReference"
+							},
+							"name": "SADAPDS2DASSY"
+						}
+					],
+					"transformations": [
+						{
+							"name": "FADAPCIADAPLO"
+						},
+						{
+							"name": "FCIN2ADAPCI"
+						},
+						{
+							"name": "FCACODEDASSY"
+						},
+						{
+							"name": "ADAPDS2ADAPCI"
+						},
+						{
+							"name": "FADAPLOADAPDS"
+						},
+						{
+							"name": "FADAPDS2DRWST"
+						},
+						{
+							"name": "FCACODE2ADAPCI"
+						},
+						{
+							"name": "FADAPDS2DASSY"
+						}
+					],
+					"script": "source(output(\n\t\tL as (ADAPCI as (ADAPLO as (STRUCTURE as (row as (ADAPCILEGACYNUMBER as string, ADAPCINUMBER as string, ADAPLOLEGACYNUMBER as string, ADAPLONUMBER as string, CDATE as string, UDATE as string)[])), CIN as ({CONF-STEERING} as (row as (ADAPCINUMBER as string, CINSTACK as string)[])), IXREQUIR as ({CONF-STEERING} as (row as (ADAPCINUMBER as string, REQUIREMENTID as string)[]))), ADAPDS as (ADAPCI as (STRUCTURE as (row as (ADAPCILEGACYNUMBER as string, ADAPCINUMBER as string, ADAPDSISSUEINDEX as string, ADAPDSNUMBER as string, CDATE as date, QUANTITY as boolean, UDATE as string)[])), ADAPDS as (QUANTITIES as (row as (ALTERNCODE as string, A_ADAPDSISSUEINDEX as string, A_ADAPDSNUMBER as string, B_ADAPDSNUMBER as string, CDATE as date, ITEMNUMBER as short, ITEMNUMBERZONE as string, QUANTITY as boolean, UDATE as string, UNIT as string)[])), DASSY as (QUANTITIES as (row as (ADAPDSISSUEINDEX as string, ADAPDSNUMBER as string, ALTERNCODE as string, CDATE as date, DASSYISSUEINDEX as string, DASSYNUMBER as string, ITEMNUMBER as short, ITEMNUMBERZONE as string, QUANTITY as short, UDATE as string, UNIT as string)[])), DDPT as (QUANTITIES as (row as (ADAPDSISSUEINDEX as string, ADAPDSNUMBER as string, ALTERNCODE as string, CDATE as date, DDPTISSUEINDEX as string, DDPTNUMBER as string, ITEMNUMBER as short, QUANTITY as short, UDATE as string, UNIT as string)[])), DRWST as ({DEF-DOSSIER} as (row as (ADAPDSISSUEINDEX as string, ADAPDSNUMBER as string, CDATE as string, DRAWINGSETNUMBER as string, DRWSTISSUEINDEX as string, UDATE as date)[])), FINCI as (STRUCTURE as (row as (ADAPDSISSUEINDEX as string, ADAPDSNUMBER as string, CDATE as date, FINCADNUMBER as string, ITEMNUMBER as short, ITEMNUMBERZONE as string, QUANTITY as boolean, UDATE as string)[])), PN as (STRUCTURE as (row as (ADAPDSISSUEINDEX as string, ADAPDSNUMBER as string, ALTERNCODE as string, CDATE as date, ITEMNUMBER as short, ITEMNUMBERZONE as string, PNCADNUMBER as string, QUANTITY as boolean, UDATE as string, UNIT as string)[])), STDPT as (QUANTITIES as (row as (ADAPDSISSUEINDEX as string, ADAPDSNUMBER as string, ALTERNCODE as string, CDATE as date, CLASSIFICATION as string, FCSM as string, ITEMNUMBER as short, ITEMNUMBERZONE as string, MATERIAL as boolean, QUANTITY as double, STDPTNUMBER as string, UDATE as string, UNIT as string)[]))), ADAPLO as (ADAPDS as (STRUCTURE as (row as (ADAPDSISSUEINDEX as string, ADAPDSNUMBER as string, ADAPLOLEGACYNUMBER as string, ADAPLONUMBER as string, CDATE as string, UDATE as string)[])), IXREQUIR as (FULFILLED as (row as (ADAPLONUMBER as string, REQUIREMENTID as string)[]))), CACODE as (ADAPCI as (CASCADE as (row as (ADAPCILEGACYNUMBER as string, ADAPCINUMBER as string, CACCCODE as string, CDATE as string, UDATE as string)[])), DASSY as (CASCADE as (row as (CACCCODE as string, CDATE as string, DASSYISSUEINDEX as string, DASSYNUMBER as string, UDATE as string)[]))), DASSY as (ADAPCI as (STRUCTURE as (row as (ADAPCINUMBER as string, CDATE as date, DASSYISSUEINDEX as string, DASSYNUMBER as string, ITEMNUMBER as short, ITEMNUMBERZONE as string, QUANTITY as boolean, UDATE as string, UNIT as string)[])), DASSY as (INTERCHANG as (row as (A_DASSYNUMBER as string, B_DASSYNUMBER as string, CDATE as date, ICYCODE as short, ICYCONDITION as string, ICYLINKTYPE as string, UDATE as date)[]), QUANTITIES as (row as (ALTERNCODE as string, A_DASSYISSUEINDEX as string, A_DASSYNUMBER as string, B_DASSYISSUEINDEX as string, B_DASSYNUMBER as string, CDATE as date, ITEMNUMBER as short, ITEMNUMBERZONE as string, QUANTITY as short, UDATE as string, UNIT as string)[])), DDPT as (INTERCHANG as (row as (A_DASSYNUMBER as string, B_DDPTNUMBER as string, CDATE as date, ICYCODE as short, ICYCONDITION as string, ICYLINKTYPE as string, UDATE as date)[]), QUANTITIES as (row as (ALTERNCODE as string, CDATE as date, DASSYISSUEINDEX as string, DASSYNUMBER as string, DDPTISSUEINDEX as string, DDPTNUMBER as string, ITEMNUMBER as short, ITEMNUMBERZONE as string, MINUS as boolean, QUANTITY as short, UDATE as string, UNIT as string)[])), DRWST as ({DEF-DOSSIER} as (row as (CDATE as string, DASSYISSUEINDEX as string, DASSYNUMBER as string, DRAWINGSETNUMBER as string, DRWSTISSUEINDEX as string, UDATE as date)[])), STDPT as (QUANTITIES as (row as (ALTERNCODE as string, CDATE as date, CLASSIFICATION as string, DASSYISSUEINDEX as string, DASSYNUMBER as string, FSCM as string, ITEMNUMBER as short, ITEMNUMBERZONE as string, MATERIAL as boolean, QUANTITY as double, STDPTNUMBER as string, UDATE as string, UNIT as string)[]))), DDPT as (DASSY as (INTERCHANG as (row as (A_DDPTNUMBER as string, B_DASSYNUMBER as string, CDATE as date, ICYCODE as short, ICYCONDITION as string, ICYLINKTYPE as string, UDATE as date)[])), DDPT as (INTERCHANG as (row as (A_DDPTNUMBER as string, B_DDPTNUMBER as string, CDATE as date, ICYCODE as short, ICYCONDITION as string, ICYLINKTYPE as string, UDATE as date)[])), DRWST as ({DEF-DOSSIER} as (row as (CDATE as string, DDPTISSUEINDEX as string, DDPTNUMBER as string, DRAWINGSETNUMBER as string, DRWSTISSUEINDEX as string, UDATE as date)[])), STDPT as (MATERIAL as (row as (ALTERNCODE as string, CDATE as date, DDPTISSUEINDEX as string, DDPTNUMBER as string, DIAMETER as string, FCSM as string, ITEMNUMBER as short, ITEMNUMBERZONE as string, LENGTH as short, MINUS as string, QUANTITY as double, STDPTNUMBER as string, THICKNESS as string, THICKNESSORDIAMETER as boolean, UDATE as string, UNIT as string, WIDTH as short)[]))), DRWST as (DQN as ({DEF-DOSSIER} as (row as (ATACODE as string, CACODE as string, CIN as string, DQNNUMBER as string, DRWSTISSUE as string, DRWSTNUMBER as string, IMPACTEDDS as string, IMPACTSTATUS as string, IMPACTTYPE as string, INTEGRATIONISSUE as string, MSN as string)[])), DRW as ({DEF-DOSSIER} as (row as (DRAWINGNUMBER as string, DRAWINGSETNUMBER as string, DRWISSUEINDEX as string, DRWSTISSUEINDEX as string)[]))), FINCI as (PN as (STRUCTURE as (row as (FINCADNUMBER as string, FINCIISSUEINDEX as string, FINCIVERSIONITERATION as string, LO_EFFECTIVITY as string, PNCADNUMBER as string, PNVERSIONITERATION as string)[]))), IXREQUIR as (CIN as ({CONF-STEERING} as (row as (CINSTACK as string, REQUIREMENTID as string)[]))))\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'xml',\n\tcontainer: 'blob01',\n\tvalidationMode: 'none',\n\tnamespaces: false,\n\twildcardPaths:['airbus/**/L_REL.xml']) ~> LREL\nLREL foldDown(unroll(L.ADAPCI.ADAPLO.STRUCTURE.row, L.ADAPCI.ADAPLO.STRUCTURE.row),\n\tmapColumn(\n\t\tADAPCILEGACYNUMBER = L.ADAPCI.ADAPLO.STRUCTURE.row.ADAPCILEGACYNUMBER,\n\t\tADAPCINUMBER = L.ADAPCI.ADAPLO.STRUCTURE.row.ADAPCINUMBER,\n\t\tADAPLOLEGACYNUMBER = L.ADAPCI.ADAPLO.STRUCTURE.row.ADAPLOLEGACYNUMBER,\n\t\tADAPLONUMBER = L.ADAPCI.ADAPLO.STRUCTURE.row.ADAPLONUMBER,\n\t\tCDATE = L.ADAPCI.ADAPLO.STRUCTURE.row.CDATE,\n\t\tUDATE = L.ADAPCI.ADAPLO.STRUCTURE.row.UDATE\n\t),\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> FADAPCIADAPLO\nLREL foldDown(unroll(L.ADAPCI.CIN.{CONF-STEERING}.row, L.ADAPCI.CIN.{CONF-STEERING}.row),\n\tmapColumn(\n\t\tADAPCINUMBER = L.ADAPCI.CIN.{CONF-STEERING}.row.ADAPCINUMBER,\n\t\tCINSTACK = L.ADAPCI.CIN.{CONF-STEERING}.row.CINSTACK\n\t),\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> FCIN2ADAPCI\nLREL foldDown(unroll(L.CACODE.DASSY.CASCADE.row, L.CACODE.DASSY.CASCADE.row),\n\tmapColumn(\n\t\tCACCCODE = L.CACODE.DASSY.CASCADE.row.CACCCODE,\n\t\tCDATE = L.CACODE.DASSY.CASCADE.row.CDATE,\n\t\tDASSYISSUEINDEX = L.CACODE.DASSY.CASCADE.row.DASSYISSUEINDEX,\n\t\tDASSYNUMBER = L.CACODE.DASSY.CASCADE.row.DASSYNUMBER,\n\t\tUDATE = L.CACODE.DASSY.CASCADE.row.UDATE\n\t),\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> FCACODEDASSY\nLREL foldDown(unroll(L.ADAPDS.ADAPCI.STRUCTURE.row, L.ADAPDS.ADAPCI.STRUCTURE.row),\n\tmapColumn(\n\t\tADAPCILEGACYNUMBER = L.ADAPDS.ADAPCI.STRUCTURE.row.ADAPCILEGACYNUMBER,\n\t\tADAPCINUMBER = L.ADAPDS.ADAPCI.STRUCTURE.row.ADAPCINUMBER,\n\t\tADAPDSISSUEINDEX = L.ADAPDS.ADAPCI.STRUCTURE.row.ADAPDSISSUEINDEX,\n\t\tADAPDSNUMBER = L.ADAPDS.ADAPCI.STRUCTURE.row.ADAPDSNUMBER,\n\t\tCDATE = L.ADAPDS.ADAPCI.STRUCTURE.row.CDATE,\n\t\tQUANTITY = L.ADAPDS.ADAPCI.STRUCTURE.row.QUANTITY,\n\t\tUDATE = L.ADAPDS.ADAPCI.STRUCTURE.row.UDATE\n\t),\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> ADAPDS2ADAPCI\nLREL foldDown(unroll(L.ADAPLO.ADAPDS.STRUCTURE.row, L.ADAPLO.ADAPDS.STRUCTURE.row),\n\tmapColumn(\n\t\tADAPDSISSUEINDEX = L.ADAPLO.ADAPDS.STRUCTURE.row.ADAPDSISSUEINDEX,\n\t\tADAPDSNUMBER = L.ADAPLO.ADAPDS.STRUCTURE.row.ADAPDSNUMBER,\n\t\tADAPLOLEGACYNUMBER = L.ADAPLO.ADAPDS.STRUCTURE.row.ADAPLOLEGACYNUMBER,\n\t\tADAPLONUMBER = L.ADAPLO.ADAPDS.STRUCTURE.row.ADAPLONUMBER,\n\t\tCDATE = L.ADAPLO.ADAPDS.STRUCTURE.row.CDATE,\n\t\tUDATE = L.ADAPLO.ADAPDS.STRUCTURE.row.UDATE\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> FADAPLOADAPDS\nLREL foldDown(unroll(L.ADAPDS.DRWST.{DEF-DOSSIER}.row, L.ADAPDS.DRWST.{DEF-DOSSIER}.row),\n\tmapColumn(\n\t\tADAPDSISSUEINDEX = L.ADAPDS.DRWST.{DEF-DOSSIER}.row.ADAPDSISSUEINDEX,\n\t\tADAPDSNUMBER = L.ADAPDS.DRWST.{DEF-DOSSIER}.row.ADAPDSNUMBER,\n\t\tCDATE = L.ADAPDS.DRWST.{DEF-DOSSIER}.row.CDATE,\n\t\tDRAWINGSETNUMBER = L.ADAPDS.DRWST.{DEF-DOSSIER}.row.DRAWINGSETNUMBER,\n\t\tDRWSTISSUEINDEX = L.ADAPDS.DRWST.{DEF-DOSSIER}.row.DRWSTISSUEINDEX,\n\t\tUDATE = L.ADAPDS.DRWST.{DEF-DOSSIER}.row.UDATE\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> FADAPDS2DRWST\nLREL foldDown(unroll(L.CACODE.ADAPCI.CASCADE.row, L.CACODE.ADAPCI.CASCADE.row),\n\tmapColumn(\n\t\tADAPCILEGACYNUMBER = L.CACODE.ADAPCI.CASCADE.row.ADAPCILEGACYNUMBER,\n\t\tADAPCINUMBER = L.CACODE.ADAPCI.CASCADE.row.ADAPCINUMBER,\n\t\tCACCCODE = L.CACODE.ADAPCI.CASCADE.row.CACCCODE,\n\t\tCDATE = L.CACODE.ADAPCI.CASCADE.row.CDATE,\n\t\tUDATE = L.CACODE.ADAPCI.CASCADE.row.UDATE\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> FCACODE2ADAPCI\nLREL foldDown(unroll(L.ADAPDS.DASSY.QUANTITIES.row, L.ADAPDS.DASSY.QUANTITIES.row),\n\tmapColumn(\n\t\tADAPDSISSUEINDEX = L.ADAPDS.DASSY.QUANTITIES.row.ADAPDSISSUEINDEX,\n\t\tADAPDSNUMBER = L.ADAPDS.DASSY.QUANTITIES.row.ADAPDSNUMBER,\n\t\tALTERNCODE = L.ADAPDS.DASSY.QUANTITIES.row.ALTERNCODE,\n\t\tCDATE = L.ADAPDS.DASSY.QUANTITIES.row.CDATE,\n\t\tDASSYISSUEINDEX = L.ADAPDS.DASSY.QUANTITIES.row.DASSYISSUEINDEX,\n\t\tDASSYNUMBER = L.ADAPDS.DASSY.QUANTITIES.row.DASSYNUMBER,\n\t\tITEMNUMBER = L.ADAPDS.DASSY.QUANTITIES.row.ITEMNUMBER,\n\t\tITEMNUMBERZONE = L.ADAPDS.DASSY.QUANTITIES.row.ITEMNUMBERZONE,\n\t\tQUANTITY = L.ADAPDS.DASSY.QUANTITIES.row.QUANTITY,\n\t\tUDATE = L.ADAPDS.DASSY.QUANTITIES.row.UDATE,\n\t\tUNIT = L.ADAPDS.DASSY.QUANTITIES.row.UNIT\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> FADAPDS2DASSY\nFADAPCIADAPLO sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table',\n\tmapColumn(\n\t\tADAPCILEGACYNUMBER,\n\t\tADAPCINUMBER,\n\t\tADAPLOLEGACYNUMBER,\n\t\tADAPLONUMBER,\n\t\tCDATE,\n\t\tUDATE\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SADAPCI2ADAPLO\nFCIN2ADAPCI sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table',\n\tpostSQLs:['DROP TABLE IF EXISTS R_CIN_ADAPCI;\\n\\nCREATE TABLE R_CIN_ADAPCI(\\n    CINSTACK VARCHAR(50),\\n    ADAPCINUMBER VARCHAR(20),\\n);\\n\\n\\nDECLARE @V_CINSTACK VARCHAR(8000);\\nDECLARE @V_ADAPCINUMBER VARCHAR (500);\\n\\nDECLARE SPLIT_CINSTACK CURSOR LOCAL FAST_FORWARD FOR \\n        SELECT\\n                CINSTACK, ADAPCINUMBER\\n        FROM R_CIN_ADAPCI_TEMP\\n\\nOPEN SPLIT_CINSTACK\\nFETCH NEXT FROM SPLIT_CINSTACK \\nINTO @V_CINSTACK, @V_ADAPCINUMBER\\n \\nWHILE @@FETCH_STATUS = 0\\nBEGIN\\n\\n    INSERT INTO R_CIN_ADAPCI\\n            SELECT SPL.value, @V_ADAPCINUMBER FROM STRING_SPLIT(@V_CINSTACK,\\',\\') AS SPL \\n    \\n            FETCH NEXT FROM SPLIT_CINSTACK \\n            INTO \\n                    @V_CINSTACK, @V_ADAPCINUMBER\\nEND \\n\\nDROP TABLE R_CIN_ADAPCI_TEMP;\\n\\n\\n'],\n\tmapColumn(\n\t\tADAPCINUMBER,\n\t\tCINSTACK\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SCIN2ADAPCI\nFCACODEDASSY sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SCACODEDASSY\nADAPDS2ADAPCI sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table',\n\tmapColumn(\n\t\tADAPCILEGACYNUMBER,\n\t\tADAPCINUMBER,\n\t\tADAPDSISSUEINDEX,\n\t\tADAPDSNUMBER,\n\t\tCDATE,\n\t\tQUANTITY,\n\t\tUDATE\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SADAPPDS2ADAPCI\nFADAPLOADAPDS sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table',\n\tmapColumn(\n\t\tADAPDSISSUEINDEX,\n\t\tADAPDSNUMBER,\n\t\tADAPLOLEGACYNUMBER,\n\t\tADAPLONUMBER,\n\t\tCDATE,\n\t\tUDATE\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SADAPLO2ADAPDS\nFADAPDS2DRWST sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table',\n\tmapColumn(\n\t\tADAPDSISSUEINDEX,\n\t\tADAPDSNUMBER,\n\t\tCDATE,\n\t\tDRAWINGSETNUMBER,\n\t\tDRWSTISSUEINDEX,\n\t\tUDATE\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SADAPDS2DRWST\nFCACODE2ADAPCI sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table',\n\tmapColumn(\n\t\tADAPCILEGACYNUMBER,\n\t\tADAPCINUMBER,\n\t\tCACCCODE,\n\t\tCDATE,\n\t\tUDATE\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SCACODE2ADAPCI\nFADAPDS2DASSY sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SADAPDS2DASSY"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/R_ADAPDS_DASSY')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/R_ADAPDS_DASSY')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"tablename": {
+						"type": "string",
+						"defaultValue": "R_ADAPDS_DASSY"
+					}
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "DBO",
+					"table": {
+						"value": "@dataset().tablename",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
