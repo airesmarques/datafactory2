@@ -16,6 +16,9 @@
 		},
 		"SqlServer1_connectionString": {
 			"value": ""
+		},
+		"trigger1_properties_typeProperties_scope": {
+			"value": "/subscriptions/828452c5-fb8a-4707-a3b0-740679370ab1/resourceGroups/AB-poc/providers/Microsoft.Storage/storageAccounts/abstoragetest3"
 		}
 	}
 }
