@@ -33,6 +33,335 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/0-A_IXOFFEFF')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "A_IXOFFEFF_FLOW",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "A_IXOFFEFF_TEMP",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"AIXOFFEFF": {},
+									"AIXOFFEFFSINK": {
+										"tablename": "A_IXOFFEFF_TEMP"
+									}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							}
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/A_IXOFFEFF_TEMP')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/1-O_CACCCODE')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "O_CACCCODE_FLOW",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "O_CACCCODE",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"OCACCCODE": {},
+									"OCACCCODESINK": {
+										"tablename": "O_CACCCODE"
+									}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							}
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/O_CACCCODE')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/10-L_REL_ALL')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "L_REL_ALL",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "L_REL_FLOW_copy1",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"LREL": {},
+									"SADAPCI2ADAPLO": {
+										"tablename": "R_ADAPCI_ADAPLO"
+									},
+									"SCIN2ADAPCI": {
+										"tablename": "R_CIN_ADAPCI_TEMP"
+									},
+									"SCACODEDASSY": {
+										"tablename": "R_CACODE_DASSY"
+									},
+									"SADAPPDS2ADAPCI": {
+										"tablename": "R_ADAPDS_ADAPCI"
+									},
+									"SADAPLO2ADAPDS": {
+										"tablename": "R_ADAPLO_ADAPDS"
+									},
+									"SADAPDS2DRWST": {
+										"tablename": "R_ADAPDS_DRWST"
+									},
+									"SCACODE2ADAPCI": {
+										"tablename": "R_CACODE_ADAPCI"
+									},
+									"SADAPDS2DASSY": {
+										"tablename": "R_ADAPDS_DASSY"
+									}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							}
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/L_REL_FLOW_copy1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/2-O_CIN')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "OCIN_FLOW",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "OCIN_TEMP_FLOW",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"OCIN": {},
+									"OCINSINK": {
+										"tablename": "O_CACCCODE"
+									}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							}
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/OCIN_TEMP_FLOW')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/3-O_DASSY')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "ODASSY_FLOW",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "O_DASSY",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"ODASSY": {},
+									"ODASSYSINK": {
+										"tablename": "O_DASSY"
+									}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							}
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/O_DASSY')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/4-O_DRWST')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "O_DRWST_FLOW",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "O_DRWST_FLOW",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"ODRWST": {},
+									"ODRWSTSINK": {
+										"tablename": "O_DRWST"
+									}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							}
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/O_DRWST_FLOW')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/5-O_DRW')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "O_DRW_FLOW",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "O_DRW_FLOW",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"ODRW": {},
+									"ODRWSINK": {
+										"tablename": "O_DRW"
+									}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							}
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/O_DRW_FLOW')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/ALL')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -106,50 +435,6 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/dataflows/A_IXOFFEFF_TEMP')]",
 				"[concat(variables('factoryId'), '/dataflows/O_CACCCODE')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/0-A_IXOFFEFF')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "A_IXOFFEFF_FLOW",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "A_IXOFFEFF_TEMP",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"AIXOFFEFF": {},
-									"AIXOFFEFFSINK": {
-										"tablename": "A_IXOFFEFF_TEMP"
-									}
-								}
-							},
-							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							}
-						}
-					}
-				],
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/A_IXOFFEFF_TEMP')]"
 			]
 		},
 		{
@@ -2375,71 +2660,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/10-L_REL_ALL')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "L_REL_ALL",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "L_REL_FLOW_copy1",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"LREL": {},
-									"SADAPCI2ADAPLO": {
-										"tablename": "R_ADAPCI_ADAPLO"
-									},
-									"SCIN2ADAPCI": {
-										"tablename": "R_CIN_ADAPCI_TEMP"
-									},
-									"SCACODEDASSY": {
-										"tablename": "R_CACODE_DASSY"
-									},
-									"SADAPPDS2ADAPCI": {
-										"tablename": "R_ADAPDS_ADAPCI"
-									},
-									"SADAPLO2ADAPDS": {
-										"tablename": "R_ADAPLO_ADAPDS"
-									},
-									"SADAPDS2DRWST": {
-										"tablename": "R_ADAPDS_DRWST"
-									},
-									"SCACODE2ADAPCI": {
-										"tablename": "R_CACODE_ADAPCI"
-									},
-									"SADAPDS2DASSY": {
-										"tablename": "R_ADAPDS_DASSY"
-									}
-								}
-							},
-							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							}
-						}
-					}
-				],
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/L_REL_FLOW_copy1')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/L_REL_ALL_BACKUP')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -2496,182 +2716,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/dataflows/L_REL_FLOW')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/1-O_CACCCODE')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "O_CACCCODE_FLOW",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "O_CACCCODE",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"OCACCCODE": {},
-									"OCACCCODESINK": {
-										"tablename": "O_CACCCODE"
-									}
-								}
-							},
-							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							}
-						}
-					}
-				],
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/O_CACCCODE')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/2-O_CIN')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "OCIN_FLOW",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "OCIN_TEMP_FLOW",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"OCIN": {},
-									"OCINSINK": {
-										"tablename": "O_CACCCODE"
-									}
-								}
-							},
-							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							}
-						}
-					}
-				],
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/OCIN_TEMP_FLOW')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/3-O_DASSY')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "ODASSY_FLOW",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "O_DASSY",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"ODASSY": {},
-									"ODASSYSINK": {
-										"tablename": "O_DASSY"
-									}
-								}
-							},
-							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							}
-						}
-					}
-				],
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/O_DASSY')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/4-O_DRWST')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "O_DRWST_FLOW",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "O_DRWST_FLOW",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"ODRWST": {},
-									"ODRWSTSINK": {
-										"tablename": "O_DRWST"
-									}
-								}
-							},
-							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							}
-						}
-					}
-				],
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/O_DRWST_FLOW')]"
 			]
 		},
 		{
@@ -2853,6 +2897,36 @@
 					"tablename": {
 						"type": "string",
 						"defaultValue": "O_DASSY"
+					}
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "DBO",
+					"table": {
+						"value": "@dataset().tablename",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/O_DRW')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"tablename": {
+						"type": "string",
+						"defaultValue": "O_DRW"
 					}
 				},
 				"annotations": [],
@@ -3520,7 +3594,7 @@
 							"name": "Flatten1"
 						}
 					],
-					"script": "source(output(\n\t\tO as (CIN as (row as (CATEGORY as string, CIN as string, CONFIGSETNAME as string, INDUSSTDCODE as string, MODNUMBER as integer, MODTITLE as string, MPNUMBER as string, MPTITLE as string, RANGE as string, STDCODE as string, TEAM_DISPLAY as string, VALIDITYTYPE as string, VALIDITYUPDATEDATE as date, VERSIONCODE as string)[]))\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'xml',\n\tcontainer: 'blob01',\n\tvalidationMode: 'none',\n\tnamespaces: true,\n\twildcardPaths:['airbus/**/O_CIN.xml']) ~> OCIN\nOCIN foldDown(unroll(O.CIN.row, O.CIN.row),\n\tmapColumn(\n\t\tCATEGORY = O.CIN.row.CATEGORY,\n\t\tCIN = O.CIN.row.CIN,\n\t\tCONFIGSETNAME = O.CIN.row.CONFIGSETNAME,\n\t\tINDUSSTDCODE = O.CIN.row.INDUSSTDCODE,\n\t\tMODNUMBER = O.CIN.row.MODNUMBER,\n\t\tMODTITLE = O.CIN.row.MODTITLE,\n\t\tMPNUMBER = O.CIN.row.MPNUMBER,\n\t\tMPTITLE = O.CIN.row.MPTITLE,\n\t\tRANGE = O.CIN.row.RANGE,\n\t\tSTDCODE = O.CIN.row.STDCODE,\n\t\tTEAM_DISPLAY = O.CIN.row.TEAM_DISPLAY,\n\t\tVALIDITYTYPE = O.CIN.row.VALIDITYTYPE,\n\t\tVALIDITYUPDATEDATE = O.CIN.row.VALIDITYUPDATEDATE,\n\t\tVERSIONCODE = O.CIN.row.VERSIONCODE\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> Flatten1\nFlatten1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table',\n\tpostSQLs:['DROP TABLE IF EXISTS O_CIN_NORM_TEMP;\\n\\nCREATE TABLE O_CIN_NORM_TEMP(\\n        CIN VARCHAR (500),\\n        MODNUMBER INTEGER,\\n        MODTITLE VARCHAR (500),\\n        MPNUMBER VARCHAR (500),\\n        MPTITLE VARCHAR (500),\\n        TEAM_DISPLAY VARCHAR (500),\\n        CATEGORY VARCHAR (500),\\n        CONFIGSETNAME VARCHAR (500),\\n        VALIDITYUPDATEDATE DATE,\\n        VALIDITYTYPE VARCHAR (500),\\n        INDUSSTDCODE VARCHAR (500),\\n        STDCODE VARCHAR (500),\\n        VERSIONCODE VARCHAR (500),\\n        RANGE VARCHAR (500),\\n        RANGE_START VARCHAR (500),\\n        RANGE_END VARCHAR (500),\\n);\\n\\n\\n\\nDROP TABLE IF EXISTS O_CIN;\\nCREATE TABLE O_CIN(\\n        CIN VARCHAR (500),\\n        MODNUMBER INTEGER,\\n        MODTITLE VARCHAR (500),\\n        MPNUMBER VARCHAR (500),\\n        MPTITLE VARCHAR (500),\\n        TEAM_DISPLAY VARCHAR (500),\\n        CATEGORY VARCHAR (500),\\n        CONFIGSETNAME VARCHAR (500),\\n        VALIDITYUPDATEDATE DATE,\\n        VALIDITYTYPE VARCHAR (500),\\n        INDUSSTDCODE VARCHAR (500),\\n        STDCODE VARCHAR (500),\\n        VERSIONCODE VARCHAR (500),\\n        RANGE VARCHAR (20),\\n        RANGE_START INTEGER,\\n        RANGE_END INTEGER,\\n);\\n\\n\\nDECLARE @PCIN VARCHAR (500)\\nDECLARE @PMODNUMBER INTEGER\\nDECLARE @PMODTITLE VARCHAR (500)\\nDECLARE @PMPNUMBER VARCHAR (500)\\nDECLARE @PMPTITLE VARCHAR (500)\\nDECLARE @PTEAM_DISPLAY VARCHAR (500)\\nDECLARE @PCATEGORY VARCHAR (500)\\nDECLARE @PCONFIGSETNAME VARCHAR (500)\\nDECLARE @PVALIDITYUPDATEDATE DATE\\nDECLARE @PVALIDITYTYPE VARCHAR (500)\\nDECLARE @PINDUSSTDCODE VARCHAR (500)\\nDECLARE @PSTDCODE VARCHAR (500)\\nDECLARE @PVERSIONCODE VARCHAR (500)\\nDECLARE @PRANGE VARCHAR(8000)\\n\\nDECLARE SPLIT_RANGE CURSOR LOCAL FAST_FORWARD FOR \\n        SELECT\\n                CIN, MODNUMBER, MODTITLE, MPNUMBER, MPTITLE, TEAM_DISPLAY, CATEGORY, CONFIGSETNAME, \\n                VALIDITYUPDATEDATE, VALIDITYTYPE, INDUSSTDCODE, STDCODE, VERSIONCODE, RANGE\\n        FROM [dbo].[O_CIN_TEMP]\\n\\nOPEN SPLIT_RANGE\\nFETCH NEXT FROM SPLIT_RANGE \\nINTO @PCIN, @PMODNUMBER, @PMODTITLE, @PMPNUMBER, @PMPTITLE, @PTEAM_DISPLAY, @PCATEGORY, @PCONFIGSETNAME, \\n     @PVALIDITYUPDATEDATE, @PVALIDITYTYPE, @PINDUSSTDCODE, @PSTDCODE, @PVERSIONCODE, @PRANGE\\n \\nWHILE @@FETCH_STATUS = 0\\nBEGIN\\n\\nINSERT INTO O_CIN_NORM_TEMP\\n        SELECT @PCIN, @PMODNUMBER, @PMODTITLE, @PMPNUMBER, @PMPTITLE, @PTEAM_DISPLAY, @PCATEGORY, @PCONFIGSETNAME, \\n                @PVALIDITYUPDATEDATE, @PVALIDITYTYPE, @PINDUSSTDCODE, @PSTDCODE, @PVERSIONCODE, \\n                SPL.value, \\'\\', \\'\\' FROM STRING_SPLIT(@PRANGE,\\',\\') AS SPL\\n \\n        FETCH NEXT FROM SPLIT_RANGE \\n        INTO \\n                @PCIN, @PMODNUMBER, @PMODTITLE, @PMPNUMBER, @PMPTITLE, @PTEAM_DISPLAY, @PCATEGORY, @PCONFIGSETNAME, \\n                @PVALIDITYUPDATEDATE, @PVALIDITYTYPE, @PINDUSSTDCODE, @PSTDCODE, @PVERSIONCODE, @PRANGE\\nEND \\n\\nINSERT INTO O_CIN\\n        SELECT CIN, \\n        MODNUMBER, MODTITLE, MPNUMBER, MPTITLE, TEAM_DISPLAY, CATEGORY, CONFIGSETNAME, VALIDITYUPDATEDATE DATE, VALIDITYTYPE, INDUSSTDCODE, STDCODE, VERSIONCODE,        \\n        RANGE,\\n        CAST(SUBSTRING(RANGE, 1, CHARINDEX(\\'-\\', RANGE) - 1) as INT) as RSTART,\\n        CAST(REVERSE( LEFT( REVERSE(RANGE), CHARINDEX(\\'-\\', REVERSE(RANGE))-1 ) ) AS INT) as REND\\n        From O_CIN_NORM_TEMP WHERE RANGE like \\'%-%\\'\\n\\nINSERT INTO O_CIN\\n        SELECT CIN,\\n        MODNUMBER, MODTITLE, MPNUMBER, MPTITLE, TEAM_DISPLAY, CATEGORY, CONFIGSETNAME, VALIDITYUPDATEDATE, VALIDITYTYPE, INDUSSTDCODE, STDCODE, VERSIONCODE, \\n        RANGE, CAST(RANGE as INT), \\'\\'\\n        From O_CIN_NORM_TEMP WHERE RANGE not like \\'%-%\\'\\n\\nDROP TABLE O_CIN_NORM_TEMP;\\nDROP TABLE O_CIN_TEMP;\\n\\n\\n'],\n\tmapColumn(\n\t\tCATEGORY,\n\t\tCIN,\n\t\tCONFIGSETNAME,\n\t\tINDUSSTDCODE,\n\t\tMODNUMBER,\n\t\tMODTITLE,\n\t\tMPNUMBER,\n\t\tMPTITLE,\n\t\tRANGE,\n\t\tSTDCODE,\n\t\tTEAM_DISPLAY,\n\t\tVALIDITYTYPE,\n\t\tVALIDITYUPDATEDATE,\n\t\tVERSIONCODE\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> OCINSINK"
+					"script": "source(output(\n\t\tO as (CIN as (row as (CATEGORY as string, CIN as string, CONFIGSETNAME as string, INDUSSTDCODE as string, MODNUMBER as integer, MODTITLE as string, MPNUMBER as string, MPTITLE as string, RANGE as string, STDCODE as string, TEAM_DISPLAY as string, VALIDITYTYPE as string, VALIDITYUPDATEDATE as date, VERSIONCODE as string)[]))\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'xml',\n\tcontainer: 'blob01',\n\tvalidationMode: 'none',\n\tnamespaces: true,\n\twildcardPaths:['airbus/**/O_CIN.xml']) ~> OCIN\nOCIN foldDown(unroll(O.CIN.row, O.CIN.row),\n\tmapColumn(\n\t\tCATEGORY = O.CIN.row.CATEGORY,\n\t\tCIN = O.CIN.row.CIN,\n\t\tCONFIGSETNAME = O.CIN.row.CONFIGSETNAME,\n\t\tINDUSSTDCODE = O.CIN.row.INDUSSTDCODE,\n\t\tMODNUMBER = O.CIN.row.MODNUMBER,\n\t\tMODTITLE = O.CIN.row.MODTITLE,\n\t\tMPNUMBER = O.CIN.row.MPNUMBER,\n\t\tMPTITLE = O.CIN.row.MPTITLE,\n\t\tRANGE = O.CIN.row.RANGE,\n\t\tSTDCODE = O.CIN.row.STDCODE,\n\t\tTEAM_DISPLAY = O.CIN.row.TEAM_DISPLAY,\n\t\tVALIDITYTYPE = O.CIN.row.VALIDITYTYPE,\n\t\tVALIDITYUPDATEDATE = O.CIN.row.VALIDITYUPDATEDATE,\n\t\tVERSIONCODE = O.CIN.row.VERSIONCODE\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> Flatten1\nFlatten1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table',\n\tpostSQLs:['/*12820 objects before enhancing RANGE size*/\\nALTER DATABASE [abtestdb] SET COMPATIBILITY_LEVEL = 130\\nDROP TABLE IF EXISTS O_CIN_NORM_TEMP;\\n\\nCREATE TABLE O_CIN_NORM_TEMP(\\n        CIN VARCHAR (500),\\n        MODNUMBER INTEGER,\\n        MODTITLE VARCHAR (500),\\n        MPNUMBER VARCHAR (500),\\n        MPTITLE VARCHAR (500),\\n        TEAM_DISPLAY VARCHAR (500),\\n        CATEGORY VARCHAR (500),\\n        CONFIGSETNAME VARCHAR (500),\\n        VALIDITYUPDATEDATE DATE,\\n        VALIDITYTYPE VARCHAR (500),\\n        INDUSSTDCODE VARCHAR (500),\\n        STDCODE VARCHAR (500),\\n        VERSIONCODE VARCHAR (500),\\n        RANGE VARCHAR (500),\\n        RANGE_START VARCHAR (500),\\n        RANGE_END VARCHAR (500),\\n);\\n\\n\\n\\nDROP TABLE IF EXISTS O_CIN;\\nCREATE TABLE O_CIN(\\n        CIN VARCHAR (500),\\n        MODNUMBER INTEGER,\\n        MODTITLE VARCHAR (500),\\n        MPNUMBER VARCHAR (500),\\n        MPTITLE VARCHAR (500),\\n        TEAM_DISPLAY VARCHAR (500),\\n        CATEGORY VARCHAR (500),\\n        CONFIGSETNAME VARCHAR (500),\\n        VALIDITYUPDATEDATE DATE,\\n        VALIDITYTYPE VARCHAR (500),\\n        INDUSSTDCODE VARCHAR (500),\\n        STDCODE VARCHAR (500),\\n        VERSIONCODE VARCHAR (500),\\n        RANGE VARCHAR (20),\\n        RANGE_START INTEGER,\\n        RANGE_END INTEGER,\\n);\\n\\n\\nDECLARE @PCIN VARCHAR (500)\\nDECLARE @PMODNUMBER INTEGER\\nDECLARE @PMODTITLE VARCHAR (500)\\nDECLARE @PMPNUMBER VARCHAR (500)\\nDECLARE @PMPTITLE VARCHAR (500)\\nDECLARE @PTEAM_DISPLAY VARCHAR (500)\\nDECLARE @PCATEGORY VARCHAR (500)\\nDECLARE @PCONFIGSETNAME VARCHAR (500)\\nDECLARE @PVALIDITYUPDATEDATE DATE\\nDECLARE @PVALIDITYTYPE VARCHAR (500)\\nDECLARE @PINDUSSTDCODE VARCHAR (500)\\nDECLARE @PSTDCODE VARCHAR (500)\\nDECLARE @PVERSIONCODE VARCHAR (500)\\nDECLARE @PRANGE NVARCHAR(max)\\n\\nDECLARE SPLIT_RANGE CURSOR LOCAL FAST_FORWARD FOR \\n        SELECT\\n                CIN, MODNUMBER, MODTITLE, MPNUMBER, MPTITLE, TEAM_DISPLAY, CATEGORY, CONFIGSETNAME, \\n                VALIDITYUPDATEDATE, VALIDITYTYPE, INDUSSTDCODE, STDCODE, VERSIONCODE, RANGE\\n        FROM [dbo].[O_CIN_TEMP]\\n\\nOPEN SPLIT_RANGE\\nFETCH NEXT FROM SPLIT_RANGE \\nINTO @PCIN, @PMODNUMBER, @PMODTITLE, @PMPNUMBER, @PMPTITLE, @PTEAM_DISPLAY, @PCATEGORY, @PCONFIGSETNAME, \\n     @PVALIDITYUPDATEDATE, @PVALIDITYTYPE, @PINDUSSTDCODE, @PSTDCODE, @PVERSIONCODE, @PRANGE\\n \\nWHILE @@FETCH_STATUS = 0\\nBEGIN\\n\\nINSERT INTO O_CIN_NORM_TEMP\\n        SELECT @PCIN, @PMODNUMBER, @PMODTITLE, @PMPNUMBER, @PMPTITLE, @PTEAM_DISPLAY, @PCATEGORY, @PCONFIGSETNAME, \\n                @PVALIDITYUPDATEDATE, @PVALIDITYTYPE, @PINDUSSTDCODE, @PSTDCODE, @PVERSIONCODE, \\n                SPL.value, \\'\\', \\'\\' FROM STRING_SPLIT(@PRANGE,\\',\\') AS SPL\\n \\n        FETCH NEXT FROM SPLIT_RANGE \\n        INTO \\n                @PCIN, @PMODNUMBER, @PMODTITLE, @PMPNUMBER, @PMPTITLE, @PTEAM_DISPLAY, @PCATEGORY, @PCONFIGSETNAME, \\n                @PVALIDITYUPDATEDATE, @PVALIDITYTYPE, @PINDUSSTDCODE, @PSTDCODE, @PVERSIONCODE, @PRANGE\\nEND \\n\\nINSERT INTO O_CIN\\n        SELECT CIN, \\n        MODNUMBER, MODTITLE, MPNUMBER, MPTITLE, TEAM_DISPLAY, CATEGORY, CONFIGSETNAME, VALIDITYUPDATEDATE DATE, VALIDITYTYPE, INDUSSTDCODE, STDCODE, VERSIONCODE,        \\n        RANGE,\\n        CAST(SUBSTRING(RANGE, 1, CHARINDEX(\\'-\\', RANGE) - 1) as INT) as RSTART,\\n        CAST(REVERSE( LEFT( REVERSE(RANGE), CHARINDEX(\\'-\\', REVERSE(RANGE))-1 ) ) AS INT) as REND\\n        From O_CIN_NORM_TEMP WHERE RANGE like \\'%-%\\'\\n\\nINSERT INTO O_CIN\\n        SELECT CIN,\\n        MODNUMBER, MODTITLE, MPNUMBER, MPTITLE, TEAM_DISPLAY, CATEGORY, CONFIGSETNAME, VALIDITYUPDATEDATE, VALIDITYTYPE, INDUSSTDCODE, STDCODE, VERSIONCODE, \\n        RANGE, CAST(RANGE as INT), \\'\\'\\n        From O_CIN_NORM_TEMP WHERE RANGE not like \\'%-%\\'\\n\\nDROP TABLE O_CIN_NORM_TEMP;\\nDROP TABLE O_CIN_TEMP;\\n\\n\\n'],\n\tmapColumn(\n\t\tCATEGORY,\n\t\tCIN,\n\t\tCONFIGSETNAME,\n\t\tINDUSSTDCODE,\n\t\tMODNUMBER,\n\t\tMODTITLE,\n\t\tMPNUMBER,\n\t\tMPTITLE,\n\t\tRANGE,\n\t\tSTDCODE,\n\t\tTEAM_DISPLAY,\n\t\tVALIDITYTYPE,\n\t\tVALIDITYUPDATEDATE,\n\t\tVERSIONCODE\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> OCINSINK"
 				}
 			},
 			"dependsOn": [
@@ -3643,36 +3717,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/O_DRW')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase1",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"tablename": {
-						"type": "string",
-						"defaultValue": "O_DRW"
-					}
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "DBO",
-					"table": {
-						"value": "@dataset().tablename",
-						"type": "Expression"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/O_DRW_FLOW')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
@@ -3708,50 +3752,6 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]",
 				"[concat(variables('factoryId'), '/datasets/O_DRW')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/5-O_DRW')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "O_DRW_FLOW",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "O_DRW_FLOW",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"ODRW": {},
-									"ODRWSINK": {
-										"tablename": "O_DRW"
-									}
-								}
-							},
-							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							}
-						}
-					}
-				],
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/O_DRW_FLOW')]"
 			]
 		}
 	]
