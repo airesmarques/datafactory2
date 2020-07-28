@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "ODASSY",
+						"referenceName": "O_DASSY",
 						"type": "DataFlowReference",
 						"datasetParameters": {
 							"ODASSYSINK": {

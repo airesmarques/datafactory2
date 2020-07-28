@@ -15,7 +15,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "R_ADAPCI_CIN",
+						"referenceName": "O_CIN_TEMP",
 						"type": "DatasetReference"
 					},
 					"name": "OCINSINK"

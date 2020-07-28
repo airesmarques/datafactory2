@@ -1,0 +1,64 @@
+{
+	"name": "ALL",
+	"properties": {
+		"activities": [
+			{
+				"name": "A_IXOFFEFF_FLOW",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "A_IXOFFEFF_TEMP",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"AIXOFFEFFSINK": {
+								"tablename": "A_IXOFFEFF_TEMP"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					}
+				}
+			},
+			{
+				"name": "O_CACCCODE_FLOW",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "O_CACCCODE",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"OCACCCODESINK": {
+								"tablename": "O_CACCCODE"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					}
+				}
+			}
+		],
+		"annotations": []
+	}
+}

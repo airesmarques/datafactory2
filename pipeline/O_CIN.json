@@ -20,7 +20,7 @@
 						"type": "DataFlowReference",
 						"datasetParameters": {
 							"OCINSINK": {
-								"tablename": "O_CIN_TEMP"
+								"tablename": "O_CACCCODE"
 							}
 						}
 					},
