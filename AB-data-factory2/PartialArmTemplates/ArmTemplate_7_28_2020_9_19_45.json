@@ -6,477 +6,12 @@
 			"type": "string",
 			"metadata": "Data Factory name",
 			"defaultValue": "AB-data-factory2"
-		},
-		"AzureBlobStorage1_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage1'"
-		},
-		"AzureSqlDatabase1_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase1'"
-		},
-		"AzureSqlMI1_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'AzureSqlMI1'"
-		},
-		"SqlServer1_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'SqlServer1'"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureBlobStorage1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobStorage",
-				"typeProperties": {
-					"connectionString": "[parameters('AzureBlobStorage1_connectionString')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabase1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureSqlDatabase",
-				"typeProperties": {
-					"connectionString": "[parameters('AzureSqlDatabase1_connectionString')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureSqlMI1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureSqlMI",
-				"typeProperties": {
-					"connectionString": "[parameters('AzureSqlMI1_connectionString')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SqlServer1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "SqlServer",
-				"typeProperties": {
-					"connectionString": "[parameters('SqlServer1_connectionString')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/B_O_CIN')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Xml",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "O_CIN.xml",
-						"folderPath": "airbus/AIRBUS-RUAG-20200622-A320-XML-EZ20181205003-1-1",
-						"container": "blob01"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/B_O_DRWST')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Xml",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "O_DRWST.xml",
-						"folderPath": "airbus/AIRBUS-RUAG-20200622-A320-XML-EZ20181205003-1-1",
-						"container": "blob01"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/B_O_MSN')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Xml",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "O_MSN.xml",
-						"folderPath": "airbus/AIRBUS-RUAG-20200622-A320-XML-EZ20181205003-1-1",
-						"container": "blob01"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/CSV')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "Data selection.csv",
-						"folderPath": "airbus",
-						"container": "blob01"
-					},
-					"columnDelimiter": ";",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "ADAPCINUMBER;ADAPCILEGACYNUMBER;ADAPLONUMBER;ADAPLOLEGACYNUMBER;CDATE;UDATE;ADAPCINUMBER2;CINSTACK;ADAPCINUMBER3;REQUIREMENTID;ADAPDSNUMBER;ADAPDSISSUEINDEX;ADAPCINUMBER4;ADAPCILEGACYNUMBER5;CDATE6;UDATE7;QUANTITY;A_ADAPDSNUMBER;A_ADAPDSISSUEINDEX;B_ADAPDSNUMBER;CDATE8;UDATE9;QUANTITY10;ITEMNUMBER;ITEMNUMBERZONE;ALTERNCODE;UNIT;ADAPDSNUMBER11;ADAPDSISSUEINDEX12;DASSYNUMBER;DASSYISSUEINDEX;CDATE13;UDATE14;QUANTITY15;ITEMNUMBER16;ITEMNUMBERZONE17;ALTERNCODE18;UNIT19;ADAPDSNUMBER20;ADAPDSISSUEINDEX21;DDPTNUMBER;DDPTISSUEINDEX;CDATE22;UDATE23;QUANTITY24;ITEMNUMBER25;ALTERNCODE26;UNIT27;ADAPDSNUMBER28;ADAPDSISSUEINDEX29;DRAWINGSETNUMBER;DRWSTISSUEINDEX;CDATE30;UDATE31;ADAPDSNUMBER32;ADAPDSISSUEINDEX33;PNCADNUMBER;CDATE34;UDATE35;QUANTITY36;ITEMNUMBER37;ITEMNUMBERZONE38;ALTERNCODE39;UNIT40;ADAPDSNUMBER41;ADAPDSISSUEINDEX42;STDPTNUMBER;CDATE43;UDATE44;QUANTITY45;ITEMNUMBER46;ITEMNUMBERZONE47;ALTERNCODE48;UNIT49;FCSM;MATERIAL;CLASSIFICATION;ADAPLONUMBER50;ADAPLOLEGACYNUMBER51;ADAPDSNUMBER52;ADAPDSISSUEINDEX53;CDATE54;UDATE55;ADAPLONUMBER56;REQUIREMENTID57;CACCCODE;ADAPCINUMBER58;ADAPCILEGACYNUMBER59;CDATE60;UDATE61;CACCCODE62;DASSYNUMBER63;DASSYISSUEINDEX64;CDATE65;UDATE66;DASSYNUMBER67;DASSYISSUEINDEX68;ADAPCINUMBER69;CDATE70;UDATE71;QUANTITY72;ITEMNUMBER73;ITEMNUMBERZONE74;UNIT75;A_DASSYNUMBER;A_DASSYISSUEINDEX;B_DASSYNUMBER;B_DASSYISSUEINDEX;CDATE76;UDATE77;QUANTITY78;ITEMNUMBER79;ITEMNUMBERZONE80;ALTERNCODE81;UNIT82;A_DASSYNUMBER83;B_DASSYNUMBER84;CDATE85;UDATE86;ICYCODE;ICYCONDITION;ICYLINKTYPE;TEAM_O_DASSY_A;TEAM_O_DASSY_B;DASSYNUMBER87;DASSYISSUEINDEX88;DDPTNUMBER89;DDPTISSUEINDEX90;CDATE91;UDATE92;QUANTITY93;ITEMNUMBER94;ITEMNUMBERZONE95;ALTERNCODE96;MINUS;UNIT97;A_DASSYNUMBER98;B_DDPTNUMBER;CDATE99;UDATE100;ICYCODE101;ICYCONDITION102;ICYLINKTYPE103;DASSYNUMBER104;DASSYISSUEINDEX105;DRAWINGSETNUMBER106;DRWSTISSUEINDEX107;CDATE108;UDATE109;DASSYNUMBER110;DASSYISSUEINDEX111;STDPTNUMBER112;CDATE113;UDATE114;QUANTITY115;ITEMNUMBER116;ITEMNUMBERZONE117;ALTERNCODE118;UNIT119;FSCM;MATERIAL120;CLASSIFICATION121;A_DDPTNUMBER;B_DASSYNUMBER122;CDATE123;UDATE124;ICYCODE125;ICYCONDITION126;ICYLINKTYPE127;A_DDPTNUMBER128;B_DDPTNUMBER129;CDATE130;UDATE131;ICYCODE132;ICYCONDITION133;ICYLINKTYPE134;DDPTNUMBER135;DDPTISSUEINDEX136;DRAWINGSETNUMBER137;DRWSTISSUEINDEX138;CDATE139;UDATE140;DDPTNUMBER141;DDPTISSUEINDEX142;STDPTNUMBER143;CDATE144;UDATE145;QUANTITY146;ITEMNUMBER147;ITEMNUMBERZONE148;LENGTH;WIDTH;THICKNESSORDIAMETER;THICKNESS;DIAMETER;UNIT149;FCSM150;MINUS151;ALTERNCODE152;DRWSTNUMBER;DRWSTISSUE;DQNNUMBER;IMPACTTYPE;CIN;ATACODE;CACODE;INTEGRATIONISSUE;MSN;IMPACTEDDS;IMPACTSTATUS;DRAWINGSETNUMBER153;DRWSTISSUEINDEX154;DRAWINGNUMBER;DRWISSUEINDEX;REQUIREMENTID155;CINSTACK156",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/O_CACCODE')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase1",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"tablename": {
-						"type": "string",
-						"defaultValue": "O_CACCCODE"
-					}
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "DBO",
-					"table": {
-						"value": "@dataset().tablename",
-						"type": "Expression"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/O_DRWST')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase1",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"tablename": {
-						"type": "string",
-						"defaultValue": "O_DRWST"
-					}
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "DBO",
-					"table": {
-						"value": "@dataset().tablename",
-						"type": "Expression"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/R_ADAPCI_ADAPLO')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase1",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"tablename": {
-						"type": "string",
-						"defaultValue": "R_ADAPCI_ADAPLO"
-					}
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "DBO",
-					"table": {
-						"value": "@dataset().tablename",
-						"type": "Expression"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/R_ADAPCI_CIN')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase1",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"tablename": {
-						"type": "string",
-						"defaultValue": "R_CIN_ADAPCI_TEMP"
-					}
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "DBO",
-					"table": {
-						"value": "@dataset().tablename",
-						"type": "Expression"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/R_ADAPDS_ADAPCI')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase1",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"tablename": {
-						"type": "string",
-						"defaultValue": "R_ADAPDS_ADAPCI"
-					}
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "DBO",
-					"table": {
-						"value": "@dataset().tablename",
-						"type": "Expression"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/R_ADAPDS_DRWST')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase1",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"tablename": {
-						"type": "string",
-						"defaultValue": "R_ADAPDS_DRWST"
-					}
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "DBO",
-					"table": {
-						"value": "@dataset().tablename",
-						"type": "Expression"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/R_ADAPLO_ADAPDS')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase1",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"tablename": {
-						"type": "string",
-						"defaultValue": "R_ADAPLO_ADAPDS"
-					}
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "DBO",
-					"table": {
-						"value": "@dataset().tablename",
-						"type": "Expression"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/R_CACODE_ADAPCI')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase1",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"tablename": {
-						"type": "string",
-						"defaultValue": "R_CACODE_ADAPCI"
-					}
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "DBO",
-					"table": {
-						"value": "@dataset().tablename",
-						"type": "Expression"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/R_CACODE_DASSY')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase1",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"tablename": {
-						"type": "string",
-						"defaultValue": "R_CACODE_DASSY"
-					}
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "DBO",
-					"table": {
-						"value": "@dataset().tablename",
-						"type": "Expression"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SqlServerTable1')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "SqlServer1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "SqlServerTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "L_REL"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/SqlServer1')]"
-			]
-		},
 		{
 			"name": "[concat(parameters('factoryName'), '/L_REL')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
@@ -2679,28 +2214,23 @@
 						"inputs": [
 							{
 								"referenceName": "CSV",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						],
 						"outputs": [
 							{
 								"referenceName": "SqlServerTable1",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						]
 					}
 				],
 				"annotations": []
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/CSV')]",
-				"[concat(variables('factoryId'), '/datasets/SqlServerTable1')]"
-			]
+			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/A_IXOFFEFF_TEMP')]",
+			"name": "[concat(parameters('factoryName'), '/L_REL_FLOW_copy1')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -2712,30 +2242,87 @@
 								"referenceName": "AzureBlobStorage1",
 								"type": "LinkedServiceReference"
 							},
-							"name": "AIXOFFEFF"
+							"name": "LREL"
 						}
 					],
 					"sinks": [
 						{
 							"dataset": {
+								"referenceName": "R_ADAPCI_ADAPLO",
+								"type": "DatasetReference"
+							},
+							"name": "SADAPCI2ADAPLO"
+						},
+						{
+							"dataset": {
 								"referenceName": "R_ADAPCI_CIN",
 								"type": "DatasetReference"
 							},
-							"name": "AIXOFFEFFSINK"
+							"name": "SCIN2ADAPCI"
+						},
+						{
+							"dataset": {
+								"referenceName": "R_CACODE_DASSY",
+								"type": "DatasetReference"
+							},
+							"name": "SCACODEDASSY"
+						},
+						{
+							"dataset": {
+								"referenceName": "R_ADAPDS_ADAPCI",
+								"type": "DatasetReference"
+							},
+							"name": "SADAPPDS2ADAPCI"
+						},
+						{
+							"dataset": {
+								"referenceName": "R_ADAPLO_ADAPDS",
+								"type": "DatasetReference"
+							},
+							"name": "SADAPLO2ADAPDS"
+						},
+						{
+							"dataset": {
+								"referenceName": "R_ADAPDS_DRWST",
+								"type": "DatasetReference"
+							},
+							"name": "SADAPDS2DRWST"
+						},
+						{
+							"dataset": {
+								"referenceName": "R_CACODE_ADAPCI",
+								"type": "DatasetReference"
+							},
+							"name": "SCACODE2ADAPCI"
 						}
 					],
 					"transformations": [
 						{
-							"name": "Flatten1"
+							"name": "FADAPCIADAPLO"
+						},
+						{
+							"name": "FCIN2ADAPCI"
+						},
+						{
+							"name": "FCACODEDASSY"
+						},
+						{
+							"name": "ADAPDS2ADAPCI"
+						},
+						{
+							"name": "FADAPLOADAPDS"
+						},
+						{
+							"name": "FADAPDS2DRWST"
+						},
+						{
+							"name": "FCACODE2ADAPCI"
 						}
 					],
-					"script": "source(output(\n\t\tA as (IXOFFEFF as (row as (CDATE as string, COCODE as string, EFFTYPE as string, INDUSSTDCODE as string, LOLEGACYNUMBER as string, LONUMBER as string, LOTYPE as string, RANGE as string, STDCODE as string, UDATE as string, VERSIONCODE as string)[]))\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'xml',\n\tcontainer: 'blob01',\n\tfolderPath: 'airbus/AIRBUS-RUAG-20200622-A320-XML-EZ20181205003-1-1',\n\tfileName: 'A_IXOFFEFF.xml',\n\tvalidationMode: 'none',\n\tnamespaces: true) ~> AIXOFFEFF\nAIXOFFEFF foldDown(unroll(A.IXOFFEFF.row, A.IXOFFEFF.row),\n\tmapColumn(\n\t\tCDATE = A.IXOFFEFF.row.CDATE,\n\t\tCOCODE = A.IXOFFEFF.row.COCODE,\n\t\tEFFTYPE = A.IXOFFEFF.row.EFFTYPE,\n\t\tINDUSSTDCODE = A.IXOFFEFF.row.INDUSSTDCODE,\n\t\tLOLEGACYNUMBER = A.IXOFFEFF.row.LOLEGACYNUMBER,\n\t\tLONUMBER = A.IXOFFEFF.row.LONUMBER,\n\t\tLOTYPE = A.IXOFFEFF.row.LOTYPE,\n\t\tRANGE = A.IXOFFEFF.row.RANGE,\n\t\tSTDCODE = A.IXOFFEFF.row.STDCODE,\n\t\tUDATE = A.IXOFFEFF.row.UDATE,\n\t\tVERSIONCODE = A.IXOFFEFF.row.VERSIONCODE\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> Flatten1\nFlatten1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table',\n\tpostSQLs:['DROP TABLE IF EXISTS A_IXOFFEFF;\\n\\ndeclare @V_MAX_STRING INTEGER = CAST((SELECT max(len(RANGE)) AS Max_Length_String FROM [dbo].[A_IXOFFEFF_TEMP])AS INT)\\n\\nCREATE TABLE A_IXOFFEFF(\\n\tLONUMBER VARCHAR(18),\\n\tLOLEGACYNUMBER VARCHAR(10),\\n\tEFFTYPE VARCHAR(12),\\n\tSTDCODE VARCHAR(5),\\n\tVERSIONCODE VARCHAR(8),\\n\tINDUSSTDCODE VARCHAR(10),\\n\tCDATE VARCHAR(20),\\n\tUDATE VARCHAR(20),\\n\tLOTYPE VARCHAR(10),\\n\tCOCODE VARCHAR(10),\\n\tRANGE VARCHAR(12),\\n\tRANGE_START INTEGER,\\n\tRANGE_END INTEGER\\n)\\n\\nDROP TABLE IF EXISTS A_IXOFFEFF_SPLIT_TEMP;\\nCREATE TABLE A_IXOFFEFF_SPLIT_TEMP(\\n\tLONUMBER VARCHAR(18),\\n\tLOLEGACYNUMBER VARCHAR(10),\\n\tEFFTYPE VARCHAR(12),\\n\tSTDCODE VARCHAR(5),\\n\tVERSIONCODE VARCHAR(8),\\n\tINDUSSTDCODE VARCHAR(10),\\n\tCDATE VARCHAR(20),\\n\tUDATE VARCHAR(20),\\n\tLOTYPE VARCHAR(10),\\n\tCOCODE VARCHAR(10),\\n\tRANGE VARCHAR(12)\\n)\\n\\n\\n\\nDECLARE @PLONUMBER VARCHAR(18)\\nDECLARE @PLOLEGACYNUMBER VARCHAR(10)\\nDECLARE @PEFFTYPE VARCHAR(12)\\nDECLARE @PSTDCODE VARCHAR(5)\\nDECLARE @PVERSIONCODE VARCHAR(8)\\nDECLARE @PINDUSSTDCODE VARCHAR(10)\\nDECLARE @PCDATE VARCHAR(20)\\nDECLARE @PUDATE VARCHAR(20)\\nDECLARE @PLOTYPE VARCHAR(10)\\nDECLARE @PCOCODE VARCHAR(10)\\nDECLARE @PRANGE NVARCHAR(max)\\n\\n\\nDECLARE SPLIT_RANGE CURSOR LOCAL FAST_FORWARD FOR \\n        SELECT\\n                LONUMBER, LOLEGACYNUMBER, EFFTYPE, STDCODE, VERSIONCODE, INDUSSTDCODE, CDATE, UDATE, LOTYPE, COCODE, RANGE\\n        FROM [dbo].[A_IXOFFEFF_TEMP]\\n\\nOPEN SPLIT_RANGE\\nFETCH NEXT FROM SPLIT_RANGE \\nINTO @PLONUMBER, @PLOLEGACYNUMBER, @PEFFTYPE, @PSTDCODE, @PVERSIONCODE, @PINDUSSTDCODE, @PCDATE, @PUDATE, @PLOTYPE, @PCOCODE, @PRANGE\\n\\n \\nWHILE @@FETCH_STATUS = 0\\nBEGIN\\n\\n    INSERT INTO A_IXOFFEFF_SPLIT_TEMP\\n            SELECT @PLONUMBER, @PLOLEGACYNUMBER, @PEFFTYPE, @PSTDCODE, @PVERSIONCODE, @PINDUSSTDCODE, @PCDATE, @PUDATE, @PLOTYPE, @PCOCODE,\\n                    SPL.value FROM STRING_SPLIT(@PRANGE,\\',\\') AS SPL\\n    \\n            \t\tFETCH NEXT FROM SPLIT_RANGE \\n            \t\tINTO \\n                    @PLONUMBER, @PLOLEGACYNUMBER, @PEFFTYPE, @PSTDCODE, @PVERSIONCODE, @PINDUSSTDCODE, @PCDATE, @PUDATE, @PLOTYPE, @PCOCODE, @PRANGE\\nEND \\n\\n\\nINSERT INTO A_IXOFFEFF\\n        SELECT \\n         LONUMBER, LOLEGACYNUMBER, EFFTYPE, STDCODE, VERSIONCODE, INDUSSTDCODE, CDATE, UDATE, LOTYPE, COCODE, \\n\t\t RANGE,\\n         CAST(SUBSTRING(RANGE, 1, CHARINDEX(\\'-\\', RANGE) - 1) as INT) as RSTART,\\n         CAST(REVERSE( LEFT( REVERSE(RANGE), CHARINDEX(\\'-\\', REVERSE(RANGE))-1 ) ) AS INT) as REND\\n         From A_IXOFFEFF_SPLIT_TEMP WHERE RANGE like \\'%-%\\'\\n\\nINSERT INTO A_IXOFFEFF\\n        SELECT\\n         LONUMBER, LOLEGACYNUMBER, EFFTYPE, STDCODE, VERSIONCODE, INDUSSTDCODE, CDATE, UDATE, LOTYPE, COCODE,  \\n         RANGE, CAST(RANGE as INT), 0\\n         From A_IXOFFEFF_SPLIT_TEMP WHERE RANGE not like \\'%-%\\'\\n\\nDROP TABLE A_IXOFFEFF_SPLIT_TEMP;\\ndrop table A_IXOFFEFF_TEMP;\\n\\nSELECT * from A_IXOFFEFF;\\n\\n\\n'],\n\tmapColumn(\n\t\tCDATE,\n\t\tCOCODE,\n\t\tEFFTYPE,\n\t\tINDUSSTDCODE,\n\t\tLOLEGACYNUMBER,\n\t\tLONUMBER,\n\t\tLOTYPE,\n\t\tRANGE,\n\t\tSTDCODE,\n\t\tUDATE,\n\t\tVERSIONCODE\n\t)) ~> AIXOFFEFFSINK"
+					"script": "source(output(\n\t\tL as (ADAPCI as (ADAPLO as (STRUCTURE as (row as (ADAPCILEGACYNUMBER as string, ADAPCINUMBER as string, ADAPLOLEGACYNUMBER as string, ADAPLONUMBER as string, CDATE as string, UDATE as string)[])), CIN as ({CONF-STEERING} as (row as (ADAPCINUMBER as string, CINSTACK as string)[])), IXREQUIR as ({CONF-STEERING} as (row as (ADAPCINUMBER as string, REQUIREMENTID as string)[]))), ADAPDS as (ADAPCI as (STRUCTURE as (row as (ADAPCILEGACYNUMBER as string, ADAPCINUMBER as string, ADAPDSISSUEINDEX as string, ADAPDSNUMBER as string, CDATE as date, QUANTITY as boolean, UDATE as string)[])), ADAPDS as (QUANTITIES as (row as (ALTERNCODE as string, A_ADAPDSISSUEINDEX as string, A_ADAPDSNUMBER as string, B_ADAPDSNUMBER as string, CDATE as date, ITEMNUMBER as short, ITEMNUMBERZONE as string, QUANTITY as boolean, UDATE as string, UNIT as string)[])), DASSY as (QUANTITIES as (row as (ADAPDSISSUEINDEX as string, ADAPDSNUMBER as string, ALTERNCODE as string, CDATE as date, DASSYISSUEINDEX as string, DASSYNUMBER as string, ITEMNUMBER as short, ITEMNUMBERZONE as string, QUANTITY as short, UDATE as string, UNIT as string)[])), DDPT as (QUANTITIES as (row as (ADAPDSISSUEINDEX as string, ADAPDSNUMBER as string, ALTERNCODE as string, CDATE as date, DDPTISSUEINDEX as string, DDPTNUMBER as string, ITEMNUMBER as short, QUANTITY as short, UDATE as string, UNIT as string)[])), DRWST as ({DEF-DOSSIER} as (row as (ADAPDSISSUEINDEX as string, ADAPDSNUMBER as string, CDATE as string, DRAWINGSETNUMBER as string, DRWSTISSUEINDEX as string, UDATE as date)[])), FINCI as (STRUCTURE as (row as (ADAPDSISSUEINDEX as string, ADAPDSNUMBER as string, CDATE as date, FINCADNUMBER as string, ITEMNUMBER as short, ITEMNUMBERZONE as string, QUANTITY as boolean, UDATE as string)[])), PN as (STRUCTURE as (row as (ADAPDSISSUEINDEX as string, ADAPDSNUMBER as string, ALTERNCODE as string, CDATE as date, ITEMNUMBER as short, ITEMNUMBERZONE as string, PNCADNUMBER as string, QUANTITY as boolean, UDATE as string, UNIT as string)[])), STDPT as (QUANTITIES as (row as (ADAPDSISSUEINDEX as string, ADAPDSNUMBER as string, ALTERNCODE as string, CDATE as date, CLASSIFICATION as string, FCSM as string, ITEMNUMBER as short, ITEMNUMBERZONE as string, MATERIAL as boolean, QUANTITY as double, STDPTNUMBER as string, UDATE as string, UNIT as string)[]))), ADAPLO as (ADAPDS as (STRUCTURE as (row as (ADAPDSISSUEINDEX as string, ADAPDSNUMBER as string, ADAPLOLEGACYNUMBER as string, ADAPLONUMBER as string, CDATE as string, UDATE as string)[])), IXREQUIR as (FULFILLED as (row as (ADAPLONUMBER as string, REQUIREMENTID as string)[]))), CACODE as (ADAPCI as (CASCADE as (row as (ADAPCILEGACYNUMBER as string, ADAPCINUMBER as string, CACCCODE as string, CDATE as string, UDATE as string)[])), DASSY as (CASCADE as (row as (CACCCODE as string, CDATE as string, DASSYISSUEINDEX as string, DASSYNUMBER as string, UDATE as string)[]))), DASSY as (ADAPCI as (STRUCTURE as (row as (ADAPCINUMBER as string, CDATE as date, DASSYISSUEINDEX as string, DASSYNUMBER as string, ITEMNUMBER as short, ITEMNUMBERZONE as string, QUANTITY as boolean, UDATE as string, UNIT as string)[])), DASSY as (INTERCHANG as (row as (A_DASSYNUMBER as string, B_DASSYNUMBER as string, CDATE as date, ICYCODE as short, ICYCONDITION as string, ICYLINKTYPE as string, UDATE as date)[]), QUANTITIES as (row as (ALTERNCODE as string, A_DASSYISSUEINDEX as string, A_DASSYNUMBER as string, B_DASSYISSUEINDEX as string, B_DASSYNUMBER as string, CDATE as date, ITEMNUMBER as short, ITEMNUMBERZONE as string, QUANTITY as short, UDATE as string, UNIT as string)[])), DDPT as (INTERCHANG as (row as (A_DASSYNUMBER as string, B_DDPTNUMBER as string, CDATE as date, ICYCODE as short, ICYCONDITION as string, ICYLINKTYPE as string, UDATE as date)[]), QUANTITIES as (row as (ALTERNCODE as string, CDATE as date, DASSYISSUEINDEX as string, DASSYNUMBER as string, DDPTISSUEINDEX as string, DDPTNUMBER as string, ITEMNUMBER as short, ITEMNUMBERZONE as string, MINUS as boolean, QUANTITY as short, UDATE as string, UNIT as string)[])), DRWST as ({DEF-DOSSIER} as (row as (CDATE as string, DASSYISSUEINDEX as string, DASSYNUMBER as string, DRAWINGSETNUMBER as string, DRWSTISSUEINDEX as string, UDATE as date)[])), STDPT as (QUANTITIES as (row as (ALTERNCODE as string, CDATE as date, CLASSIFICATION as string, DASSYISSUEINDEX as string, DASSYNUMBER as string, FSCM as string, ITEMNUMBER as short, ITEMNUMBERZONE as string, MATERIAL as boolean, QUANTITY as double, STDPTNUMBER as string, UDATE as string, UNIT as string)[]))), DDPT as (DASSY as (INTERCHANG as (row as (A_DDPTNUMBER as string, B_DASSYNUMBER as string, CDATE as date, ICYCODE as short, ICYCONDITION as string, ICYLINKTYPE as string, UDATE as date)[])), DDPT as (INTERCHANG as (row as (A_DDPTNUMBER as string, B_DDPTNUMBER as string, CDATE as date, ICYCODE as short, ICYCONDITION as string, ICYLINKTYPE as string, UDATE as date)[])), DRWST as ({DEF-DOSSIER} as (row as (CDATE as string, DDPTISSUEINDEX as string, DDPTNUMBER as string, DRAWINGSETNUMBER as string, DRWSTISSUEINDEX as string, UDATE as date)[])), STDPT as (MATERIAL as (row as (ALTERNCODE as string, CDATE as date, DDPTISSUEINDEX as string, DDPTNUMBER as string, DIAMETER as string, FCSM as string, ITEMNUMBER as short, ITEMNUMBERZONE as string, LENGTH as short, MINUS as string, QUANTITY as double, STDPTNUMBER as string, THICKNESS as string, THICKNESSORDIAMETER as boolean, UDATE as string, UNIT as string, WIDTH as short)[]))), DRWST as (DQN as ({DEF-DOSSIER} as (row as (ATACODE as string, CACODE as string, CIN as string, DQNNUMBER as string, DRWSTISSUE as string, DRWSTNUMBER as string, IMPACTEDDS as string, IMPACTSTATUS as string, IMPACTTYPE as string, INTEGRATIONISSUE as string, MSN as string)[])), DRW as ({DEF-DOSSIER} as (row as (DRAWINGNUMBER as string, DRAWINGSETNUMBER as string, DRWISSUEINDEX as string, DRWSTISSUEINDEX as string)[]))), FINCI as (PN as (STRUCTURE as (row as (FINCADNUMBER as string, FINCIISSUEINDEX as string, FINCIVERSIONITERATION as string, LO_EFFECTIVITY as string, PNCADNUMBER as string, PNVERSIONITERATION as string)[]))), IXREQUIR as (CIN as ({CONF-STEERING} as (row as (CINSTACK as string, REQUIREMENTID as string)[]))))\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'xml',\n\tcontainer: 'blob01',\n\tvalidationMode: 'none',\n\tnamespaces: false,\n\twildcardPaths:['airbus/**/L_REL.xml']) ~> LREL\nLREL foldDown(unroll(L.ADAPCI.ADAPLO.STRUCTURE.row, L.ADAPCI.ADAPLO.STRUCTURE.row),\n\tmapColumn(\n\t\tADAPCILEGACYNUMBER = L.ADAPCI.ADAPLO.STRUCTURE.row.ADAPCILEGACYNUMBER,\n\t\tADAPCINUMBER = L.ADAPCI.ADAPLO.STRUCTURE.row.ADAPCINUMBER,\n\t\tADAPLOLEGACYNUMBER = L.ADAPCI.ADAPLO.STRUCTURE.row.ADAPLOLEGACYNUMBER,\n\t\tADAPLONUMBER = L.ADAPCI.ADAPLO.STRUCTURE.row.ADAPLONUMBER,\n\t\tCDATE = L.ADAPCI.ADAPLO.STRUCTURE.row.CDATE,\n\t\tUDATE = L.ADAPCI.ADAPLO.STRUCTURE.row.UDATE\n\t),\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> FADAPCIADAPLO\nLREL foldDown(unroll(L.ADAPCI.CIN.{CONF-STEERING}.row, L.ADAPCI.CIN.{CONF-STEERING}.row),\n\tmapColumn(\n\t\tADAPCINUMBER = L.ADAPCI.CIN.{CONF-STEERING}.row.ADAPCINUMBER,\n\t\tCINSTACK = L.ADAPCI.CIN.{CONF-STEERING}.row.CINSTACK\n\t),\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> FCIN2ADAPCI\nLREL foldDown(unroll(L.CACODE.DASSY.CASCADE.row, L.CACODE.DASSY.CASCADE.row),\n\tmapColumn(\n\t\tCACCCODE = L.CACODE.DASSY.CASCADE.row.CACCCODE,\n\t\tCDATE = L.CACODE.DASSY.CASCADE.row.CDATE,\n\t\tDASSYISSUEINDEX = L.CACODE.DASSY.CASCADE.row.DASSYISSUEINDEX,\n\t\tDASSYNUMBER = L.CACODE.DASSY.CASCADE.row.DASSYNUMBER,\n\t\tUDATE = L.CACODE.DASSY.CASCADE.row.UDATE\n\t),\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> FCACODEDASSY\nLREL foldDown(unroll(L.ADAPDS.ADAPCI.STRUCTURE.row, L.ADAPDS.ADAPCI.STRUCTURE.row),\n\tmapColumn(\n\t\tADAPCILEGACYNUMBER = L.ADAPDS.ADAPCI.STRUCTURE.row.ADAPCILEGACYNUMBER,\n\t\tADAPCINUMBER = L.ADAPDS.ADAPCI.STRUCTURE.row.ADAPCINUMBER,\n\t\tADAPDSISSUEINDEX = L.ADAPDS.ADAPCI.STRUCTURE.row.ADAPDSISSUEINDEX,\n\t\tADAPDSNUMBER = L.ADAPDS.ADAPCI.STRUCTURE.row.ADAPDSNUMBER,\n\t\tCDATE = L.ADAPDS.ADAPCI.STRUCTURE.row.CDATE,\n\t\tQUANTITY = L.ADAPDS.ADAPCI.STRUCTURE.row.QUANTITY,\n\t\tUDATE = L.ADAPDS.ADAPCI.STRUCTURE.row.UDATE\n\t),\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> ADAPDS2ADAPCI\nLREL foldDown(unroll(L.ADAPLO.ADAPDS.STRUCTURE.row, L.ADAPLO.ADAPDS.STRUCTURE.row),\n\tmapColumn(\n\t\tADAPDSISSUEINDEX = L.ADAPLO.ADAPDS.STRUCTURE.row.ADAPDSISSUEINDEX,\n\t\tADAPDSNUMBER = L.ADAPLO.ADAPDS.STRUCTURE.row.ADAPDSNUMBER,\n\t\tADAPLOLEGACYNUMBER = L.ADAPLO.ADAPDS.STRUCTURE.row.ADAPLOLEGACYNUMBER,\n\t\tADAPLONUMBER = L.ADAPLO.ADAPDS.STRUCTURE.row.ADAPLONUMBER,\n\t\tCDATE = L.ADAPLO.ADAPDS.STRUCTURE.row.CDATE,\n\t\tUDATE = L.ADAPLO.ADAPDS.STRUCTURE.row.UDATE\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> FADAPLOADAPDS\nLREL foldDown(unroll(L.ADAPDS.DRWST.{DEF-DOSSIER}.row, L.ADAPDS.DRWST.{DEF-DOSSIER}.row),\n\tmapColumn(\n\t\tADAPDSISSUEINDEX = L.ADAPDS.DRWST.{DEF-DOSSIER}.row.ADAPDSISSUEINDEX,\n\t\tADAPDSNUMBER = L.ADAPDS.DRWST.{DEF-DOSSIER}.row.ADAPDSNUMBER,\n\t\tCDATE = L.ADAPDS.DRWST.{DEF-DOSSIER}.row.CDATE,\n\t\tDRAWINGSETNUMBER = L.ADAPDS.DRWST.{DEF-DOSSIER}.row.DRAWINGSETNUMBER,\n\t\tDRWSTISSUEINDEX = L.ADAPDS.DRWST.{DEF-DOSSIER}.row.DRWSTISSUEINDEX,\n\t\tUDATE = L.ADAPDS.DRWST.{DEF-DOSSIER}.row.UDATE\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> FADAPDS2DRWST\nLREL foldDown(unroll(L.CACODE.ADAPCI.CASCADE.row, L.CACODE.ADAPCI.CASCADE.row),\n\tmapColumn(\n\t\tADAPCILEGACYNUMBER = L.CACODE.ADAPCI.CASCADE.row.ADAPCILEGACYNUMBER,\n\t\tADAPCINUMBER = L.CACODE.ADAPCI.CASCADE.row.ADAPCINUMBER,\n\t\tCACCCODE = L.CACODE.ADAPCI.CASCADE.row.CACCCODE,\n\t\tCDATE = L.CACODE.ADAPCI.CASCADE.row.CDATE,\n\t\tUDATE = L.CACODE.ADAPCI.CASCADE.row.UDATE\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> FCACODE2ADAPCI\nFADAPCIADAPLO sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tmapColumn(\n\t\tADAPCILEGACYNUMBER,\n\t\tADAPCINUMBER,\n\t\tADAPLOLEGACYNUMBER,\n\t\tADAPLONUMBER,\n\t\tCDATE,\n\t\tUDATE\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SADAPCI2ADAPLO\nFCIN2ADAPCI sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tpostSQLs:['DROP TABLE IF EXISTS R_CIN_ADAPCI;\\n\\nCREATE TABLE R_CIN_ADAPCI(\\n    CINSTACK VARCHAR(50),\\n    ADAPCINUMBER VARCHAR(20),\\n);\\n\\n\\nDECLARE @V_CINSTACK VARCHAR(8000);\\nDECLARE @V_ADAPCINUMBER VARCHAR (500);\\n\\nDECLARE SPLIT_CINSTACK CURSOR LOCAL FAST_FORWARD FOR \\n        SELECT\\n                CINSTACK, ADAPCINUMBER\\n        FROM R_CIN_ADAPCI_TEMP\\n\\nOPEN SPLIT_CINSTACK\\nFETCH NEXT FROM SPLIT_CINSTACK \\nINTO @V_CINSTACK, @V_ADAPCINUMBER\\n \\nWHILE @@FETCH_STATUS = 0\\nBEGIN\\n\\n    INSERT INTO R_CIN_ADAPCI\\n            SELECT SPL.value, @V_ADAPCINUMBER FROM STRING_SPLIT(@V_CINSTACK,\\',\\') AS SPL \\n    \\n            FETCH NEXT FROM SPLIT_CINSTACK \\n            INTO \\n                    @V_CINSTACK, @V_ADAPCINUMBER\\nEND \\n\\n/* SELECT * FROM R_CIN_ADAPCI; */\\nDROP TABLE R_CIN_ADAPCI_TEMP;\\n\\n\\n'],\n\tmapColumn(\n\t\tADAPCINUMBER,\n\t\tCINSTACK\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SCIN2ADAPCI\nFCACODEDASSY sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SCACODEDASSY\nADAPDS2ADAPCI sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tmapColumn(\n\t\tADAPCILEGACYNUMBER,\n\t\tADAPCINUMBER,\n\t\tADAPDSISSUEINDEX,\n\t\tADAPDSNUMBER,\n\t\tCDATE,\n\t\tQUANTITY,\n\t\tUDATE\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SADAPPDS2ADAPCI\nFADAPLOADAPDS sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tmapColumn(\n\t\tADAPDSISSUEINDEX,\n\t\tADAPDSNUMBER,\n\t\tADAPLOLEGACYNUMBER,\n\t\tADAPLONUMBER,\n\t\tCDATE,\n\t\tUDATE\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SADAPLO2ADAPDS\nFADAPDS2DRWST sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table',\n\tmapColumn(\n\t\tADAPDSISSUEINDEX,\n\t\tADAPDSNUMBER,\n\t\tCDATE,\n\t\tDRAWINGSETNUMBER,\n\t\tDRWSTISSUEINDEX,\n\t\tUDATE\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SADAPDS2DRWST\nFCACODE2ADAPCI sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table',\n\tmapColumn(\n\t\tADAPCILEGACYNUMBER,\n\t\tADAPCINUMBER,\n\t\tCACCCODE,\n\t\tCDATE,\n\t\tUDATE\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SCACODE2ADAPCI"
 				}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]",
-				"[concat(variables('factoryId'), '/datasets/R_ADAPCI_CIN')]"
-			]
+			"dependsOn": []
 		}
 	]
 }
