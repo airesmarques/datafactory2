@@ -6,7 +6,7 @@
 		"pipelines": [
 			{
 				"pipelineReference": {
-					"referenceName": "L_REL_ALL_copy1",
+					"referenceName": "L_REL_ALL",
 					"type": "PipelineReference"
 				}
 			}
