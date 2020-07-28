@@ -1,0 +1,160 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "AB-data-factory2"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/L_REL_ALL')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "L_REL_ALL",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "L_REL_FLOW_copy1",
+								"type": "DataFlowReference",
+								"datasetParameters": {
+									"SADAPCI2ADAPLO": {
+										"tablename": "R_ADAPCI_ADAPLO"
+									},
+									"SCIN2ADAPCI": {
+										"tablename": "R_CIN_ADAPCI_TEMP"
+									},
+									"SCACODEDASSY": {
+										"tablename": "R_CACODE_DASSY"
+									},
+									"SADAPPDS2ADAPCI": {
+										"tablename": "R_ADAPDS_ADAPCI"
+									},
+									"SADAPLO2ADAPDS": {
+										"tablename": "R_ADAPLO_ADAPDS"
+									},
+									"SADAPDS2DRWST": {
+										"tablename": "R_ADAPDS_DRWST"
+									},
+									"SCACODE2ADAPCI": {
+										"tablename": "R_CACODE_ADAPCI"
+									},
+									"SADAPDS2DASSY": {
+										"tablename": "R_ADAPDS_DASSY"
+									}
+								}
+							},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							}
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/L_REL_ALL_BACKUP')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "L_REL_ALL",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "L_REL_FLOW",
+								"type": "DataFlowReference",
+								"datasetParameters": {
+									"SADAPCI2ADAPLO": {
+										"tablename": "R_ADAPCI_ADAPLO"
+									},
+									"SCIN2ADAPCI": {
+										"tablename": "R_CIN_ADAPCI_TEMP"
+									},
+									"SCACODEDASSY": {
+										"tablename": "R_CACODE_DASSY"
+									},
+									"SADAPPDS2ADAPCI": {
+										"tablename": "R_ADAPDS_ADAPCI"
+									},
+									"SADAPLO2ADAPDS": {
+										"tablename": "R_ADAPLO_ADAPDS"
+									},
+									"SADAPDS2DRWST": {
+										"tablename": "R_ADAPDS_DRWST"
+									}
+								}
+							},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							}
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/trigger1')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "L_REL_ALL",
+							"type": "PipelineReference"
+						}
+					}
+				],
+				"type": "BlobEventsTrigger",
+				"typeProperties": {
+					"blobPathBeginsWith": "/blob01/blobs/airbus/",
+					"blobPathEndsWith": "L_REL.xml",
+					"ignoreEmptyBlobs": true,
+					"scope": "/subscriptions/828452c5-fb8a-4707-a3b0-740679370ab1/resourceGroups/AB-poc/providers/Microsoft.Storage/storageAccounts/abstoragetest3",
+					"events": [
+						"Microsoft.Storage.BlobCreated"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/L_REL_ALL')]"
+			]
+		}
+	]
+}
