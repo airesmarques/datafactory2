@@ -1,0 +1,368 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "AB-data-factory2"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/10-L_REL_ALL')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "L_REL_ALL",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "L_REL_FLOW_copy1",
+								"type": "DataFlowReference",
+								"datasetParameters": {
+									"SADAPCI2ADAPLO": {
+										"tablename": "R_ADAPCI_ADAPLO"
+									},
+									"SCIN2ADAPCI": {
+										"tablename": "R_CIN_ADAPCI_TEMP"
+									},
+									"SCACODEDASSY": {
+										"tablename": "R_CACODE_DASSY"
+									},
+									"SADAPPDS2ADAPCI": {
+										"tablename": "R_ADAPDS_ADAPCI"
+									},
+									"SADAPLO2ADAPDS": {
+										"tablename": "R_ADAPLO_ADAPDS"
+									},
+									"SADAPDS2DRWST": {
+										"tablename": "R_ADAPDS_DRWST"
+									},
+									"SCACODE2ADAPCI": {
+										"tablename": "R_CACODE_ADAPCI"
+									},
+									"SADAPDS2DASSY": {
+										"tablename": "R_ADAPDS_DASSY"
+									}
+								}
+							},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							}
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/1-O_CACCCODE')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "O_CACCCODE_FLOW",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "O_CACCCODE",
+								"type": "DataFlowReference",
+								"datasetParameters": {
+									"OCACCCODESINK": {
+										"tablename": "O_CACCCODE"
+									}
+								}
+							},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							}
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/2-O_CIN')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "OCIN_FLOW",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "OCIN_TEMP_FLOW",
+								"type": "DataFlowReference",
+								"datasetParameters": {
+									"OCINSINK": {
+										"tablename": "O_CACCCODE"
+									}
+								}
+							},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							}
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/3-O_DASSY')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "ODASSY_FLOW",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "O_DASSY",
+								"type": "DataFlowReference",
+								"datasetParameters": {
+									"ODASSYSINK": {
+										"tablename": "O_DASSY"
+									}
+								}
+							},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							}
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/4-O_DRWST')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "O_DRWST_FLOW",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "O_DRWST_FLOW",
+								"type": "DataFlowReference",
+								"datasetParameters": {
+									"ODRWSTSINK": {
+										"tablename": "O_DRWST"
+									}
+								}
+							},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							}
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/trigger1')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Stopped",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "10-L_REL_ALL",
+							"type": "PipelineReference"
+						}
+					}
+				],
+				"type": "BlobEventsTrigger",
+				"typeProperties": {
+					"blobPathBeginsWith": "/blob01/blobs/airbus/",
+					"blobPathEndsWith": "L_REL.xml",
+					"ignoreEmptyBlobs": true,
+					"scope": "/subscriptions/828452c5-fb8a-4707-a3b0-740679370ab1/resourceGroups/AB-poc/providers/Microsoft.Storage/storageAccounts/abstoragetest3",
+					"events": [
+						"Microsoft.Storage.BlobCreated"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/10-L_REL_ALL')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/O_DRW')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"tablename": {
+						"type": "string",
+						"defaultValue": "O_DRW"
+					}
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "DBO",
+					"table": {
+						"value": "@dataset().tablename",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/O_DRW_FLOW')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"linkedService": {
+								"referenceName": "AzureBlobStorage1",
+								"type": "LinkedServiceReference"
+							},
+							"name": "ODRW"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "O_DRW",
+								"type": "DatasetReference"
+							},
+							"name": "ODRWSINK"
+						}
+					],
+					"transformations": [
+						{
+							"name": "FODRW"
+						}
+					],
+					"script": "source(output(\n\t\tO as (DRW as (row as (CADTOOL as string, CANCELLATIONINDEX as boolean, CDATE as date, CREATETIMESTAMP as date, DRAWINGNUMBER as short, DRAWINGSETNUMBER as string, DRAWINGSIZE as string, DRWISSUEINDEX as string, ENGLISHTITLE as string, LOCATION as string, MODIFYTIMESTAMP as date, NATCO as string, STATUS as string, TEAM_DISPLAY as string, UDATE as date, VERSIONITERATION as string)[]))\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\trowUrlColumn: 'ab_file',\n\tpartitionRootPath: 'airbus',\n\tformat: 'xml',\n\tcontainer: 'blob01',\n\tvalidationMode: 'none',\n\tnamespaces: true,\n\twildcardPaths:['airbus/**/O_DRW.xml']) ~> ODRW\nODRW foldDown(unroll(O.DRW.row, O.DRW.row),\n\tmapColumn(\n\t\tCADTOOL = O.DRW.row.CADTOOL,\n\t\tCANCELLATIONINDEX = O.DRW.row.CANCELLATIONINDEX,\n\t\tCDATE = O.DRW.row.CDATE,\n\t\tCREATETIMESTAMP = O.DRW.row.CREATETIMESTAMP,\n\t\tDRAWINGNUMBER = O.DRW.row.DRAWINGNUMBER,\n\t\tDRAWINGSETNUMBER = O.DRW.row.DRAWINGSETNUMBER,\n\t\tDRAWINGSIZE = O.DRW.row.DRAWINGSIZE,\n\t\tDRWISSUEINDEX = O.DRW.row.DRWISSUEINDEX,\n\t\tENGLISHTITLE = O.DRW.row.ENGLISHTITLE,\n\t\tLOCATION = O.DRW.row.LOCATION,\n\t\tMODIFYTIMESTAMP = O.DRW.row.MODIFYTIMESTAMP,\n\t\tNATCO = O.DRW.row.NATCO,\n\t\tSTATUS = O.DRW.row.STATUS,\n\t\tTEAM_DISPLAY = O.DRW.row.TEAM_DISPLAY,\n\t\tUDATE = O.DRW.row.UDATE,\n\t\tVERSIONITERATION = O.DRW.row.VERSIONITERATION\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> FODRW\nFODRW sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table',\n\tmapColumn(\n\t\tCADTOOL,\n\t\tCANCELLATIONINDEX,\n\t\tCDATE,\n\t\tCREATETIMESTAMP,\n\t\tDRAWINGNUMBER,\n\t\tDRAWINGSETNUMBER,\n\t\tDRAWINGSIZE,\n\t\tDRWISSUEINDEX,\n\t\tENGLISHTITLE,\n\t\tLOCATION,\n\t\tMODIFYTIMESTAMP,\n\t\tNATCO,\n\t\tSTATUS,\n\t\tTEAM_DISPLAY,\n\t\tUDATE,\n\t\tVERSIONITERATION\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> ODRWSINK"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/O_DRW')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/5-O_DRW')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "O_DRW_FLOW",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "O_DRW_FLOW",
+								"type": "DataFlowReference",
+								"datasetParameters": {
+									"ODRWSINK": {
+										"tablename": "O_DRW"
+									}
+								}
+							},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							}
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/O_DRW_FLOW')]"
+			]
+		}
+	]
+}
