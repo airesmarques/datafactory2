@@ -1,0 +1,51 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "AB-data-factory2"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/O_CACCCODE')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"linkedService": {
+								"referenceName": "AzureBlobStorage1",
+								"type": "LinkedServiceReference"
+							},
+							"name": "OCACCCODE"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "O_CACCODE",
+								"type": "DatasetReference"
+							},
+							"name": "OCACCCODESINK"
+						}
+					],
+					"transformations": [
+						{
+							"name": "Flatten1"
+						}
+					],
+					"script": "source(output(\n\t\tO as (CACODE as (row as (AIR as boolean, CACCCODE as string, CDATE as date, CITYPE as string, DELIVERYRESPONSIBLE as string, DESIGNATION as string, DESIGNRESPONSIBLE as string, EQPTINTEGRATED as boolean, GLOBALSC as string, GROUNDTEST as boolean, JAAFORM1 as string, MANUFACTURINGRESPONSIBLE as string, MODIFYTIMESTAMP as date, NATCO as string, PRODUCTIONRESPONSIBLE as string, SECTIONCODE as string, SUPERVISOR as string, TEAM_DISPLAY as string, UDATE as date)[]))\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'xml',\n\tcontainer: 'blob01',\n\tvalidationMode: 'none',\n\tnamespaces: true,\n\twildcardPaths:['airbus/**/O_CACCCODE.xml']) ~> OCACCCODE\nOCACCCODE foldDown(unroll(O.CACODE.row, O.CACODE.row),\n\tmapColumn(\n\t\tAIR = O.CACODE.row.AIR,\n\t\tCACCCODE = O.CACODE.row.CACCCODE,\n\t\tCDATE = O.CACODE.row.CDATE,\n\t\tCITYPE = O.CACODE.row.CITYPE,\n\t\tDELIVERYRESPONSIBLE = O.CACODE.row.DELIVERYRESPONSIBLE,\n\t\tDESIGNATION = O.CACODE.row.DESIGNATION,\n\t\tDESIGNRESPONSIBLE = O.CACODE.row.DESIGNRESPONSIBLE,\n\t\tEQPTINTEGRATED = O.CACODE.row.EQPTINTEGRATED,\n\t\tGLOBALSC = O.CACODE.row.GLOBALSC,\n\t\tGROUNDTEST = O.CACODE.row.GROUNDTEST,\n\t\tJAAFORM1 = O.CACODE.row.JAAFORM1,\n\t\tMANUFACTURINGRESPONSIBLE = O.CACODE.row.MANUFACTURINGRESPONSIBLE,\n\t\tMODIFYTIMESTAMP = O.CACODE.row.MODIFYTIMESTAMP,\n\t\tNATCO = O.CACODE.row.NATCO,\n\t\tPRODUCTIONRESPONSIBLE = O.CACODE.row.PRODUCTIONRESPONSIBLE,\n\t\tSECTIONCODE = O.CACODE.row.SECTIONCODE,\n\t\tSUPERVISOR = O.CACODE.row.SUPERVISOR,\n\t\tTEAM_DISPLAY = O.CACODE.row.TEAM_DISPLAY,\n\t\tUDATE = O.CACODE.row.UDATE\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> Flatten1\nFlatten1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table') ~> OCACCCODESINK"
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
