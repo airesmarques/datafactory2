@@ -1,5 +1,5 @@
 {
-	"name": "O_DRW",
+	"name": "5-O_DRW",
 	"properties": {
 		"activities": [
 			{
@@ -16,10 +16,10 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "O_DRWST_FLOW",
+						"referenceName": "O_DRW_FLOW",
 						"type": "DataFlowReference",
 						"datasetParameters": {
-							"ODRWSTSINK": {
+							"ODRWSINK": {
 								"tablename": "O_DRW"
 							}
 						}

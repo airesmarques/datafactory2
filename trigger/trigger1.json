@@ -2,11 +2,11 @@
 	"name": "trigger1",
 	"properties": {
 		"annotations": [],
-		"runtimeState": "Started",
+		"runtimeState": "Stopped",
 		"pipelines": [
 			{
 				"pipelineReference": {
-					"referenceName": "L_REL_ALL",
+					"referenceName": "10-L_REL_ALL",
 					"type": "PipelineReference"
 				}
 			}
