@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "L_REL",
+				"name": "L_REL - CSV",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
