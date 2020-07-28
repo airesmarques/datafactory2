@@ -1,0 +1,25 @@
+{
+	"name": "trigger1",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "L_REL_ALL_copy1",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "BlobEventsTrigger",
+		"typeProperties": {
+			"blobPathBeginsWith": "/blob01/blobs/airbus/",
+			"blobPathEndsWith": "L_REL.xml",
+			"ignoreEmptyBlobs": true,
+			"scope": "/subscriptions/828452c5-fb8a-4707-a3b0-740679370ab1/resourceGroups/AB-poc/providers/Microsoft.Storage/storageAccounts/abstoragetest3",
+			"events": [
+				"Microsoft.Storage.BlobCreated"
+			]
+		}
+	}
+}
