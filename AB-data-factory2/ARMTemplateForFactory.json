@@ -211,7 +211,7 @@
 								"datasetParameters": {
 									"OCIN": {},
 									"OCINSINK": {
-										"tablename": "O_CACCCODE"
+										"tablename": "O_CIN_TEMP"
 									}
 								}
 							},
