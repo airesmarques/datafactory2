@@ -2489,7 +2489,7 @@
 								"datasetParameters": {
 									"OCIN": {},
 									"OCINSINK": {
-										"tablename": "O_CIN_TEMP"
+										"tablename": "O_CACCCODE"
 									}
 								}
 							},
@@ -2527,7 +2527,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"dataflow": {
-								"referenceName": "ODASSY",
+								"referenceName": "O_DASSY",
 								"type": "DataFlowReference",
 								"parameters": {},
 								"datasetParameters": {
@@ -2548,7 +2548,7 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/ODASSY')]"
+				"[concat(variables('factoryId'), '/dataflows/O_DASSY')]"
 			]
 		},
 		{
@@ -3329,7 +3329,7 @@
 					"sinks": [
 						{
 							"dataset": {
-								"referenceName": "R_ADAPCI_CIN",
+								"referenceName": "O_CIN_TEMP",
 								"type": "DatasetReference"
 							},
 							"name": "OCINSINK"
@@ -3345,11 +3345,11 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]",
-				"[concat(variables('factoryId'), '/datasets/R_ADAPCI_CIN')]"
+				"[concat(variables('factoryId'), '/datasets/O_CIN_TEMP')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/ODASSY')]",
+			"name": "[concat(parameters('factoryName'), '/O_DASSY')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -3367,7 +3367,7 @@
 					"sinks": [
 						{
 							"dataset": {
-								"referenceName": "R_ADAPCI_CIN",
+								"referenceName": "O_DASSY",
 								"type": "DatasetReference"
 							},
 							"name": "ODASSYSINK"
@@ -3383,7 +3383,7 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]",
-				"[concat(variables('factoryId'), '/datasets/R_ADAPCI_CIN')]"
+				"[concat(variables('factoryId'), '/datasets/O_DASSY')]"
 			]
 		},
 		{
@@ -3460,6 +3460,142 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]",
 				"[concat(variables('factoryId'), '/datasets/O_DRWST')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ALL')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "A_IXOFFEFF_FLOW",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "A_IXOFFEFF_TEMP",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"AIXOFFEFF": {},
+									"AIXOFFEFFSINK": {
+										"tablename": "A_IXOFFEFF_TEMP"
+									}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							}
+						}
+					},
+					{
+						"name": "O_CACCCODE_FLOW",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "O_CACCCODE",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"OCACCCODE": {},
+									"OCACCCODESINK": {
+										"tablename": "O_CACCCODE"
+									}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							}
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/A_IXOFFEFF_TEMP')]",
+				"[concat(variables('factoryId'), '/dataflows/O_CACCCODE')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/O_DASSY')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"tablename": {
+						"type": "string",
+						"defaultValue": "O_DASSY"
+					}
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "DBO",
+					"table": {
+						"value": "@dataset().tablename",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/O_CIN_TEMP')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"tablename": {
+						"type": "string",
+						"defaultValue": "O_CIN_TEMP"
+					}
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "DBO",
+					"table": {
+						"value": "@dataset().tablename",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
 			]
 		}
 	]
